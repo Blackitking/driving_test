@@ -1,293 +1,733 @@
-<!DOCTYPE html>
-<html lang="ku" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Driving Theory Test</title>
-
-<style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f1f3f6;
-    margin:0;
-    padding:20px;
-}
-.box{
-    max-width:700px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 4px 15px #0002;
-}
-button{
-    width:100%;
-    padding:14px;
-    margin:7px 0;
-    border:0;
-    border-radius:10px;
-    font-size:17px;
-    cursor:pointer;
-}
-.lang{
-    background:white;
-    border:2px solid #ddd;
-}
-.answer{
-    background:#f3f3f3;
-    text-align:right;
-}
-#quiz{
-    display:none;
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-<!-- LANGUAGE -->
-<div id="languages">
-
-<h2 id="chooseLanguage">تکایە زمانێک هەڵبژێرە</h2>
-
-<button class="lang" onclick="setLanguage('ku')">
-🇹🇯 کوردی سۆرانی
-</button>
-
-<button class="lang" onclick="setLanguage('badini')">
-🇹🇯 کوردی بادینی
-</button>
-
-<button class="lang" onclick="setLanguage('ar')">
-🇮🇶 العربية
-</button>
-
-<button class="lang" onclick="setLanguage('en')">
-🇬🇧 English
-</button>
-
-</div>
-
-<!-- QUIZ -->
-<div id="quiz">
-
-<h2 id="question"></h2>
-
-<div id="answers"></div>
-
-</div>
-
-</div>
-
-<script>
-
-/* =========================
-   QUESTIONS - 4 LANGUAGES
-========================= */
-
 const questions = [
 
 {
-ku:{
-q:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
-a:["پاسکیل","ماتۆڕسکیل","سکۆتەر"]
+id:1,
+q:{
+ku:"هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",
+badini:"Amadeyeke çerxdar e ku bi hêza bedenî an mekanîkî dimeşe an tê kişandin",
+ar:"مركبة ذات عجلات تسير أو تُسحب بقوة جسمانية أو ميكانيكية",
+en:"A wheeled vehicle that moves or is pulled by physical or mechanical power"
 },
-badini:{
-q:"Amadeyek çerxdar e ku bi hêza bedenî dimeşe",
-a:["Bisîklet","Motorsîklet","Skuter"]
-},
-ar:{
-q:"مركبة ذات عجلات تسير بقوة جسمانية",
-a:["دراجة هوائية","دراجة نارية","سكوتر"]
-},
-en:{
-q:"A wheeled vehicle that moves by physical power",
-a:["Bicycle","Motorcycle","Scooter"]
+a:{
+ku:["سوارڕۆ","ئۆتۆمبێل","شەمەندەفەر"],
+badini:["Bisîklet","Otomobîl","Tren"],
+ar:["دراجة","سيارة","قطار"],
+en:["Bicycle","Car","Train"]
 },
 correct:0
 },
 
 {
-ku:{
-q:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
-a:["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"]
+id:2,
+q:{
+ku:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
+badini:"Amadeyeke çerxdar e ku bi hêza bedenî dimeşe",
+ar:"مركبة ذات عجلات تسير بالقوة الجسمانية",
+en:"A wheeled vehicle that moves by physical power"
 },
-badini:{
-q:"Sewarek ji bo veguhastina kesan li hember kirê hatiye amadekirin",
-a:["Otomobîla taybet","Kamyon","Taksî"]
+a:{
+ku:["پاسکیل","ماتۆڕسکیل","سکۆتەر"],
+badini:["Bisîklet","Motorsîklet","Skuter"],
+ar:["دراجة هوائية","دراجة نارية","سكوتر"],
+en:["Bicycle","Motorcycle","Scooter"]
 },
-ar:{
-q:"مركبة مخصصة لنقل الأشخاص مقابل أجرة",
-a:["سيارة خاصة","شاحنة","تاكسي"]
+correct:0
 },
-en:{
-q:"A vehicle designed to transport people for a fare",
-a:["Private car","Truck","Taxi"]
+
+{
+id:3,
+q:{
+ku:"چۆن پاسکیل بۆ منداڵەکەت هەڵدەبژێریت؟",
+badini:"Tu çawa bisîkletekê ji bo zarokê xwe hilbijêrî?",
+ar:"كيف تختار الدراجة الهوائية لطفلك؟",
+en:"How do you choose a bicycle for your child?"
+},
+a:{
+ku:[
+"بەپێی حەزو داواکاری منداڵەکە",
+"بە شێوەیەک بتوانێت بۆ چەند ساڵێک بەکاری بهێنێت",
+"بە پێی قەبارەو چوار چێوەی پاسکیلەکە،لەگەڵ باڵاو توانای منداڵەکە بگونجێت"
+],
+badini:[
+"Li gorî hez û daxwazên zarokê",
+"Bi awayekî ku ew bikaribe çend salan bikar bîne",
+"Li gorî mezinahî û çarçoveya bisîkletê, bi dirêjahiya beden û hêza zarokê re li hev bike"
+],
+ar:[
+"حسب رغبة الطفل وطلبه",
+"بطريقة يمكنه من خلالها استخدامها لعدة سنوات",
+"حسب حجم وهيكل الدراجة بما يتناسب مع طول وقوة الطفل"
+],
+en:[
+"According to the child's wishes",
+"In a way that allows the child to use it for several years",
+"According to the bicycle size and frame, matching the child's height and ability"
+]
 },
 correct:2
 },
 
 {
-ku:{
-q:"شانی ڕێگا چیە؟",
-a:[
-"ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە",
-"بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک",
-"ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"
-]
+id:4,
+q:{
+ku:"ئامێرێکی گواستنەوەیە دوو یان سێ تایەی هەیە بەهێزی میکانیکی پاڵی پێوە دەنرێت",
+badini:"Amadeyeke veguhestinê ye ku du an sê teker hene û bi hêza mekanîkî dimeşe",
+ar:"وسيلة نقل لها عجلتان أو ثلاث عجلات وتتحرك بقوة ميكانيكية",
+en:"A means of transport with two or three wheels powered mechanically"
 },
-badini:{
-q:"Milê rê çi ye?",
-a:[
-"Beşa rê ye ku rasterast li kêleka rê ye",
-"Beşa rê ye ji bo rêçûna yek rêza otomobîlan",
-"Beşa rê ye ku li rast û çepê rê ye"
-]
+a:{
+ku:["پاسکیل","ماتۆڕسکیل","سوارڕۆ"],
+badini:["Bisîklet","Motorsîklet","Sewar"],
+ar:["دراجة هوائية","دراجة نارية","مركبة نقل"],
+en:["Bicycle","Motorcycle","Vehicle"]
 },
-ar:{
-q:"ما هو كتف الطريق؟",
-a:[
-"الجزء من الطريق الذي يقع مباشرة بجانب الطريق",
-"جزء من الطريق لسير صف واحد من السيارات",
-"الجزء من الطريق الموجود على يمين ويسار الطريق"
-]
+correct:1
 },
-en:{
-q:"What is the road shoulder?",
-a:[
-"The part of the road directly beside the roadway",
-"A part of the road for one line of vehicles",
-"The part of the road on the right and left sides"
-]
+
+{
+id:5,
+q:{
+ku:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
+badini:"Sewareke ji bo veguhastina kesan li hember kirê hatiye amadekirin",
+ar:"مركبة مخصصة لنقل الأشخاص مقابل أجرة",
+en:"A vehicle designed to transport people for a fare"
+},
+a:{
+ku:["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"],
+badini:["Otomobîla taybet","Kamyon","Taksî"],
+ar:["سيارة خاصة","شاحنة","تاكسي"],
+en:["Private car","Truck","Taxi"]
+},
+correct:2
+},
+
+{
+id:6,
+q:{
+ku:"چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",
+badini:"Kengê divê ajokarê taksiyê alîkariya rêwiyan bike?",
+ar:"متى يجب على سائق سيارة الأجرة مساعدة الراكب؟",
+en:"When should a taxi driver help a passenger?"
+},
+a:{
+ku:["کاتی سەرکەوتن","کاتی دابەزین","کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"],
+badini:["Dema siwarbûnê","Dema daketinê","Dema rêwî kal, nexweş an xwedî pêdiviyên taybet be"],
+ar:["عند الصعود","عند النزول","عندما يكون الراكب مسناً أو مريضاً أو من ذوي الاحتياجات الخاصة"],
+en:["When getting in","When getting out","When the passenger is elderly, ill, or has special needs"]
+},
+correct:2
+},
+
+{
+id:7,
+q:{
+ku:"سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",
+badini:"Derbarê rêwiyê taksiyê de kîjan ji van rast e?",
+ar:"أي من العبارات التالية صحيحة بشأن راكب سيارة الأجرة؟",
+en:"Which of the following is correct about a taxi passenger?"
+},
+a:{
+ku:["مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات","مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە","هەردوو وڵامەکەی سەرەوە ڕاستن"],
+badini:["Mafê wî heye bi otomobîlekî ewle gerê","Mafê wî heye heywanê xwe bi xwe re bibe hundirê taksiyê","Her du bersivên jor rast in"],
+ar:["من حقه أن يسافر بسيارة آمنة","من حقه أن يصطحب حيوانه داخل سيارة الأجرة","كلتا الإجابتين السابقتين صحيحتان"],
+en:["They have the right to travel in a safe vehicle","They have the right to take their animal into the taxi","Both answers above are correct"]
 },
 correct:0
 },
 
 {
-ku:{
-q:"ژمارەی تەلەفۆنی فریا گوزاری (ئەمبوڵانس) چەندە؟",
-a:["122","104","188"]
+id:8,
+q:{
+ku:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",
+badini:"Sewareke mezin e ji bo veguhastina hejmareke diyarkirî ji rêwiyan",
+ar:"مركبة كبيرة مخصصة لنقل عدد محدد من الركاب",
+en:"A large vehicle designed to carry a specified number of passengers"
 },
-badini:{
-q:"Hejmara telefona ambulansê çi ye?",
-a:["122","104","188"]
+a:{
+ku:["تەکسی","پاس","بارهەڵگر"],
+badini:["Taksî","Otobûs","Kamyon"],
+ar:["تاكسي","حافلة","شاحنة"],
+en:["Taxi","Bus","Truck"]
 },
-ar:{
-q:"ما رقم هاتف الإسعاف؟",
-a:["122","104","188"]
+correct:1
 },
-en:{
-q:"What is the ambulance telephone number?",
-a:["122","104","188"]
+
+{
+id:9,
+q:{
+ku:"لۆری بارهەڵگرێکە تەرخان کراوە بۆ",
+badini:"Lory ji bo çi hatiye tayînkirin?",
+ar:"الشاحنة مخصصة لـ",
+en:"A lorry is designed for"
+},
+a:{
+ku:["گواستنەوەی کەل و پەل","گواستنەوەی کەرەستەو پێداویستی بیناسازی","گواستنەوەی سوتەمەنی و تۆز و پاودەر"],
+badini:["Veguhastina mal û kelûpel","Veguhastina materyal û pêdiviyên avahiyê","Veguhastina sotemenî û gaz û toz"],
+ar:["نقل البضائع والأمتعة","نقل مواد ومستلزمات البناء","نقل الوقود والمواد المسحوقة"],
+en:["Transporting goods and luggage","Transporting construction materials and supplies","Transporting fuel and powdered materials"]
 },
 correct:0
 },
 
 {
-ku:{
-q:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
-a:["گەرمی و ئۆکسجین و ماددە","بەنزین","گاز"]
+id:10,
+q:{
+ku:"بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",
+badini:"Barkêşek ji bo veguhastina materyal û pêdiviyên avahiyê hatiye tayînkirin",
+ar:"شاحنة مخصصة لنقل مواد ومستلزمات البناء",
+en:"A truck designed to transport construction materials and supplies"
 },
-badini:{
-q:"Hêmayên bingehîn ên çêbûna agirê çi ne?",
-a:["Germî, oksîjen û madde","Benzîn","Gaz"]
+a:{
+ku:["لۆری","گەڵابە","تەنکەر"],
+badini:["Lory","Gelabe","Tanker"],
+ar:["شاحنة لوري","شاحنة بناء","صهريج"],
+en:["Lorry","Construction truck","Tanker"]
 },
-ar:{
-q:"ما هي العناصر الأساسية لحدوث الحريق؟",
-a:["الحرارة والأكسجين والمادة","البنزين","الغاز"]
+correct:1
 },
-en:{
-q:"What are the main elements necessary for fire?",
-a:["Heat, oxygen and fuel","Petrol","Gas"]
+
+{
+id:11,
+q:{
+ku:"پاسی گواستنەوەی گشتی بەکاردێت بۆ",
+badini:"Otobûsa veguhastina giştî ji bo çi tê bikaranîn?",
+ar:"تستخدم حافلة النقل العام لـ",
+en:"Public transport buses are used for"
+},
+a:{
+ku:["گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان","گواستنەوەی منداڵان و قوتابیان","گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"],
+badini:["Veguhastina gerokên cihên geştê","Veguhastina zarok û xwendekaran","Veguhastina rêwiyan di hundir û derveyî bajaran de"],
+ar:["نقل السياح إلى الأماكن السياحية","نقل الأطفال والطلاب","نقل الركاب داخل المدن وخارجها"],
+en:["Transporting tourists to tourist places","Transporting children and students","Transporting passengers inside and outside cities"]
+},
+correct:2
+},
+
+{
+id:12,
+q:{
+ku:"لە چی بارودۆخێکدا لێخوڕینی ئۆتۆمبێل بە عەرەبانەوە مەترسیدارە؟",
+badini:"Di kîjan rewşê de ajotina otomobîlê bi erebanê re xeter e?",
+ar:"في أي حالة تكون قيادة السيارة مع المقطورة خطرة؟",
+en:"In which situation is driving a car with a trailer dangerous?"
+},
+a:{
+ku:["لەکاتی بونی بەفر و خلیسکی سەر ڕێگا","لەکاتی بونی گەرمای زۆردا","لەکاتی بونی هەورێکی زۆردا"],
+badini:["Dema berf û şilbûna rê hebe","Dema germiya zêde hebe","Dema ewrê zêde hebe"],
+ar:["عند وجود الثلج وانزلاق الطريق","عند وجود حرارة شديدة","عند وجود الكثير من الغيوم"],
+en:["When there is snow and a slippery road","During very hot weather","When there are many clouds"]
 },
 correct:0
+},
+
+{
+id:13,
+q:{
+ku:"لەکاتی بەستنی عەرەبانە یان کەرەڤانە بە ئۆتۆمبێلەکەتەوە نابێت",
+badini:"Dema erebe an karavan bi otomobîla te ve girêdayî be, divê nebe",
+ar:"عند ربط مقطورة أو كرفان بسيارتك يجب ألا",
+en:"When a trailer or caravan is attached to your car, you must not"
+},
+a:{
+ku:["بە خێرایی زیاتر لە 30 کم بڕوات","بە خێرایی زیاتر لە 80 کم بڕوات","بە خێرایی کەمتر لە 80 کم بڕوات"],
+badini:["Bi leza zêdetir ji 30 km biçî","Bi leza zêdetir ji 80 km biçî","Bi leza kêmtir ji 80 km biçî"],
+ar:["تسير بسرعة أكثر من 30 كم","تسير بسرعة أكثر من 80 كم","تسير بسرعة أقل من 80 كم"],
+en:["Drive faster than 30 km/h","Drive faster than 80 km/h","Drive slower than 80 km/h"]
+},
+correct:1
+},
+
+{
+id:14,
+q:{
+ku:"لە کاتی ڕاکێشانی ئۆتۆمبێل",
+badini:"Dema kişandina otomobîlekê",
+ar:"عند سحب سيارة",
+en:"When towing a car"
+},
+a:{
+ku:["نابێت بە خێرایی زیاتر لە 30 کم بڕوات","نابێت بە خێرایی کەمتر لە 30 کم بڕوات","پێویستە بە خێرایی 30 کم بڕوات"],
+badini:["Divê bi leza zêdetir ji 30 km neçe","Divê bi leza kêmtir ji 30 km neçe","Divê bi leza 30 km here"],
+ar:["يجب ألا تسير بسرعة أكثر من 30 كم","يجب ألا تسير بسرعة أقل من 30 كم","يجب أن تسير بسرعة 30 كم"],
+en:["It must not travel faster than 30 km/h","It must not travel slower than 30 km/h","It must travel at 30 km/h"]
+},
+correct:0
+},
+
+{
+id:15,
+q:{
+ku:"ڕێڕەوی ناوەڕاست بەکاردێت بۆ",
+badini:"Rêya navîn ji bo çi tê bikaranîn?",
+ar:"يستخدم المسار الأوسط لـ",
+en:"The middle lane is used for"
+},
+a:{
+ku:["لێخوڕین بە ئەوپەڕی خێرایی ڕێگە پێدراو","لێخوڕین بە کەمترین خێرایی ڕێگە پێدراو","لێخوڕینی ڕاستەو ڕاست"],
+badini:["Ajotina bi herî zêde leza destûrdar","Ajotina bi kêmtirîn leza destûrdar","Ajotina rasterast"],
+ar:["القيادة بأقصى سرعة مسموحة","القيادة بأقل سرعة مسموحة","القيادة بشكل مستقيم"],
+en:["Driving at the maximum permitted speed","Driving at the minimum permitted speed","Driving straight ahead"]
+},
+correct:2
+},
+
+{
+id:16,
+q:{
+ku:"شانی ڕێگا چیە؟",
+badini:"Milê rê çi ye?",
+ar:"ما هو كتف الطريق؟",
+en:"What is the road shoulder?"
+},
+a:{
+ku:["ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە","بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک","ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"],
+badini:["Beşa rê ye ku rasterast li kêleka rê ye","Beşa rê ye ji bo rêçûna yek rêza otomobîlan","Beşa rê ye ku li rast û çepê rê ye"],
+ar:["الجزء من الطريق الذي يقع مباشرة بجانب الطريق","جزء من الطريق لسير صف واحد من السيارات","الجزء من الطريق الموجود على يمين ويسار الطريق"],
+en:["The part of the road directly beside the roadway","A part of the road for one line of vehicles","The part of the road on the right and left sides"]
+},
+correct:0
+},
+
+{
+id:17,
+q:{
+ku:"پاتناییەکە تەنها ڕێگا بە ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک دەدات",
+badini:"Ev beş tenê rê dide ku yek rêza otomobîlan li pey hev here",
+ar:"هذا الجزء من الطريق يسمح فقط بمرور صف واحد من السيارات",
+en:"This part of the road allows only one line of vehicles to travel one after another"
+},
+a:{
+ku:["شانی ڕێگا","ڕێڕەو","ڕێگای فریاکەوتن"],
+badini:["Milê rê","Rê","Riya acîl"],
+ar:["كتف الطريق","المسار","طريق الطوارئ"],
+en:["Road shoulder","Lane","Emergency road"]
+},
+correct:1
+},
+
+{
+id:18,
+q:{
+ku:"ڕێگای خێرا چییە؟",
+badini:"Riya bilez çi ye?",
+ar:"ما هو الطريق السريع؟",
+en:"What is a fast road?"
+},
+a:{
+ku:["ڕێگایەکی ئامادە کراوە بۆ هۆیەکانی گواستنەوە، بە خێرایی دەتوانن لێیەوە هاتوچۆ بکەن","ئەو ڕێگایانەن کە شارەکان بە یەکتر دەبەستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتوە"],
+badini:["Rêyek ji bo wesayîtên veguhestinê ye ku dikarin bi lez li ser biçin","Ew rê ne ku bajar bi hev ve girêdidin","Ji rêya sereke û aliyekê pêk tê"],
+ar:["طريق مخصص لوسائل النقل ويمكن السير فيه بسرعة","الطرق التي تربط المدن ببعضها","يتكون من طريق رئيسي وطريق فرعي"],
+en:["A road designed for vehicles where they can travel at high speed","Roads that connect cities","A road made of a main and secondary road"]
+},
+correct:0
+},
+
+{
+id:19,
+q:{
+ku:"ڕێگای خێرای دابەشکراو چییە؟",
+badini:"Riya bilez a dabeşkirî çi ye?",
+ar:"ما هو الطريق السريع المقسم؟",
+en:"What is a divided fast road?"
+},
+a:{
+ku:["ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتووە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆرو خێرایی سوارڕۆکان"],
+badini:["Ew rê ne ku bajar bi hev ve girêdidin","Ji rêya sereke û aliyekê pêk tê","Rêyek e ku rêyên wê li gorî cûre û leza wesayîtan hatine dabeşkirin"],
+ar:["الطرق التي تربط المدن ببعضها","يتكون من طريق رئيسي وفرعي","طريق مقسم إلى مسارات حسب نوع وسرعة المركبات"],
+en:["Roads that connect cities","It consists of a main and secondary road","A road divided into lanes according to vehicle type and speed"]
+},
+correct:2
+},
+
+{
+id:20,
+q:{
+ku:"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبەستنەوە",
+badini:"Ew rê ne ku bajar bi hev ve girêdidin",
+ar:"هي الطرق التي تربط المدن ببعضها",
+en:"These are roads that connect cities to each other"
+},
+a:{
+ku:["ڕێگای خێرا","ڕێگا دەرەکیەکان","ڕێگا خزمەت گوزاریەکان"],
+badini:["Riya bilez","Riyên derveyî","Riyên xizmetê"],
+ar:["الطرق السريعة","الطرق الخارجية","طرق الخدمات"],
+en:["Fast roads","External roads","Service roads"]
+},
+correct:1
+},
+
+{
+id:21,
+q:{
+ku:"ڕێگای ناوخۆیی چییە؟",
+badini:"Riya hundirîn çi ye?",
+ar:"ما هو الطريق الداخلي؟",
+en:"What is an internal road?"
+},
+a:{
+ku:["لە ڕێگای سەرەکی و لاوەکی پێک هاتوە","ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبەستنەوە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"],
+badini:["Ji rêya sereke û aliyekê pêk tê","Ew rê ne ku bajar bi hev ve girêdidin","Rêyek e ku rêyên wê li gorî cûre û leza wesayîtan hatine dabeşkirin"],
+ar:["يتكون من طريق رئيسي وفرعي","الطرق التي تربط المدن ببعضها","طريق مقسم حسب نوع وسرعة المركبات"],
+en:["It consists of a main and secondary road","Roads that connect cities","A road divided according to vehicle type and speed"]
+},
+correct:0
+},
+
+{
+id:22,
+q:{
+ku:"منداڵ تا تەمەنی (13) ساڵی پێویستە",
+badini:"Zarok heta temenê 13 salî divê",
+ar:"الطفل حتى عمر 13 سنة يجب أن",
+en:"A child up to the age of 13 must"
+},
+a:{
+ku:["لە کوشنەکانی پێشەوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و کورسی تایبەت بەکار بهێنێت"],
+badini:["Li kursiyên pêş rûne û kemera ewlehiyê bikar bîne","Li kursiyên paş rûne û kemera ewlehiyê bikar bîne","Li kursiyên paş rûne û kursiya taybet bikar bîne"],
+ar:["يجلس في المقاعد الأمامية ويستخدم حزام الأمان","يجلس في المقاعد الخلفية ويستخدم حزام الأمان","يجلس في المقاعد الخلفية ويستخدم مقعداً خاصاً"],
+en:["Sit in the front seats and use a seat belt","Sit in the rear seats and use a seat belt","Sit in the rear seats and use a special child seat"]
+},
+correct:2
+},
+
+{
+id:23,
+q:{
+ku:"یاسای هاتوچۆ جێبەجێ دەبێت بەسەر",
+badini:"Qanûna trafîkê li ser kê tê bicîhkirin?",
+ar:"على من يطبق قانون المرور؟",
+en:"Who does the traffic law apply to?"
+},
+a:{
+ku:["تەنها ئۆتۆمبێل و ماتۆڕسکیل","تەنها پاسکیل و پیادەو سەرنشین","تەواوی بەکارهێنەرانی ڕێگا و بەشدار بوانی هاتوچۆ لە شوفێر و سەرنشین و پیادە"],
+badini:["Tenê otomobîl û motorsîklet","Tenê bisîklet, peya û rêwî","Hemû bikarhênerên rê û beşdarên trafîkê, ajokar, rêwî û peya"],
+ar:["السيارات والدراجات النارية فقط","الدراجات الهوائية والمشاة والركاب فقط","جميع مستخدمي الطريق والمشاركين في المرور من سائقين وركاب ومشاة"],
+en:["Only cars and motorcycles","Only bicycles, pedestrians and passengers","All road users and traffic participants, including drivers, passengers and pedestrians"]
+},
+correct:2
+},
+
+{
+id:24,
+q:{
+ku:"چی کاتێک ڕێگە پێ دراوە سەرنشین بەشێکی لەشی لە ئۆتۆمبێلەکە بباتە دەرەوە؟",
+badini:"Kengê rê dide ku rêwî beşek ji laşê xwe ji otomobîlê derxe?",
+ar:"متى يسمح للراكب بإخراج جزء من جسمه من السيارة؟",
+en:"When is a passenger allowed to put part of their body outside the car?"
+},
+a:{
+ku:["تەنها لە کاتی ئاهەنگ و دەربڕینی خۆشی و شادی","تەنها لە کاتی دڵ تێکچون","هیچ کاتێک ڕێگە پێدراو نیە"],
+badini:["Tenê di cejn û şahiyê de","Tenê dema xemgînî","Tu carî destûr nayê dayîn"],
+ar:["فقط أثناء الاحتفال والتعبير عن الفرح","فقط عند الحزن","لا يسمح بذلك في أي وقت"],
+en:["Only during celebrations","Only when upset","It is not permitted at any time"]
+},
+correct:2
+},
+
+{
+id:25,
+q:{
+ku:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",
+badini:"Ma destûra ajotinê betal dibe?",
+ar:"هل تصبح رخصة القيادة ملغاة؟",
+en:"Can a driving license become invalid?"
+},
+a:{
+ku:["نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە","بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت","مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"],
+badini:["Na, destûra ajotinê betal nabe","Erê, heke ajokar yek ji mercên wergirtina destûrê ji dest bide","Destûra ajotinê piştî 5 salan betal dibe"],
+ar:["لا، لا تصبح رخصة القيادة ملغاة","نعم إذا فقد السائق أحد شروط الحصول على الرخصة","تلغى رخصة القيادة بعد 5 سنوات"],
+en:["No, a driving license does not become invalid","Yes, if the driver loses one of the conditions required to obtain the license","A driving license becomes invalid after 5 years"]
+},
+correct:1
+},
+
+{
+id:26,
+q:{
+ku:"هەر کەسێک بە کەمتەر خەمی لێ بخوڕێت و ببێتە هۆکاری مردنی کەسێک یان پەککەوتنی زیاتر لە کەسێک یان مردنی زیاتر لە کەسێک سزا دەدرێت بە",
+badini:"Kesê ku bi bêperçewî ajot û bû sedema mirina kesekê an birîndarbûna gelek kesan dê bê cezakirin bi",
+ar:"كل من يقود بإهمال ويتسبب في وفاة شخص أو إعاقة أكثر من شخص يعاقب بـ",
+en:"Anyone who drives negligently and causes death or serious injury is punished with"
+},
+a:{
+ku:["سزای دارایی","بەندکردن","بەندکردن و سزای دارایی"],
+badini:["Cezayê darayî","Girtin","Girtin û cezayê darayî"],
+ar:["غرامة مالية","السجن","السجن والغرامة المالية"],
+en:["A financial penalty","Imprisonment","Imprisonment and a financial penalty"]
+},
+correct:2
+},
+
+{
+id:27,
+q:{
+ku:"کام لەم وڵامانە سەبارەت بە یاسای هاتوچۆ ڕاستن؟",
+badini:"Kîjan ji van bersivan derbarê qanûna trafîkê de rast e?",
+ar:"أي من الإجابات التالية صحيحة بشأن قانون المرور؟",
+en:"Which of these statements about traffic law is correct?"
+},
+a:{
+ku:["دروست بونی ڕوداوی هاتوچۆ لەسەر هێڵی پەڕینەوە یاخود یارمەتی نەدانی کەسی زیان لەکەوتو نەگەیاندنی بۆ نەخۆشخانە یاخود ئاگادار نەکردنەوەی لایەنە پەیوەندیدارەکان بە بارودۆخی توند کردنی سزا دادەنرێن","دروست بونی ڕوداوی هاتوچۆ دور لە هێڵی پەڕینەوە یاخود یارمەتی دانی کەسی زیان لێکەوتو بە گەیاندنی بۆ نەخۆشخانە یاخود ئاگادار کردەوەی لایەنە پەیوەندی دارەکان بە بارودۆخی کەمکردنەوەی سزا دادەنرێن","هەردوو وڵامی سەرەوە ڕاستن"],
+badini:["Qewimîna qezayeke trafîkê li ser xeta derbasbûnê, an ne alîkariya kesê birîndar û neşandina wî bo nexweşxaneyê, an ne agahdarkirina aliyên peywendîdar, sedema tundkirina ceza ye","Qewimîna qezayê dûr ji xeta derbasbûnê û alîkariya birîndar û agahdarkirina aliyên peywendîdar sedema kêmkirina ceza ye","Her du bersivên jor rast in"],
+ar:["وقوع حادث مرور على خط العبور أو عدم مساعدة المصاب ونقله إلى المستشفى أو عدم إبلاغ الجهات المختصة يعد ظرفاً مشدداً للعقوبة","وقوع الحادث بعيداً عن خط العبور ومساعدة المصاب وإبلاغ الجهات المختصة يعد ظرفاً مخففاً للعقوبة","كلتا الإجابتين صحيحتان"],
+en:["Causing an accident on a crossing line or failing to help the injured person or notify authorities is an aggravating circumstance","An accident away from the crossing line, helping the injured person and notifying authorities are mitigating circumstances","Both answers above are correct"]
+},
+correct:2
+},
+
+{
+id:28,
+q:{
+ku:"هەر کەسێک هەڕەشە یان سوکایەتی بکات بە پۆلیسی هاتوچۆ سزا دەدرێت بە",
+badini:"Kesê ku gef an heqaretê bike li polîsê trafîkê dê bê cezakirin bi",
+ar:"كل من يهدد أو يهين شرطي المرور يعاقب بـ",
+en:"Anyone who threatens or insults a traffic police officer is punished with"
+},
+a:{
+ku:["بەندکردن","سزای دارایی","بەندکردن و سزای دارایی"],
+badini:["Girtin","Cezayê darayî","Girtin û cezayê darayî"],
+ar:["السجن","غرامة مالية","السجن والغرامة المالية"],
+en:["Imprisonment","A financial penalty","Imprisonment and a financial penalty"]
+},
+correct:0
+},
+
+{
+id:29,
+q:{
+ku:"هەرکەسێک هێرش بکاتە سەر پۆلیسی هاتوچۆ",
+badini:"Kesê ku êrîşî polîsê trafîkê bike",
+ar:"كل من يعتدي على شرطي المرور",
+en:"Anyone who attacks a traffic police officer"
+},
+a:{
+ku:["سزای دارایی","بەندکردن زیاتر نەبێت لە 3 ساڵ","بەندکردن و سزای دارایی"],
+badini:["Cezayê darayî","Girtinê ku ji 3 salan zêdetir nebe","Girtin û cezayê darayî"],
+ar:["غرامة مالية","السجن مدة لا تزيد على 3 سنوات","السجن والغرامة المالية"],
+en:["A financial penalty","Imprisonment for no more than 3 years","Imprisonment and a financial penalty"]
+},
+correct:1
+},
+
+{
+id:30,
+q:{
+ku:"هەرکەسێک هێرش بکاتە سەر ئەفسەری هاتوچۆ سزا دەدرێت بە",
+badini:"Kesê ku êrîşî efserê trafîkê bike dê bê cezakirin bi",
+ar:"كل من يعتدي على ضابط المرور يعاقب بـ",
+en:"Anyone who attacks a traffic officer is punished with"
+},
+a:{
+ku:["سزای دارایی","بەندکردن زیاتر نەبێت لە 5 ساڵ","بەندکردن و سزای دارایی"],
+badini:["Cezayê darayî","Girtinê ku ji 5 salan zêdetir nebe","Girtin û cezayê darayî"],
+ar:["غرامة مالية","السجن مدة لا تزيد على 5 سنوات","السجن والغرامة المالية"],
+en:["A financial penalty","Imprisonment for no more than 5 years","Imprisonment and a financial penalty"]
+},
+correct:1
+},
+
+{
+id:31,
+q:{
+ku:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
+badini:"Hêmayên bingehîn ên çêbûna agirê çi ne?",
+ar:"ما هي العناصر الأساسية لحدوث الحريق؟",
+en:"What are the main elements necessary for fire?"
+},
+a:{
+ku:["گەرمی و ئۆکسجین و ماددە","بەنزین","گاز"],
+badini:["Germî, oksîjen û madde","Benzîn","Gaz"],
+ar:["الحرارة والأكسجين والمادة","البنزين","الغاز"],
+en:["Heat, oxygen and fuel","Petrol","Gas"]
+},
+correct:0
+},
+
+{
+id:32,
+q:{
+ku:"لەکاتی کوژاندنەوەی ئاگر پێویستە بوەستین لە",
+badini:"Dema ku agir tê vemirandin divê em li ku derê rawestin?",
+ar:"عند إطفاء الحريق يجب أن نقف",
+en:"When extinguishing a fire, we should stand"
+},
+a:{
+ku:["ڕو لەو شوێنەی کە بایەکەی لێوە دێت","شانمان دەکەینە باکە","بە ئاڕاستەی با، واتا پشت لە باوو ڕو لە ئاگرەکە"],
+badini:["Ber bi cihê ku ba jê tê","Milê xwe bidin ba","Li aliyê ba, bi piştê xwe li ba û rû li agir"],
+ar:["باتجاه مصدر الرياح","نجعل الرياح خلفنا","مع اتجاه الريح أي والريح خلفنا ووجهنا نحو النار"],
+en:["Facing where the wind comes from","With the wind at our side","In the direction of the wind, with the wind behind us and facing the fire"]
+},
+correct:2
+},
+
+{
+id:33,
+q:{
+ku:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری (A) ڕەنگی سەوز ئەمانە لەخۆ دەگرێت",
+badini:"Di polê A yê agirkujê de, ev madde tê de ne",
+ar:"تصنيف مواد إطفاء الحريق من النوع A يشمل",
+en:"Class A fire materials include"
+},
+a:{
+ku:["کاغەزو تەختەو قوماش","ئامێرە ئەلیکترۆنی و کارەباییەکان","نەوت و گازوایل و بەنزین"],
+badini:["Kaxez, dar û qumaş","Amûrên elektronîk û elektrîkî","Neft, gazoyl û benzîn"],
+ar:["الورق والخشب والقماش","الأجهزة الإلكترونية والكهربائية","النفط والديزل والبنزين"],
+en:["Paper, wood and cloth","Electronic and electrical equipment","Oil, diesel and petrol"]
+},
+correct:0
+},
+
+{
+id:34,
+q:{
+ku:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری ئاو جیادەکرێتەوە بە ڕەنگی",
+badini:"Agirkuskerê destan yê avê bi rengê çi tê naskirin?",
+ar:"تتميز مطفأة الحريق اليدوية من نوع الماء باللون",
+en:"A water-type hand fire extinguisher is identified by the color"
+},
+a:{
+ku:["شین","سوور","سەوز"],
+badini:["Şîn","Sor","Kesk"],
+ar:["الأزرق","الأحمر","الأخضر"],
+en:["Blue","Red","Green"]
+},
+correct:1
+},
+
+{
+id:35,
+q:{
+ku:"لە وەرزی گەرمادا شۆفێری تەنکەری غازی شل پێویستە کاری بارکردن و بەتاڵکردنەوە ئەنجەم بدات لە",
+badini:"Di demsala germ de, ajokarê tankera gazê divê barkirin û vala kirin li",
+ar:"في فصل الصيف يجب على سائق صهريج الغاز المسال القيام بالتحميل والتفريغ في",
+en:"In hot weather, an LPG tanker driver should load and unload during"
+},
+a:{
+ku:["شەو","ڕۆژ","هەر کاتێک بێت گرینگ نیە"],
+badini:["Şevê","Rojê","Her dem, girîng nîne"],
+ar:["الليل","النهار","أي وقت، لا يهم"],
+en:["Night","Day","Any time, it does not matter"]
+},
+correct:0
+},
+
+{
+id:36,
+q:{
+ku:"ژمارە تەڵەفونی پۆلیسی فریا کەوتن چەندە؟",
+badini:"Hejmara telefona polîsê acîl çend e?",
+ar:"ما رقم هاتف شرطة الطوارئ؟",
+en:"What is the emergency police telephone number?"
+},
+a:{
+ku:["188","440","104"],
+badini:["188","440","104"],
+ar:["188","440","104"],
+en:["188","440","104"]
+},
+correct:2
+},
+
+{
+id:37,
+q:{
+ku:"ژمارە تەلەفونی بەرگری شارستانی چەندە؟",
+badini:"Hejmara telefona parastina sivîl çend e?",
+ar:"ما رقم هاتف الدفاع المدني؟",
+en:"What is the civil defense telephone number?"
+},
+a:{
+ku:["440","115","122"],
+badini:["440","115","122"],
+ar:["440","115","122"],
+en:["440","115","122"]
+},
+correct:1
+},
+
+{
+id:38,
+q:{
+ku:"ژمارە تەلەفونی فریا گوزاری(ئەمبوڵانس) چەندە؟",
+badini:"Hejmara telefona ambulansê çend e?",
+ar:"ما رقم هاتف الإسعاف؟",
+en:"What is the ambulance telephone number?"
+},
+a:{
+ku:["122","104","188"],
+badini:["122","104","188"],
+ar:["122","104","188"],
+en:["122","104","188"]
+},
+correct:0
+},
+
+{
+id:39,
+q:{
+ku:"ژمارە تەلەفونی پۆلیسی هاتوچۆ (مرور) چەندە؟",
+badini:"Hejmara telefona polîsê trafîkê çend e?",
+ar:"ما رقم هاتف شرطة المرور؟",
+en:"What is the traffic police telephone number?"
+},
+a:{
+ku:["188","440","هەردوو وڵامەکە ڕاستن"],
+badini:["188","440","Her du bersiv rast in"],
+ar:["188","440","كلا الرقمين صحيحان"],
+en:["188","440","Both answers are correct"]
+},
+correct:2
+},
+
+{
+id:40,
+q:{
+ku:"یەکێک لە نیشانەکانی ئەگەری ئاگر کەوتنەوەی ئۆتۆمبێل بریتیە لە",
+badini:"Yek ji nîşanên ihtîmala şewitîna otomobîlê",
+ar:"من علامات احتمال اشتعال السيارة",
+en:"One sign that a car may catch fire is"
+},
+a:{
+ku:["بەرزبونەوەی پلەی گەرمی بزوێنەر","لەرزینی سوکان","کەمبونی ئاوی فڵچەکان"],
+badini:["Bilindbûna germa motora","Lerizîna volanê","Kêmbûna ava firçeyan"],
+ar:["ارتفاع درجة حرارة المحرك","اهتزاز عجلة القيادة","نقصان ماء المساحات"],
+en:["An increase in engine temperature","Steering wheel vibration","Low windshield washer fluid"]
+},
+correct:0
+},
+
+{
+id:41,
+q:{
+ku:"تانکەری گواستنەوەی غازی شل پێویستە پارک بکرێت",
+badini:"Tankerê veguhastina gazê divê li ku derê park bibe?",
+ar:"يجب إيقاف صهريج نقل الغاز المسال",
+en:"An LPG transport tanker should be parked"
+},
+a:{
+ku:["لەبەر هەتاو","لە گەراجی کراوە کە هەوا گۆڕکێی هەبێت","لە گەراجی داخراودا"],
+badini:["Di ber tavê de","Di garajeke vekirî de ku hewaya baş hebe","Di garajeke girtî de"],
+ar:["تحت أشعة الشمس","في مرآب مفتوح جيد التهوية","في مرآب مغلق"],
+en:["In direct sunlight","In an open, well-ventilated garage","In a closed garage"]
+},
+correct:1
+},
+
+{
+id:42,
+q:{
+ku:"لە کاتی بەتاڵکردنی غازی شل پێویستە دوور بێت لە هەر سەرچاوەیەکی گەرمی بە دوریەک کەمترنەبێت لە",
+badini:"Dema vala kirina gazê divê ji her çavkaniya germiyê bi dûrahiya ne kêmtir ji",
+ar:"عند تفريغ الغاز المسال يجب الابتعاد عن أي مصدر للحرارة بمسافة لا تقل عن",
+en:"When unloading LPG, it must be kept away from any heat source by at least"
+},
+a:{
+ku:["2 مەتر","5 مەتر","8 مەتر"],
+badini:["2 metre","5 metre","8 metre"],
+ar:["2 متر","5 أمتار","8 أمتار"],
+en:["2 meters","5 meters","8 meters"]
+},
+correct:2
 }
 
 ];
-
-
-/* =========================
-   LANGUAGE SYSTEM
-========================= */
-
-let currentLanguage="ku";
-
-const languageNames={
-ku:"کوردی سۆرانی",
-badini:"کوردی بادینی",
-ar:"العربية",
-en:"English"
-};
-
-function setLanguage(language){
-
-currentLanguage=language;
-
-document.getElementById("languages").style.display="none";
-document.getElementById("quiz").style.display="block";
-
-if(language==="ar"){
-document.documentElement.dir="rtl";
-document.documentElement.lang="ar";
-}
-else if(language==="ku" || language==="badini"){
-document.documentElement.dir="rtl";
-document.documentElement.lang="ku";
-}
-else{
-document.documentElement.dir="ltr";
-document.documentElement.lang="en";
-}
-
-showQuestion();
-}
-
-
-/* =========================
-   SHOW QUESTION
-========================= */
-
-let currentQuestion=0;
-
-function showQuestion(){
-
-const item=questions[currentQuestion][currentLanguage];
-
-document.getElementById("question").textContent=item.q;
-
-const answers=document.getElementById("answers");
-
-answers.innerHTML="";
-
-item.a.forEach((answer,index)=>{
-
-const button=document.createElement("button");
-
-button.className="answer";
-
-button.textContent=answer;
-
-button.onclick=function(){
-
-if(index===questions[currentQuestion].correct){
-button.style.background="#b9f6c3";
-}
-else{
-button.style.background="#222";
-button.style.color="white";
-}
-
-};
-
-answers.appendChild(button);
-
-});
-
-}
-
-</script>
-
-</body>
-</html>
