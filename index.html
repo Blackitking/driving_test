@@ -1,733 +1,1644 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تاقیکردنەوەی تیۆری مۆڵەتی شوفێری</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  min-height:100vh;
+  color:#111827;
+}
+
+.container{
+  width:94%;
+  max-width:700px;
+  margin:20px auto;
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.hidden{
+  display:none!important;
+}
+
+h1,h2,h3{
+  text-align:center;
+}
+
+.logo{
+  text-align:center;
+  font-size:55px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#64748b;
+  line-height:1.8;
+}
+
+.primary-btn{
+  width:100%;
+  border:0;
+  padding:16px;
+  border-radius:15px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+.primary-btn:hover{
+  background:#1d4ed8;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  border:2px solid #cbd5e1;
+  border-radius:14px;
+  font-size:17px;
+  outline:none;
+  margin-top:10px;
+}
+
+input:focus{
+  border-color:#2563eb;
+}
+
+.info{
+  line-height:2;
+  background:#eff6ff;
+  padding:15px;
+  border-radius:15px;
+  margin-top:20px;
+}
+
+.contact{
+  text-align:center;
+  margin-top:15px;
+  line-height:2;
+}
+
+.contact a{
+  text-decoration:none;
+  font-weight:bold;
+  margin:0 7px;
+}
+
+.whatsapp{
+  color:#16a34a;
+}
+
+.viber{
+  color:#7c3aed;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.timer{
+  background:#fee2e2;
+  color:#dc2626;
+  padding:10px 15px;
+  border-radius:13px;
+  font-size:20px;
+  font-weight:bold;
+  min-width:80px;
+  text-align:center;
+}
+
+.progress{
+  height:9px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:15px;
+}
+
+.progress-bar{
+  height:100%;
+  background:#2563eb;
+  width:0%;
+  transition:.3s;
+}
+
+.question-numbers{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:20px;
+  justify-content:center;
+}
+
+.qnum{
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  background:#cbd5e1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.qnum.current{
+  outline:3px solid #2563eb;
+}
+
+.qnum.correct{
+  background:#16a34a;
+  color:white;
+}
+
+.qnum.wrong{
+  background:#000;
+  color:white;
+}
+
+.question{
+  font-size:21px;
+  font-weight:bold;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+
+.answers{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.answer-btn{
+  width:100%;
+  text-align:right;
+  padding:16px;
+  border:2px solid #d1d5db;
+  border-radius:15px;
+  background:#f8fafc;
+  font-size:17px;
+  cursor:pointer;
+  line-height:1.6;
+}
+
+.answer-btn:hover{
+  border-color:#2563eb;
+  background:#eff6ff;
+}
+
+.answer-btn.selected{
+  border-color:#2563eb;
+  background:#dbeafe;
+}
+
+.answer-btn.correct-answer{
+  border-color:#16a34a;
+  background:#dcfce7;
+}
+
+.answer-btn.wrong-answer{
+  border-color:#dc2626;
+  background:#fee2e2;
+}
+
+.result{
+  text-align:center;
+}
+
+.result-icon{
+  font-size:70px;
+}
+
+.score{
+  font-size:40px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.pass{
+  color:#16a34a;
+}
+
+.fail{
+  color:#dc2626;
+}
+
+.wrong-list{
+  margin-top:25px;
+  text-align:right;
+}
+
+.wrong-item{
+  background:#f8fafc;
+  border-right:5px solid #dc2626;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:12px;
+  line-height:1.9;
+}
+
+.small{
+  color:#64748b;
+  font-size:14px;
+}
+
+@media(max-width:500px){
+
+  .card{
+    padding:18px;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+  .answer-btn{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- WELCOME -->
+<section id="welcomeScreen" class="card">
+
+  <div class="logo">🚘</div>
+
+  <h1>بەخێر بێیت بۆ تاقی کردنەوەی تیۆری مۆڵەتی شوفێری</h1>
+
+  <div class="info">
+
+    <p>
+      <strong>خاوەنی سایتی تاقی کردنەوە:</strong>
+      لاوە سعدللە
+    </p>
+
+    <p>
+      <strong>پرسیارەکان وەرگیراون لە مامۆستا:</strong>
+      باوان ئازاد
+    </p>
+
+    <p>
+      <strong>کێشەیەکت هەبوو لە سایتەکە:</strong>
+      تکایە ئاگادارمان بکەرەوە (7515176569)
+    </p>
+
+  </div>
+
+  <div class="contact">
+
+    <a
+      class="whatsapp"
+      href="https://wa.me/9647515176569"
+      target="_blank">
+      🟢 WhatsApp
+    </a>
+
+    <a
+      class="viber"
+      href="viber://chat?number=%2B9647515176569">
+      🟣 Viber
+    </a>
+
+  </div>
+
+  <button
+    class="primary-btn"
+    onclick="showNameScreen()">
+    دەست پێکردن
+  </button>
+
+</section>
+
+
+<!-- NAME -->
+<section id="nameScreen" class="card hidden">
+
+  <div class="logo">👤</div>
+
+  <h2>ناوی سیانی بنووسە</h2>
+
+  <p class="subtitle">
+    تکایە ناوی سیانی خۆت بنووسە بۆ دەستپێکردنی تاقیکردنەوە.
+  </p>
+
+  <input
+    id="fullName"
+    type="text"
+    autocomplete="name"
+    placeholder="ناوی سیانی"
+  >
+
+  <button
+    class="primary-btn"
+    onclick="startQuiz()">
+    دەست پێکردنی تاقیکردنەوە
+  </button>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quizScreen" class="card hidden">
+
+  <div class="topbar">
+
+    <strong id="questionCounter"></strong>
+
+    <div class="timer" id="timer">
+      60
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div
+      class="progress-bar"
+      id="progressBar">
+    </div>
+  </div>
+
+  <div
+    class="question-numbers"
+    id="questionNumbers">
+  </div>
+
+  <div
+    class="question"
+    id="questionText">
+  </div>
+
+  <div
+    class="answers"
+    id="answers">
+  </div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="resultScreen" class="card hidden">
+
+  <div class="result">
+
+    <div
+      class="result-icon"
+      id="resultIcon">
+    </div>
+
+    <h1 id="resultTitle"></h1>
+
+    <div
+      class="score"
+      id="finalScore">
+    </div>
+
+    <p id="resultDetails"></p>
+
+    <div
+      class="wrong-list"
+      id="wrongList">
+    </div>
+
+    <button
+      class="primary-btn"
+      onclick="newTest()"
+      id="newTestBtn">
+      تاقیکردنەوەی نوێ
+    </button>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   دەقی سۆرانی
+========================================================= */
+
+const t = {
+
+  question:"پرسیار",
+  of:"لە",
+
+  passed:"پیرۆزە دەرچویت 🎉",
+  failed:"دەرنەچویت ❌",
+
+  correct:"وەڵامی ڕاست",
+  wrong:"وەڵامی هەڵە",
+
+  timeout:"کات تەواو بوو",
+
+  yourAnswer:"وەڵامی تۆ",
+
+  score:"نمرە",
+
+  correctCount:"وەڵامی ڕاست",
+  wrongCount:"وەڵامی هەڵە",
+
+  newTest:"تاقیکردنەوەی نوێ",
+
+  noAnswer:"وەڵام نەدراوە"
+
+};
+
+
+/* =========================================================
+   42 QUESTIONS
+========================================================= */
+
 const questions = [
 
 {
 id:1,
-q:{
-ku:"هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",
-badini:"Amadeyeke çerxdar e ku bi hêza bedenî an mekanîkî dimeşe an tê kişandin",
-ar:"مركبة ذات عجلات تسير أو تُسحب بقوة جسمانية أو ميكانيكية",
-en:"A wheeled vehicle that moves or is pulled by physical or mechanical power"
-},
-a:{
-ku:["سوارڕۆ","ئۆتۆمبێل","شەمەندەفەر"],
-badini:["Bisîklet","Otomobîl","Tren"],
-ar:["دراجة","سيارة","قطار"],
-en:["Bicycle","Car","Train"]
-},
+q:"هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",
+a:[
+"سوارڕۆ",
+"ئۆتۆمبێل",
+"شەمەندەفەر"
+],
 correct:0
 },
 
 {
 id:2,
-q:{
-ku:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
-badini:"Amadeyeke çerxdar e ku bi hêza bedenî dimeşe",
-ar:"مركبة ذات عجلات تسير بالقوة الجسمانية",
-en:"A wheeled vehicle that moves by physical power"
-},
-a:{
-ku:["پاسکیل","ماتۆڕسکیل","سکۆتەر"],
-badini:["Bisîklet","Motorsîklet","Skuter"],
-ar:["دراجة هوائية","دراجة نارية","سكوتر"],
-en:["Bicycle","Motorcycle","Scooter"]
-},
+q:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
+a:[
+"پاسکیل",
+"ماتۆڕسکیل",
+"سکۆتەر"
+],
 correct:0
 },
 
 {
 id:3,
-q:{
-ku:"چۆن پاسکیل بۆ منداڵەکەت هەڵدەبژێریت؟",
-badini:"Tu çawa bisîkletekê ji bo zarokê xwe hilbijêrî?",
-ar:"كيف تختار الدراجة الهوائية لطفلك؟",
-en:"How do you choose a bicycle for your child?"
-},
-a:{
-ku:[
+q:"چۆن پاسکیل بۆ منداڵەکەت هەڵدەبژێریت؟",
+a:[
 "بەپێی حەزو داواکاری منداڵەکە",
 "بە شێوەیەک بتوانێت بۆ چەند ساڵێک بەکاری بهێنێت",
 "بە پێی قەبارەو چوار چێوەی پاسکیلەکە،لەگەڵ باڵاو توانای منداڵەکە بگونجێت"
 ],
-badini:[
-"Li gorî hez û daxwazên zarokê",
-"Bi awayekî ku ew bikaribe çend salan bikar bîne",
-"Li gorî mezinahî û çarçoveya bisîkletê, bi dirêjahiya beden û hêza zarokê re li hev bike"
-],
-ar:[
-"حسب رغبة الطفل وطلبه",
-"بطريقة يمكنه من خلالها استخدامها لعدة سنوات",
-"حسب حجم وهيكل الدراجة بما يتناسب مع طول وقوة الطفل"
-],
-en:[
-"According to the child's wishes",
-"In a way that allows the child to use it for several years",
-"According to the bicycle size and frame, matching the child's height and ability"
-]
-},
 correct:2
 },
 
 {
 id:4,
-q:{
-ku:"ئامێرێکی گواستنەوەیە دوو یان سێ تایەی هەیە بەهێزی میکانیکی پاڵی پێوە دەنرێت",
-badini:"Amadeyeke veguhestinê ye ku du an sê teker hene û bi hêza mekanîkî dimeşe",
-ar:"وسيلة نقل لها عجلتان أو ثلاث عجلات وتتحرك بقوة ميكانيكية",
-en:"A means of transport with two or three wheels powered mechanically"
-},
-a:{
-ku:["پاسکیل","ماتۆڕسکیل","سوارڕۆ"],
-badini:["Bisîklet","Motorsîklet","Sewar"],
-ar:["دراجة هوائية","دراجة نارية","مركبة نقل"],
-en:["Bicycle","Motorcycle","Vehicle"]
-},
+q:"ئامێرێکی گواستنەوەیە دوو یان سێ تایەی هەیە بەهێزی میکانیکی پاڵی پێوە دەنرێت",
+a:[
+"پاسکیل",
+"ماتۆڕسکیل",
+"سوارڕۆ"
+],
 correct:1
 },
 
 {
 id:5,
-q:{
-ku:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
-badini:"Sewareke ji bo veguhastina kesan li hember kirê hatiye amadekirin",
-ar:"مركبة مخصصة لنقل الأشخاص مقابل أجرة",
-en:"A vehicle designed to transport people for a fare"
-},
-a:{
-ku:["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"],
-badini:["Otomobîla taybet","Kamyon","Taksî"],
-ar:["سيارة خاصة","شاحنة","تاكسي"],
-en:["Private car","Truck","Taxi"]
-},
+q:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
+a:[
+"ئۆتۆمبێلی تایبەت",
+"ئۆتۆمبێلی بارهەڵگر",
+"تەکسی"
+],
 correct:2
 },
 
 {
 id:6,
-q:{
-ku:"چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",
-badini:"Kengê divê ajokarê taksiyê alîkariya rêwiyan bike?",
-ar:"متى يجب على سائق سيارة الأجرة مساعدة الراكب؟",
-en:"When should a taxi driver help a passenger?"
-},
-a:{
-ku:["کاتی سەرکەوتن","کاتی دابەزین","کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"],
-badini:["Dema siwarbûnê","Dema daketinê","Dema rêwî kal, nexweş an xwedî pêdiviyên taybet be"],
-ar:["عند الصعود","عند النزول","عندما يكون الراكب مسناً أو مريضاً أو من ذوي الاحتياجات الخاصة"],
-en:["When getting in","When getting out","When the passenger is elderly, ill, or has special needs"]
-},
+q:"چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",
+a:[
+"کاتی سەرکەوتن",
+"کاتی دابەزین",
+"کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"
+],
 correct:2
 },
 
 {
 id:7,
-q:{
-ku:"سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",
-badini:"Derbarê rêwiyê taksiyê de kîjan ji van rast e?",
-ar:"أي من العبارات التالية صحيحة بشأن راكب سيارة الأجرة؟",
-en:"Which of the following is correct about a taxi passenger?"
-},
-a:{
-ku:["مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات","مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە","هەردوو وڵامەکەی سەرەوە ڕاستن"],
-badini:["Mafê wî heye bi otomobîlekî ewle gerê","Mafê wî heye heywanê xwe bi xwe re bibe hundirê taksiyê","Her du bersivên jor rast in"],
-ar:["من حقه أن يسافر بسيارة آمنة","من حقه أن يصطحب حيوانه داخل سيارة الأجرة","كلتا الإجابتين السابقتين صحيحتان"],
-en:["They have the right to travel in a safe vehicle","They have the right to take their animal into the taxi","Both answers above are correct"]
-},
+q:"سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",
+a:[
+"مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات",
+"مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە",
+"هەردوو وڵامەکەی سەرەوە ڕاستن"
+],
 correct:0
 },
 
 {
 id:8,
-q:{
-ku:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",
-badini:"Sewareke mezin e ji bo veguhastina hejmareke diyarkirî ji rêwiyan",
-ar:"مركبة كبيرة مخصصة لنقل عدد محدد من الركاب",
-en:"A large vehicle designed to carry a specified number of passengers"
-},
-a:{
-ku:["تەکسی","پاس","بارهەڵگر"],
-badini:["Taksî","Otobûs","Kamyon"],
-ar:["تاكسي","حافلة","شاحنة"],
-en:["Taxi","Bus","Truck"]
-},
+q:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",
+a:[
+"تەکسی",
+"پاس",
+"بارهڵگر"
+],
 correct:1
 },
 
 {
 id:9,
-q:{
-ku:"لۆری بارهەڵگرێکە تەرخان کراوە بۆ",
-badini:"Lory ji bo çi hatiye tayînkirin?",
-ar:"الشاحنة مخصصة لـ",
-en:"A lorry is designed for"
-},
-a:{
-ku:["گواستنەوەی کەل و پەل","گواستنەوەی کەرەستەو پێداویستی بیناسازی","گواستنەوەی سوتەمەنی و تۆز و پاودەر"],
-badini:["Veguhastina mal û kelûpel","Veguhastina materyal û pêdiviyên avahiyê","Veguhastina sotemenî û gaz û toz"],
-ar:["نقل البضائع والأمتعة","نقل مواد ومستلزمات البناء","نقل الوقود والمواد المسحوقة"],
-en:["Transporting goods and luggage","Transporting construction materials and supplies","Transporting fuel and powdered materials"]
-},
+q:"لۆری بارهەڵگرێکە تەرخان کراوە بۆ",
+a:[
+"گواستنەوەی کەل و پەل",
+"گواستنەوەی کەرەستەو پێداویستی بیناسازی",
+"گواستنەوەی سوتەمەنی و تۆز و پاودەر"
+],
 correct:0
 },
 
 {
 id:10,
-q:{
-ku:"بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",
-badini:"Barkêşek ji bo veguhastina materyal û pêdiviyên avahiyê hatiye tayînkirin",
-ar:"شاحنة مخصصة لنقل مواد ومستلزمات البناء",
-en:"A truck designed to transport construction materials and supplies"
-},
-a:{
-ku:["لۆری","گەڵابە","تەنکەر"],
-badini:["Lory","Gelabe","Tanker"],
-ar:["شاحنة لوري","شاحنة بناء","صهريج"],
-en:["Lorry","Construction truck","Tanker"]
-},
+q:"بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",
+a:[
+"لۆری",
+"گەڵابە",
+"تەنکەر"
+],
 correct:1
 },
 
 {
 id:11,
-q:{
-ku:"پاسی گواستنەوەی گشتی بەکاردێت بۆ",
-badini:"Otobûsa veguhastina giştî ji bo çi tê bikaranîn?",
-ar:"تستخدم حافلة النقل العام لـ",
-en:"Public transport buses are used for"
-},
-a:{
-ku:["گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان","گواستنەوەی منداڵان و قوتابیان","گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"],
-badini:["Veguhastina gerokên cihên geştê","Veguhastina zarok û xwendekaran","Veguhastina rêwiyan di hundir û derveyî bajaran de"],
-ar:["نقل السياح إلى الأماكن السياحية","نقل الأطفال والطلاب","نقل الركاب داخل المدن وخارجها"],
-en:["Transporting tourists to tourist places","Transporting children and students","Transporting passengers inside and outside cities"]
-},
+q:"پاسی گواستنەوەی گشتی بەکاردێت بۆ",
+a:[
+"گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان",
+"گواستنەوەی منداڵان و قوتابیان",
+"گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"
+],
 correct:2
 },
 
 {
 id:12,
-q:{
-ku:"لە چی بارودۆخێکدا لێخوڕینی ئۆتۆمبێل بە عەرەبانەوە مەترسیدارە؟",
-badini:"Di kîjan rewşê de ajotina otomobîlê bi erebanê re xeter e?",
-ar:"في أي حالة تكون قيادة السيارة مع المقطورة خطرة؟",
-en:"In which situation is driving a car with a trailer dangerous?"
-},
-a:{
-ku:["لەکاتی بونی بەفر و خلیسکی سەر ڕێگا","لەکاتی بونی گەرمای زۆردا","لەکاتی بونی هەورێکی زۆردا"],
-badini:["Dema berf û şilbûna rê hebe","Dema germiya zêde hebe","Dema ewrê zêde hebe"],
-ar:["عند وجود الثلج وانزلاق الطريق","عند وجود حرارة شديدة","عند وجود الكثير من الغيوم"],
-en:["When there is snow and a slippery road","During very hot weather","When there are many clouds"]
-},
+q:"لە چی بارودۆخێکدا لێخوڕینی ئۆتۆمبێل بە عەرەبانەوە مەترسیدارە؟",
+a:[
+"لەکاتی بونی بەفر و خلیسکی سەر ڕێگا",
+"لەکاتی بونی گەرمای زۆردا",
+"لەکاتی بونی هەورێکی زۆردا"
+],
 correct:0
 },
 
 {
 id:13,
-q:{
-ku:"لەکاتی بەستنی عەرەبانە یان کەرەڤانە بە ئۆتۆمبێلەکەتەوە نابێت",
-badini:"Dema erebe an karavan bi otomobîla te ve girêdayî be, divê nebe",
-ar:"عند ربط مقطورة أو كرفان بسيارتك يجب ألا",
-en:"When a trailer or caravan is attached to your car, you must not"
-},
-a:{
-ku:["بە خێرایی زیاتر لە 30 کم بڕوات","بە خێرایی زیاتر لە 80 کم بڕوات","بە خێرایی کەمتر لە 80 کم بڕوات"],
-badini:["Bi leza zêdetir ji 30 km biçî","Bi leza zêdetir ji 80 km biçî","Bi leza kêmtir ji 80 km biçî"],
-ar:["تسير بسرعة أكثر من 30 كم","تسير بسرعة أكثر من 80 كم","تسير بسرعة أقل من 80 كم"],
-en:["Drive faster than 30 km/h","Drive faster than 80 km/h","Drive slower than 80 km/h"]
-},
+q:"لەکاتی بەستنی عەرەبانە یان کەرەڤانە بە ئۆتۆمبێلەکەتەوە نابێت",
+a:[
+"بە خێرایی زیاتر لە 30 کم بڕوات",
+"بە خێرایی زیاتر لە 80 کم بڕوات",
+"بە خێرایی کەمتر لە 80 کم بڕوات"
+],
 correct:1
 },
 
 {
 id:14,
-q:{
-ku:"لە کاتی ڕاکێشانی ئۆتۆمبێل",
-badini:"Dema kişandina otomobîlekê",
-ar:"عند سحب سيارة",
-en:"When towing a car"
-},
-a:{
-ku:["نابێت بە خێرایی زیاتر لە 30 کم بڕوات","نابێت بە خێرایی کەمتر لە 30 کم بڕوات","پێویستە بە خێرایی 30 کم بڕوات"],
-badini:["Divê bi leza zêdetir ji 30 km neçe","Divê bi leza kêmtir ji 30 km neçe","Divê bi leza 30 km here"],
-ar:["يجب ألا تسير بسرعة أكثر من 30 كم","يجب ألا تسير بسرعة أقل من 30 كم","يجب أن تسير بسرعة 30 كم"],
-en:["It must not travel faster than 30 km/h","It must not travel slower than 30 km/h","It must travel at 30 km/h"]
-},
+q:"لە کاتی ڕاکێشانی ئۆتۆمبێل",
+a:[
+"نابێت بە خێرایی زیاتر لە 30 کم بڕوات",
+"نابێت بە خێرایی کەمتر لە 30 کم بڕوات",
+"پێویستە بە خێرایی 30 کم بڕوات"
+],
 correct:0
 },
 
 {
 id:15,
-q:{
-ku:"ڕێڕەوی ناوەڕاست بەکاردێت بۆ",
-badini:"Rêya navîn ji bo çi tê bikaranîn?",
-ar:"يستخدم المسار الأوسط لـ",
-en:"The middle lane is used for"
-},
-a:{
-ku:["لێخوڕین بە ئەوپەڕی خێرایی ڕێگە پێدراو","لێخوڕین بە کەمترین خێرایی ڕێگە پێدراو","لێخوڕینی ڕاستەو ڕاست"],
-badini:["Ajotina bi herî zêde leza destûrdar","Ajotina bi kêmtirîn leza destûrdar","Ajotina rasterast"],
-ar:["القيادة بأقصى سرعة مسموحة","القيادة بأقل سرعة مسموحة","القيادة بشكل مستقيم"],
-en:["Driving at the maximum permitted speed","Driving at the minimum permitted speed","Driving straight ahead"]
-},
+q:"ڕێڕەوی ناوەڕاست بەکاردێت بۆ",
+a:[
+"لێخوڕین بە ئەوپەڕی خێرایی ڕێگە پێدراو",
+"لێخوڕین بە کەمترین خێرایی ڕێگە پێدراو",
+"لێخوڕینی ڕاستەو ڕاست"
+],
 correct:2
 },
 
 {
 id:16,
-q:{
-ku:"شانی ڕێگا چیە؟",
-badini:"Milê rê çi ye?",
-ar:"ما هو كتف الطريق؟",
-en:"What is the road shoulder?"
-},
-a:{
-ku:["ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە","بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک","ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"],
-badini:["Beşa rê ye ku rasterast li kêleka rê ye","Beşa rê ye ji bo rêçûna yek rêza otomobîlan","Beşa rê ye ku li rast û çepê rê ye"],
-ar:["الجزء من الطريق الذي يقع مباشرة بجانب الطريق","جزء من الطريق لسير صف واحد من السيارات","الجزء من الطريق الموجود على يمين ويسار الطريق"],
-en:["The part of the road directly beside the roadway","A part of the road for one line of vehicles","The part of the road on the right and left sides"]
-},
+q:"شانی ڕێگا چیە؟",
+a:[
+"ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە",
+"بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک",
+"ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"
+],
 correct:0
 },
 
 {
 id:17,
-q:{
-ku:"پاتناییەکە تەنها ڕێگا بە ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک دەدات",
-badini:"Ev beş tenê rê dide ku yek rêza otomobîlan li pey hev here",
-ar:"هذا الجزء من الطريق يسمح فقط بمرور صف واحد من السيارات",
-en:"This part of the road allows only one line of vehicles to travel one after another"
-},
-a:{
-ku:["شانی ڕێگا","ڕێڕەو","ڕێگای فریاکەوتن"],
-badini:["Milê rê","Rê","Riya acîl"],
-ar:["كتف الطريق","المسار","طريق الطوارئ"],
-en:["Road shoulder","Lane","Emergency road"]
-},
+q:"پاتناییەکە تەنها ڕێگا بە ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک دەدات",
+a:[
+"شانی ڕێگا",
+"ڕێڕەو",
+"ڕێگای فریاکەوتن"
+],
 correct:1
 },
 
 {
 id:18,
-q:{
-ku:"ڕێگای خێرا چییە؟",
-badini:"Riya bilez çi ye?",
-ar:"ما هو الطريق السريع؟",
-en:"What is a fast road?"
-},
-a:{
-ku:["ڕێگایەکی ئامادە کراوە بۆ هۆیەکانی گواستنەوە، بە خێرایی دەتوانن لێیەوە هاتوچۆ بکەن","ئەو ڕێگایانەن کە شارەکان بە یەکتر دەبەستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتوە"],
-badini:["Rêyek ji bo wesayîtên veguhestinê ye ku dikarin bi lez li ser biçin","Ew rê ne ku bajar bi hev ve girêdidin","Ji rêya sereke û aliyekê pêk tê"],
-ar:["طريق مخصص لوسائل النقل ويمكن السير فيه بسرعة","الطرق التي تربط المدن ببعضها","يتكون من طريق رئيسي وطريق فرعي"],
-en:["A road designed for vehicles where they can travel at high speed","Roads that connect cities","A road made of a main and secondary road"]
-},
+q:"ڕێگای خێرا چییە؟",
+a:[
+"ڕێگایەکی ئامادە کراوە بۆ هۆیەکانی گواستنەوە، بە خێرایی دەتوانن لێیەوە هاتوچۆ بکەن",
+"ئەو ڕێگایانەن کە شارەکان بە یەکتر دەبەستنەوە",
+"لە ڕێگای سەرەکی و لاوەکی پێکهاتوە"
+],
 correct:0
 },
 
 {
 id:19,
-q:{
-ku:"ڕێگای خێرای دابەشکراو چییە؟",
-badini:"Riya bilez a dabeşkirî çi ye?",
-ar:"ما هو الطريق السريع المقسم؟",
-en:"What is a divided fast road?"
-},
-a:{
-ku:["ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتووە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆرو خێرایی سوارڕۆکان"],
-badini:["Ew rê ne ku bajar bi hev ve girêdidin","Ji rêya sereke û aliyekê pêk tê","Rêyek e ku rêyên wê li gorî cûre û leza wesayîtan hatine dabeşkirin"],
-ar:["الطرق التي تربط المدن ببعضها","يتكون من طريق رئيسي وفرعي","طريق مقسم إلى مسارات حسب نوع وسرعة المركبات"],
-en:["Roads that connect cities","It consists of a main and secondary road","A road divided into lanes according to vehicle type and speed"]
-},
+q:"ڕێگای خێرای دابەشکراو چییە؟",
+a:[
+"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبستنەوە",
+"لە ڕێگای سەرەکی و لاوەکی پێکهاتووە",
+"ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆرو خێرایی سوارڕۆکان"
+],
 correct:2
 },
 
 {
 id:20,
-q:{
-ku:"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبەستنەوە",
-badini:"Ew rê ne ku bajar bi hev ve girêdidin",
-ar:"هي الطرق التي تربط المدن ببعضها",
-en:"These are roads that connect cities to each other"
-},
-a:{
-ku:["ڕێگای خێرا","ڕێگا دەرەکیەکان","ڕێگا خزمەت گوزاریەکان"],
-badini:["Riya bilez","Riyên derveyî","Riyên xizmetê"],
-ar:["الطرق السريعة","الطرق الخارجية","طرق الخدمات"],
-en:["Fast roads","External roads","Service roads"]
-},
+q:"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبەستنەوە",
+a:[
+"ڕێگای خێرا",
+"ڕێگا دەرەکیەکان",
+"ڕێگا خزمەت گوزاریەکان"
+],
 correct:1
 },
 
 {
 id:21,
-q:{
-ku:"ڕێگای ناوخۆیی چییە؟",
-badini:"Riya hundirîn çi ye?",
-ar:"ما هو الطريق الداخلي؟",
-en:"What is an internal road?"
-},
-a:{
-ku:["لە ڕێگای سەرەکی و لاوەکی پێک هاتوە","ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبەستنەوە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"],
-badini:["Ji rêya sereke û aliyekê pêk tê","Ew rê ne ku bajar bi hev ve girêdidin","Rêyek e ku rêyên wê li gorî cûre û leza wesayîtan hatine dabeşkirin"],
-ar:["يتكون من طريق رئيسي وفرعي","الطرق التي تربط المدن ببعضها","طريق مقسم حسب نوع وسرعة المركبات"],
-en:["It consists of a main and secondary road","Roads that connect cities","A road divided according to vehicle type and speed"]
-},
+q:"ڕێگای ناوخۆیی چییە؟",
+a:[
+"لە ڕێگای سەرەکی و لاوەکی پێک هاتوە",
+"ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبەستنەوە",
+"ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"
+],
 correct:0
 },
 
 {
 id:22,
-q:{
-ku:"منداڵ تا تەمەنی (13) ساڵی پێویستە",
-badini:"Zarok heta temenê 13 salî divê",
-ar:"الطفل حتى عمر 13 سنة يجب أن",
-en:"A child up to the age of 13 must"
-},
-a:{
-ku:["لە کوشنەکانی پێشەوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و کورسی تایبەت بەکار بهێنێت"],
-badini:["Li kursiyên pêş rûne û kemera ewlehiyê bikar bîne","Li kursiyên paş rûne û kemera ewlehiyê bikar bîne","Li kursiyên paş rûne û kursiya taybet bikar bîne"],
-ar:["يجلس في المقاعد الأمامية ويستخدم حزام الأمان","يجلس في المقاعد الخلفية ويستخدم حزام الأمان","يجلس في المقاعد الخلفية ويستخدم مقعداً خاصاً"],
-en:["Sit in the front seats and use a seat belt","Sit in the rear seats and use a seat belt","Sit in the rear seats and use a special child seat"]
-},
+q:"منداڵ تا تەمەنی (13) ساڵی پێویستە",
+a:[
+"لە کوشنەکانی پێشەوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت",
+"لە کوشنەکانی دواوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت",
+"لە کوشنەکانی دواوە دابنیشێت و کورسی تایبەت بەکار بهێنێت"
+],
 correct:2
 },
 
 {
 id:23,
-q:{
-ku:"یاسای هاتوچۆ جێبەجێ دەبێت بەسەر",
-badini:"Qanûna trafîkê li ser kê tê bicîhkirin?",
-ar:"على من يطبق قانون المرور؟",
-en:"Who does the traffic law apply to?"
-},
-a:{
-ku:["تەنها ئۆتۆمبێل و ماتۆڕسکیل","تەنها پاسکیل و پیادەو سەرنشین","تەواوی بەکارهێنەرانی ڕێگا و بەشدار بوانی هاتوچۆ لە شوفێر و سەرنشین و پیادە"],
-badini:["Tenê otomobîl û motorsîklet","Tenê bisîklet, peya û rêwî","Hemû bikarhênerên rê û beşdarên trafîkê, ajokar, rêwî û peya"],
-ar:["السيارات والدراجات النارية فقط","الدراجات الهوائية والمشاة والركاب فقط","جميع مستخدمي الطريق والمشاركين في المرور من سائقين وركاب ومشاة"],
-en:["Only cars and motorcycles","Only bicycles, pedestrians and passengers","All road users and traffic participants, including drivers, passengers and pedestrians"]
-},
+q:"یاسای هاتوچۆ جێبەجێ دەبێت بەسەر",
+a:[
+"تەنها ئۆتۆمبێل و ماتۆڕسکیل",
+"تەنها پاسکیل و پیادەو سەرنشین",
+"تەواوی بەکارهێنەرانی ڕێگا و بەشدار بوانی هاتوچۆ لە شوفێر و سەرنشین و پیادە"
+],
 correct:2
 },
 
 {
 id:24,
-q:{
-ku:"چی کاتێک ڕێگە پێ دراوە سەرنشین بەشێکی لەشی لە ئۆتۆمبێلەکە بباتە دەرەوە؟",
-badini:"Kengê rê dide ku rêwî beşek ji laşê xwe ji otomobîlê derxe?",
-ar:"متى يسمح للراكب بإخراج جزء من جسمه من السيارة؟",
-en:"When is a passenger allowed to put part of their body outside the car?"
-},
-a:{
-ku:["تەنها لە کاتی ئاهەنگ و دەربڕینی خۆشی و شادی","تەنها لە کاتی دڵ تێکچون","هیچ کاتێک ڕێگە پێدراو نیە"],
-badini:["Tenê di cejn û şahiyê de","Tenê dema xemgînî","Tu carî destûr nayê dayîn"],
-ar:["فقط أثناء الاحتفال والتعبير عن الفرح","فقط عند الحزن","لا يسمح بذلك في أي وقت"],
-en:["Only during celebrations","Only when upset","It is not permitted at any time"]
-},
+q:"چی کاتێک ڕێگە پێ دراوە سەرنشین بەشێکی لەشی لە ئۆتۆمبێلەکە بباتە دەرەوە؟",
+a:[
+"تەنها لە کاتی ئاهەنگ و دەربڕینی خۆشی و شادی",
+"تەنها لە کاتی دڵ تێکچون",
+"هیچ کاتێک ڕێگە پێدراو نیە"
+],
 correct:2
 },
 
 {
 id:25,
-q:{
-ku:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",
-badini:"Ma destûra ajotinê betal dibe?",
-ar:"هل تصبح رخصة القيادة ملغاة؟",
-en:"Can a driving license become invalid?"
-},
-a:{
-ku:["نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە","بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت","مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"],
-badini:["Na, destûra ajotinê betal nabe","Erê, heke ajokar yek ji mercên wergirtina destûrê ji dest bide","Destûra ajotinê piştî 5 salan betal dibe"],
-ar:["لا، لا تصبح رخصة القيادة ملغاة","نعم إذا فقد السائق أحد شروط الحصول على الرخصة","تلغى رخصة القيادة بعد 5 سنوات"],
-en:["No, a driving license does not become invalid","Yes, if the driver loses one of the conditions required to obtain the license","A driving license becomes invalid after 5 years"]
-},
+q:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",
+a:[
+"نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە",
+"بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت",
+"مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"
+],
 correct:1
 },
 
 {
 id:26,
-q:{
-ku:"هەر کەسێک بە کەمتەر خەمی لێ بخوڕێت و ببێتە هۆکاری مردنی کەسێک یان پەککەوتنی زیاتر لە کەسێک یان مردنی زیاتر لە کەسێک سزا دەدرێت بە",
-badini:"Kesê ku bi bêperçewî ajot û bû sedema mirina kesekê an birîndarbûna gelek kesan dê bê cezakirin bi",
-ar:"كل من يقود بإهمال ويتسبب في وفاة شخص أو إعاقة أكثر من شخص يعاقب بـ",
-en:"Anyone who drives negligently and causes death or serious injury is punished with"
-},
-a:{
-ku:["سزای دارایی","بەندکردن","بەندکردن و سزای دارایی"],
-badini:["Cezayê darayî","Girtin","Girtin û cezayê darayî"],
-ar:["غرامة مالية","السجن","السجن والغرامة المالية"],
-en:["A financial penalty","Imprisonment","Imprisonment and a financial penalty"]
-},
+q:"هەر کەسێک بە کەمتەر خەمی لێ بخوڕێت و ببێتە هۆکاری مردنی کەسێک یان پەککەوتنی زیاتر لە کەسێک یان مردنی زیاتر لە کەسێک سزا دەدرێت بە",
+a:[
+"سزای دارایی",
+"بەندکردن",
+"بەندکردن و سزای دارایی"
+],
 correct:2
 },
 
 {
 id:27,
-q:{
-ku:"کام لەم وڵامانە سەبارەت بە یاسای هاتوچۆ ڕاستن؟",
-badini:"Kîjan ji van bersivan derbarê qanûna trafîkê de rast e?",
-ar:"أي من الإجابات التالية صحيحة بشأن قانون المرور؟",
-en:"Which of these statements about traffic law is correct?"
-},
-a:{
-ku:["دروست بونی ڕوداوی هاتوچۆ لەسەر هێڵی پەڕینەوە یاخود یارمەتی نەدانی کەسی زیان لەکەوتو نەگەیاندنی بۆ نەخۆشخانە یاخود ئاگادار نەکردنەوەی لایەنە پەیوەندیدارەکان بە بارودۆخی توند کردنی سزا دادەنرێن","دروست بونی ڕوداوی هاتوچۆ دور لە هێڵی پەڕینەوە یاخود یارمەتی دانی کەسی زیان لێکەوتو بە گەیاندنی بۆ نەخۆشخانە یاخود ئاگادار کردەوەی لایەنە پەیوەندی دارەکان بە بارودۆخی کەمکردنەوەی سزا دادەنرێن","هەردوو وڵامی سەرەوە ڕاستن"],
-badini:["Qewimîna qezayeke trafîkê li ser xeta derbasbûnê, an ne alîkariya kesê birîndar û neşandina wî bo nexweşxaneyê, an ne agahdarkirina aliyên peywendîdar, sedema tundkirina ceza ye","Qewimîna qezayê dûr ji xeta derbasbûnê û alîkariya birîndar û agahdarkirina aliyên peywendîdar sedema kêmkirina ceza ye","Her du bersivên jor rast in"],
-ar:["وقوع حادث مرور على خط العبور أو عدم مساعدة المصاب ونقله إلى المستشفى أو عدم إبلاغ الجهات المختصة يعد ظرفاً مشدداً للعقوبة","وقوع الحادث بعيداً عن خط العبور ومساعدة المصاب وإبلاغ الجهات المختصة يعد ظرفاً مخففاً للعقوبة","كلتا الإجابتين صحيحتان"],
-en:["Causing an accident on a crossing line or failing to help the injured person or notify authorities is an aggravating circumstance","An accident away from the crossing line, helping the injured person and notifying authorities are mitigating circumstances","Both answers above are correct"]
-},
+q:"کام لەم وڵامانە سەبارەت بە یاسای هاتوچۆ ڕاستن؟",
+a:[
+"دروست بونی ڕوداوی هاتوچۆ لەسەر هێڵی پەڕینەوە یاخود یارمەتی نەدانی کەسی زیان لەکەوتو نەگەیاندنی بۆ نەخۆشخانە یاخود ئاگادار نەکردنەوەی لایەنە پەیوەندیدارەکان بە بارودۆخی توند کردنی سزا دادەنرێن",
+"دروست بونی ڕوداوی هاتوچۆ دور لە هێڵی پەڕینەوە یاخود یارمەتی دانی کەسی زیان لێکەوتو بە گەیاندنی بۆ نەخۆشخانە یاخود ئاگادار کردەوەی لایەنە پەیوەندی دارەکان بە بارودۆخی کەمکردنەوەی سزا دادەنرێن",
+"هەردوو وڵامی سەرەوە ڕاستن"
+],
 correct:2
 },
 
 {
 id:28,
-q:{
-ku:"هەر کەسێک هەڕەشە یان سوکایەتی بکات بە پۆلیسی هاتوچۆ سزا دەدرێت بە",
-badini:"Kesê ku gef an heqaretê bike li polîsê trafîkê dê bê cezakirin bi",
-ar:"كل من يهدد أو يهين شرطي المرور يعاقب بـ",
-en:"Anyone who threatens or insults a traffic police officer is punished with"
-},
-a:{
-ku:["بەندکردن","سزای دارایی","بەندکردن و سزای دارایی"],
-badini:["Girtin","Cezayê darayî","Girtin û cezayê darayî"],
-ar:["السجن","غرامة مالية","السجن والغرامة المالية"],
-en:["Imprisonment","A financial penalty","Imprisonment and a financial penalty"]
-},
+q:"هەر کەسێک هەڕەشە یان سوکایەتی بکات بە پۆلیسی هاتوچۆ سزا دەدرێت بە",
+a:[
+"بەندکردن",
+"سزای دارایی",
+"بەندکردن و سزای دارایی"
+],
 correct:0
 },
 
 {
 id:29,
-q:{
-ku:"هەرکەسێک هێرش بکاتە سەر پۆلیسی هاتوچۆ",
-badini:"Kesê ku êrîşî polîsê trafîkê bike",
-ar:"كل من يعتدي على شرطي المرور",
-en:"Anyone who attacks a traffic police officer"
-},
-a:{
-ku:["سزای دارایی","بەندکردن زیاتر نەبێت لە 3 ساڵ","بەندکردن و سزای دارایی"],
-badini:["Cezayê darayî","Girtinê ku ji 3 salan zêdetir nebe","Girtin û cezayê darayî"],
-ar:["غرامة مالية","السجن مدة لا تزيد على 3 سنوات","السجن والغرامة المالية"],
-en:["A financial penalty","Imprisonment for no more than 3 years","Imprisonment and a financial penalty"]
-},
+q:"هەرکەسێک هێرش بکاتە سەر پۆلیسی هاتوچۆ",
+a:[
+"سزای دارایی",
+"بەندکردن زیاتر نەبێت لە 3 ساڵ",
+"بەندکردن و سزای دارایی"
+],
 correct:1
 },
 
 {
 id:30,
-q:{
-ku:"هەرکەسێک هێرش بکاتە سەر ئەفسەری هاتوچۆ سزا دەدرێت بە",
-badini:"Kesê ku êrîşî efserê trafîkê bike dê bê cezakirin bi",
-ar:"كل من يعتدي على ضابط المرور يعاقب بـ",
-en:"Anyone who attacks a traffic officer is punished with"
-},
-a:{
-ku:["سزای دارایی","بەندکردن زیاتر نەبێت لە 5 ساڵ","بەندکردن و سزای دارایی"],
-badini:["Cezayê darayî","Girtinê ku ji 5 salan zêdetir nebe","Girtin û cezayê darayî"],
-ar:["غرامة مالية","السجن مدة لا تزيد على 5 سنوات","السجن والغرامة المالية"],
-en:["A financial penalty","Imprisonment for no more than 5 years","Imprisonment and a financial penalty"]
-},
+q:"هەرکەسێک هێرش بکاتە سەر ئەفسەری هاتوچۆ سزا دەدرێت بە",
+a:[
+"سزای دارایی",
+"بەندکردن زیاتر نەبێت لە 5 ساڵ",
+"بەندکردن و سزای دارایی"
+],
 correct:1
 },
 
 {
 id:31,
-q:{
-ku:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
-badini:"Hêmayên bingehîn ên çêbûna agirê çi ne?",
-ar:"ما هي العناصر الأساسية لحدوث الحريق؟",
-en:"What are the main elements necessary for fire?"
-},
-a:{
-ku:["گەرمی و ئۆکسجین و ماددە","بەنزین","گاز"],
-badini:["Germî, oksîjen û madde","Benzîn","Gaz"],
-ar:["الحرارة والأكسجين والمادة","البنزين","الغاز"],
-en:["Heat, oxygen and fuel","Petrol","Gas"]
-},
+q:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
+a:[
+"گەرمی و ئۆکسجین و ماددە",
+"بەنزین",
+"گاز"
+],
 correct:0
 },
 
 {
 id:32,
-q:{
-ku:"لەکاتی کوژاندنەوەی ئاگر پێویستە بوەستین لە",
-badini:"Dema ku agir tê vemirandin divê em li ku derê rawestin?",
-ar:"عند إطفاء الحريق يجب أن نقف",
-en:"When extinguishing a fire, we should stand"
-},
-a:{
-ku:["ڕو لەو شوێنەی کە بایەکەی لێوە دێت","شانمان دەکەینە باکە","بە ئاڕاستەی با، واتا پشت لە باوو ڕو لە ئاگرەکە"],
-badini:["Ber bi cihê ku ba jê tê","Milê xwe bidin ba","Li aliyê ba, bi piştê xwe li ba û rû li agir"],
-ar:["باتجاه مصدر الرياح","نجعل الرياح خلفنا","مع اتجاه الريح أي والريح خلفنا ووجهنا نحو النار"],
-en:["Facing where the wind comes from","With the wind at our side","In the direction of the wind, with the wind behind us and facing the fire"]
-},
+q:"لەکاتی کوژاندنەوەی ئاگر پێویستە بوەستین لە",
+a:[
+"ڕو لەو شوێنەی کە بایەکەی لێوە دێت",
+"شانمان دەکەینە باکە",
+"بە ئاڕاستەی با، واتا پشت لە باوو ڕو لە ئاگرەکە"
+],
 correct:2
 },
 
 {
 id:33,
-q:{
-ku:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری (A) ڕەنگی سەوز ئەمانە لەخۆ دەگرێت",
-badini:"Di polê A yê agirkujê de, ev madde tê de ne",
-ar:"تصنيف مواد إطفاء الحريق من النوع A يشمل",
-en:"Class A fire materials include"
-},
-a:{
-ku:["کاغەزو تەختەو قوماش","ئامێرە ئەلیکترۆنی و کارەباییەکان","نەوت و گازوایل و بەنزین"],
-badini:["Kaxez, dar û qumaş","Amûrên elektronîk û elektrîkî","Neft, gazoyl û benzîn"],
-ar:["الورق والخشب والقماش","الأجهزة الإلكترونية والكهربائية","النفط والديزل والبنزين"],
-en:["Paper, wood and cloth","Electronic and electrical equipment","Oil, diesel and petrol"]
-},
+q:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری (A) ڕەنگی سەوز ئەمانە لەخۆ دەگرێت",
+a:[
+"کاغەزو تەختەو قوماش",
+"ئامێرە ئەلیکترۆنی و کارەباییەکان",
+"نەوت و گازوایل و بەنزین"
+],
 correct:0
 },
 
 {
 id:34,
-q:{
-ku:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری ئاو جیادەکرێتەوە بە ڕەنگی",
-badini:"Agirkuskerê destan yê avê bi rengê çi tê naskirin?",
-ar:"تتميز مطفأة الحريق اليدوية من نوع الماء باللون",
-en:"A water-type hand fire extinguisher is identified by the color"
-},
-a:{
-ku:["شین","سوور","سەوز"],
-badini:["Şîn","Sor","Kesk"],
-ar:["الأزرق","الأحمر","الأخضر"],
-en:["Blue","Red","Green"]
-},
+q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری ئاو جیادەکرێتەوە بە ڕەنگی",
+a:[
+"شین",
+"سوور",
+"سەوز"
+],
 correct:1
 },
 
 {
 id:35,
-q:{
-ku:"لە وەرزی گەرمادا شۆفێری تەنکەری غازی شل پێویستە کاری بارکردن و بەتاڵکردنەوە ئەنجەم بدات لە",
-badini:"Di demsala germ de, ajokarê tankera gazê divê barkirin û vala kirin li",
-ar:"في فصل الصيف يجب على سائق صهريج الغاز المسال القيام بالتحميل والتفريغ في",
-en:"In hot weather, an LPG tanker driver should load and unload during"
-},
-a:{
-ku:["شەو","ڕۆژ","هەر کاتێک بێت گرینگ نیە"],
-badini:["Şevê","Rojê","Her dem, girîng nîne"],
-ar:["الليل","النهار","أي وقت، لا يهم"],
-en:["Night","Day","Any time, it does not matter"]
-},
+q:"لە وەرزی گەرمادا شۆفێری تەنکەری غازی شل پێویستە کاری بارکردن و بەتاڵکردنەوە ئەنجەم بدات لە",
+a:[
+"شەو",
+"ڕۆژ",
+"هەر کاتێک بێت گرینگ نیە"
+],
 correct:0
 },
 
 {
 id:36,
-q:{
-ku:"ژمارە تەڵەفونی پۆلیسی فریا کەوتن چەندە؟",
-badini:"Hejmara telefona polîsê acîl çend e?",
-ar:"ما رقم هاتف شرطة الطوارئ؟",
-en:"What is the emergency police telephone number?"
-},
-a:{
-ku:["188","440","104"],
-badini:["188","440","104"],
-ar:["188","440","104"],
-en:["188","440","104"]
-},
+q:"ژمارە تەڵەفونی پۆلیسی فریا کەوتن چەندە؟",
+a:[
+"188",
+"440",
+"104"
+],
 correct:2
 },
 
 {
 id:37,
-q:{
-ku:"ژمارە تەلەفونی بەرگری شارستانی چەندە؟",
-badini:"Hejmara telefona parastina sivîl çend e?",
-ar:"ما رقم هاتف الدفاع المدني؟",
-en:"What is the civil defense telephone number?"
-},
-a:{
-ku:["440","115","122"],
-badini:["440","115","122"],
-ar:["440","115","122"],
-en:["440","115","122"]
-},
+q:"ژمارە تەلەفونی بەرگری شارستانی چەندە؟",
+a:[
+"440",
+"115",
+"122"
+],
 correct:1
 },
 
 {
 id:38,
-q:{
-ku:"ژمارە تەلەفونی فریا گوزاری(ئەمبوڵانس) چەندە؟",
-badini:"Hejmara telefona ambulansê çend e?",
-ar:"ما رقم هاتف الإسعاف؟",
-en:"What is the ambulance telephone number?"
-},
-a:{
-ku:["122","104","188"],
-badini:["122","104","188"],
-ar:["122","104","188"],
-en:["122","104","188"]
-},
+q:"ژمارە تەلەفونی فریا گوزاری(ئەمبوڵانس) چەندە؟",
+a:[
+"122",
+"104",
+"188"
+],
 correct:0
 },
 
 {
 id:39,
-q:{
-ku:"ژمارە تەلەفونی پۆلیسی هاتوچۆ (مرور) چەندە؟",
-badini:"Hejmara telefona polîsê trafîkê çend e?",
-ar:"ما رقم هاتف شرطة المرور؟",
-en:"What is the traffic police telephone number?"
-},
-a:{
-ku:["188","440","هەردوو وڵامەکە ڕاستن"],
-badini:["188","440","Her du bersiv rast in"],
-ar:["188","440","كلا الرقمين صحيحان"],
-en:["188","440","Both answers are correct"]
-},
+q:"ژمارە تەلەفونی پۆلیسی هاتوچۆ (مرور) چەندە؟",
+a:[
+"188",
+"440",
+"هەردوو وڵامەکە ڕاستن"
+],
 correct:2
 },
 
 {
 id:40,
-q:{
-ku:"یەکێک لە نیشانەکانی ئەگەری ئاگر کەوتنەوەی ئۆتۆمبێل بریتیە لە",
-badini:"Yek ji nîşanên ihtîmala şewitîna otomobîlê",
-ar:"من علامات احتمال اشتعال السيارة",
-en:"One sign that a car may catch fire is"
-},
-a:{
-ku:["بەرزبونەوەی پلەی گەرمی بزوێنەر","لەرزینی سوکان","کەمبونی ئاوی فڵچەکان"],
-badini:["Bilindbûna germa motora","Lerizîna volanê","Kêmbûna ava firçeyan"],
-ar:["ارتفاع درجة حرارة المحرك","اهتزاز عجلة القيادة","نقصان ماء المساحات"],
-en:["An increase in engine temperature","Steering wheel vibration","Low windshield washer fluid"]
-},
+q:"یەکێک لە نیشانەکانی ئەگەری ئاگر کەوتنەوەی ئۆتۆمبێل بریتیە لە",
+a:[
+"بەرزبونەوەی پلەی گەرمی بزوێنەر",
+"لەرزینی سوکان",
+"کەمبونی ئاوی فڵچەکان"
+],
 correct:0
 },
 
 {
 id:41,
-q:{
-ku:"تانکەری گواستنەوەی غازی شل پێویستە پارک بکرێت",
-badini:"Tankerê veguhastina gazê divê li ku derê park bibe?",
-ar:"يجب إيقاف صهريج نقل الغاز المسال",
-en:"An LPG transport tanker should be parked"
-},
-a:{
-ku:["لەبەر هەتاو","لە گەراجی کراوە کە هەوا گۆڕکێی هەبێت","لە گەراجی داخراودا"],
-badini:["Di ber tavê de","Di garajeke vekirî de ku hewaya baş hebe","Di garajeke girtî de"],
-ar:["تحت أشعة الشمس","في مرآب مفتوح جيد التهوية","في مرآب مغلق"],
-en:["In direct sunlight","In an open, well-ventilated garage","In a closed garage"]
-},
+q:"تانکەری گواستنەوەی غازی شل پێویستە پارک بکرێت",
+a:[
+"لەبەر هەتاو",
+"لە گەراجی کراوە کە هەوا گۆڕکێی هەبێت",
+"لە گەراجی داخراودا"
+],
 correct:1
 },
 
 {
 id:42,
-q:{
-ku:"لە کاتی بەتاڵکردنی غازی شل پێویستە دوور بێت لە هەر سەرچاوەیەکی گەرمی بە دوریەک کەمترنەبێت لە",
-badini:"Dema vala kirina gazê divê ji her çavkaniya germiyê bi dûrahiya ne kêmtir ji",
-ar:"عند تفريغ الغاز المسال يجب الابتعاد عن أي مصدر للحرارة بمسافة لا تقل عن",
-en:"When unloading LPG, it must be kept away from any heat source by at least"
-},
-a:{
-ku:["2 مەتر","5 مەتر","8 مەتر"],
-badini:["2 metre","5 metre","8 metre"],
-ar:["2 متر","5 أمتار","8 أمتار"],
-en:["2 meters","5 meters","8 meters"]
-},
+q:"لە کاتی بەتاڵکردنی غازی شل پێویستە دوور بێت لە هەر سەرچاوەیەکی گەرمی بە دوریەک کەمترنەبێت لە",
+a:[
+"2 مەتر",
+"5 مەتر",
+"8 مەتر"
+],
 correct:2
 }
 
 ];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let sessionQuestions=[];
+let currentQuestion=0;
+let scoreCorrect=0;
+let wrongAnswers=[];
+let timerInterval=null;
+let timeLeft=60;
+let userName="";
+
+
+/* =========================================================
+   RANDOM SHUFFLE
+========================================================= */
+
+function shuffle(array){
+
+  const arr=[...array];
+
+  for(let i=arr.length-1;i>0;i--){
+
+    const j=Math.floor(Math.random()*(i+1));
+
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+
+  return arr;
+}
+
+
+/* =========================================================
+   GET 25 QUESTIONS
+========================================================= */
+
+function getSessionQuestions(){
+
+  let remaining=[];
+
+  try{
+
+    remaining=JSON.parse(
+      localStorage.getItem("remainingQuestions") || "[]"
+    );
+
+  }catch(e){
+
+    remaining=[];
+  }
+
+  const allIds=questions.map(q=>q.id);
+
+  if(!Array.isArray(remaining)){
+    remaining=[];
+  }
+
+  remaining=remaining.filter(
+    id=>allIds.includes(id)
+  );
+
+  if(remaining.length<25){
+
+    let lastSession=[];
+
+    try{
+
+      lastSession=JSON.parse(
+        localStorage.getItem("lastSession") || "[]"
+      );
+
+    }catch(e){
+
+      lastSession=[];
+    }
+
+    const notLast=shuffle(
+      allIds.filter(
+        id=>!lastSession.includes(id)
+      )
+    );
+
+    const inRemaining=remaining.filter(
+      id=>!lastSession.includes(id)
+    );
+
+    const combined=[
+      ...inRemaining,
+      ...notLast.filter(
+        id=>!inRemaining.includes(id)
+      )
+    ];
+
+    remaining=shuffle(combined);
+
+    if(remaining.length<25){
+
+      remaining=shuffle(allIds);
+    }
+  }
+
+  const selected=remaining.slice(0,25);
+
+  const newRemaining=remaining.slice(25);
+
+  localStorage.setItem(
+    "remainingQuestions",
+    JSON.stringify(newRemaining)
+  );
+
+  localStorage.setItem(
+    "lastSession",
+    JSON.stringify(selected)
+  );
+
+  return selected.map(
+    id=>questions.find(q=>q.id===id)
+  );
+}
+
+
+/* =========================================================
+   NAME SCREEN
+========================================================= */
+
+function showNameScreen(){
+
+  document.getElementById("welcomeScreen")
+    .classList.add("hidden");
+
+  document.getElementById("nameScreen")
+    .classList.remove("hidden");
+
+  setTimeout(()=>{
+
+    document.getElementById("fullName").focus();
+
+  },200);
+}
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+function startQuiz(){
+
+  const input=
+    document.getElementById("fullName");
+
+  userName=input.value.trim();
+
+  if(!userName){
+
+    input.focus();
+
+    return;
+  }
+
+  sessionQuestions=getSessionQuestions();
+
+  currentQuestion=0;
+
+  scoreCorrect=0;
+
+  wrongAnswers=[];
+
+  document.getElementById("nameScreen")
+    .classList.add("hidden");
+
+  document.getElementById("quizScreen")
+    .classList.remove("hidden");
+
+  createQuestionNumbers();
+
+  showQuestion();
+}
+
+
+/* =========================================================
+   QUESTION NUMBERS
+========================================================= */
+
+function createQuestionNumbers(){
+
+  const box=
+    document.getElementById("questionNumbers");
+
+  box.innerHTML="";
+
+  for(let i=0;i<25;i++){
+
+    const div=
+      document.createElement("div");
+
+    div.className="qnum";
+
+    div.id="qnum-"+i;
+
+    div.textContent=i+1;
+
+    box.appendChild(div);
+  }
+}
+
+
+/* =========================================================
+   SHOW QUESTION
+========================================================= */
+
+function showQuestion(){
+
+  clearInterval(timerInterval);
+
+  const q=
+    sessionQuestions[currentQuestion];
+
+  document.querySelectorAll(".qnum")
+    .forEach(x=>{
+      x.classList.remove("current");
+    });
+
+  const currentNumber=
+    document.getElementById(
+      "qnum-"+currentQuestion
+    );
+
+  if(currentNumber){
+
+    currentNumber.classList.add("current");
+  }
+
+  document.getElementById(
+    "questionCounter"
+  ).textContent=
+    `${t.question} ${currentQuestion+1} ${t.of} 25`;
+
+  document.getElementById(
+    "progressBar"
+  ).style.width=
+    `${((currentQuestion)/25)*100}%`;
+
+  document.getElementById(
+    "questionText"
+  ).textContent=q.q;
+
+  const answersBox=
+    document.getElementById("answers");
+
+  answersBox.innerHTML="";
+
+
+  const choices=q.a.map(
+    (text,index)=>({
+
+      text:text,
+      originalIndex:index
+
+    })
+  );
+
+  const shuffledChoices=
+    shuffle(choices);
+
+  shuffledChoices.forEach(choice=>{
+
+    const button=
+      document.createElement("button");
+
+    button.className="answer-btn";
+
+    button.textContent=
+      choice.text;
+
+    button.onclick=()=>{
+
+      answerQuestion(
+        choice.originalIndex,
+        button
+      );
+
+    };
+
+    answersBox.appendChild(button);
+  });
+
+  startTimer();
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+  timeLeft=60;
+
+  updateTimer();
+
+  timerInterval=setInterval(()=>{
+
+    timeLeft--;
+
+    updateTimer();
+
+    if(timeLeft<=0){
+
+      clearInterval(timerInterval);
+
+      timeExpired();
+    }
+
+  },1000);
+}
+
+
+function updateTimer(){
+
+  document.getElementById("timer")
+    .textContent=timeLeft;
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+function answerQuestion(
+  originalIndex,
+  button
+){
+
+  clearInterval(timerInterval);
+
+  const q=
+    sessionQuestions[currentQuestion];
+
+  const buttons=
+    document.querySelectorAll(
+      ".answer-btn"
+    );
+
+  buttons.forEach(b=>{
+    b.disabled=true;
+  });
+
+
+  if(originalIndex===q.correct){
+
+    scoreCorrect++;
+
+    button.classList.add(
+      "correct-answer"
+    );
+
+    markQuestion(true);
+
+  }else{
+
+    button.classList.add(
+      "wrong-answer"
+    );
+
+    buttons.forEach(b=>{
+
+      if(
+        b.textContent===
+        q.a[q.correct]
+      ){
+
+        b.classList.add(
+          "correct-answer"
+        );
+      }
+
+    });
+
+    wrongAnswers.push({
+
+      number:currentQuestion+1,
+
+      question:q.q,
+
+      userAnswer:
+        q.a[originalIndex],
+
+      correctAnswer:
+        q.a[q.correct]
+
+    });
+
+    markQuestion(false);
+  }
+
+  setTimeout(
+    nextQuestion,
+    700
+  );
+}
+
+
+/* =========================================================
+   TIME EXPIRED
+========================================================= */
+
+function timeExpired(){
+
+  const q=
+    sessionQuestions[currentQuestion];
+
+  const buttons=
+    document.querySelectorAll(
+      ".answer-btn"
+    );
+
+  buttons.forEach(
+    b=>b.disabled=true
+  );
+
+  buttons.forEach(b=>{
+
+    if(
+      b.textContent===
+      q.a[q.correct]
+    ){
+
+      b.classList.add(
+        "correct-answer"
+      );
+    }
+
+  });
+
+  wrongAnswers.push({
+
+    number:currentQuestion+1,
+
+    question:q.q,
+
+    userAnswer:t.timeout,
+
+    correctAnswer:q.a[q.correct]
+
+  });
+
+  markQuestion(false);
+
+  setTimeout(
+    nextQuestion,
+    700
+  );
+}
+
+
+/* =========================================================
+   MARK QUESTION
+========================================================= */
+
+function markQuestion(isCorrect){
+
+  const el=
+    document.getElementById(
+      "qnum-"+currentQuestion
+    );
+
+  if(!el) return;
+
+  el.classList.remove(
+    "current"
+  );
+
+  if(isCorrect){
+
+    el.classList.add(
+      "correct"
+    );
+
+  }else{
+
+    el.classList.add(
+      "wrong"
+    );
+  }
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  if(
+    currentQuestion>=
+    sessionQuestions.length
+  ){
+
+    finishQuiz();
+
+  }else{
+
+    showQuestion();
+  }
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finishQuiz(){
+
+  clearInterval(timerInterval);
+
+  document.getElementById(
+    "quizScreen"
+  ).classList.add("hidden");
+
+  document.getElementById(
+    "resultScreen"
+  ).classList.remove("hidden");
+
+
+  const finalScore=
+    scoreCorrect*4;
+
+  const passed=
+    scoreCorrect>=20;
+
+
+  document.getElementById(
+    "resultIcon"
+  ).textContent=
+    passed ? "🏆" : "❌";
+
+
+  const resultTitle=
+    document.getElementById(
+      "resultTitle"
+    );
+
+  resultTitle.textContent=
+    passed
+    ? t.passed
+    : t.failed;
+
+  resultTitle.className=
+    passed
+    ? "pass"
+    : "fail";
+
+
+  document.getElementById(
+    "finalScore"
+  ).textContent=
+    `${t.score}: ${finalScore}/100`;
+
+
+  document.getElementById(
+    "resultDetails"
+  ).innerHTML=
+    `<strong>${t.correctCount}:</strong>
+     ${scoreCorrect}/25
+     <br>
+     <strong>${t.wrongCount}:</strong>
+     ${wrongAnswers.length}/25`;
+
+
+  const list=
+    document.getElementById(
+      "wrongList"
+    );
+
+  list.innerHTML="";
+
+
+  if(wrongAnswers.length>0){
+
+    const title=
+      document.createElement("h3");
+
+    title.textContent=
+      `${t.wrongCount}: ${wrongAnswers.length}`;
+
+    list.appendChild(title);
+
+
+    wrongAnswers.forEach(item=>{
+
+      const div=
+        document.createElement("div");
+
+      div.className="wrong-item";
+
+      div.innerHTML=`
+
+        <strong>
+          ${t.question} ${item.number}
+        </strong>
+
+        <p>
+          ${item.question}
+        </p>
+
+        <p>
+          <strong>
+            ${t.yourAnswer}:
+          </strong>
+
+          ${item.userAnswer}
+        </p>
+
+        <p>
+          <strong>
+            ${t.correct}:
+          </strong>
+
+          ${item.correctAnswer}
+        </p>
+
+      `;
+
+      list.appendChild(div);
+
+    });
+
+  }else{
+
+    const perfect=
+      document.createElement("p");
+
+    perfect.textContent=
+      "زۆر باشە! هەموو پرسیارەکانت بە ڕاستی وەڵام دا. 🎉";
+
+    list.appendChild(perfect);
+  }
+
+
+  document.getElementById(
+    "newTestBtn"
+  ).textContent=
+    t.newTest;
+}
+
+
+/* =========================================================
+   NEW TEST
+========================================================= */
+
+function newTest(){
+
+  document.getElementById(
+    "resultScreen"
+  ).classList.add("hidden");
+
+  document.getElementById(
+    "nameScreen"
+  ).classList.remove("hidden");
+
+  document.getElementById(
+    "fullName"
+  ).value="";
+
+  setTimeout(()=>{
+
+    document.getElementById(
+      "fullName"
+    ).focus();
+
+  },200);
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document.getElementById(
+  "fullName"
+).addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key==="Enter"){
+
+      startQuiz();
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
