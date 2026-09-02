@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تاقیکردنەوەی تیۆری مۆڵەتی شوفێری</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  min-height:100vh;
+  color:#111827;
+}
+
+.container{
+  width:94%;
+  max-width:700px;
+  margin:20px auto;
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.hidden{
+  display:none!important;
+}
+
+h1,h2,h3{
+  text-align:center;
+}
+
+.logo{
+  text-align:center;
+  font-size:55px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#64748b;
+  line-height:1.8;
+}
+
+.language-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:25px;
+}
+
+.lang-btn{
+  border:0;
+  padding:18px 10px;
+  border-radius:15px;
+  background:#f1f5f9;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.lang-btn:hover{
+  background:#dbeafe;
+}
+
+.primary-btn{
+  width:100%;
+  border:0;
+  padding:16px;
+  border-radius:15px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+.primary-btn:hover{
+  background:#1d4ed8;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  border:2px solid #cbd5e1;
+  border-radius:14px;
+  font-size:17px;
+  outline:none;
+  margin-top:10px;
+}
+
+input:focus{
+  border-color:#2563eb;
+}
+
+.info{
+  line-height:2;
+  background:#eff6ff;
+  padding:15px;
+  border-radius:15px;
+  margin-top:20px;
+}
+
+.contact{
+  text-align:center;
+  margin-top:15px;
+  line-height:2;
+}
+
+.contact a{
+  text-decoration:none;
+  font-weight:bold;
+  margin:0 7px;
+}
+
+.whatsapp{
+  color:#16a34a;
+}
+
+.viber{
+  color:#7c3aed;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.timer{
+  background:#fee2e2;
+  color:#dc2626;
+  padding:10px 15px;
+  border-radius:13px;
+  font-size:20px;
+  font-weight:bold;
+  min-width:80px;
+  text-align:center;
+}
+
+.progress{
+  height:9px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:15px;
+}
+
+.progress-bar{
+  height:100%;
+  background:#2563eb;
+  width:0%;
+  transition:.3s;
+}
+
+.question-numbers{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:20px;
+  justify-content:center;
+}
+
+.qnum{
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  background:#cbd5e1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.qnum.current{
+  outline:3px solid #2563eb;
+}
+
+.qnum.correct{
+  background:#16a34a;
+  color:white;
+}
+
+.qnum.wrong{
+  background:#000;
+  color:white;
+}
+
+.question{
+  font-size:21px;
+  font-weight:bold;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+
+.answers{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.answer-btn{
+  width:100%;
+  text-align:right;
+  padding:16px;
+  border:2px solid #d1d5db;
+  border-radius:15px;
+  background:#f8fafc;
+  font-size:17px;
+  cursor:pointer;
+  line-height:1.6;
+}
+
+.answer-btn:hover{
+  border-color:#2563eb;
+  background:#eff6ff;
+}
+
+.answer-btn.selected{
+  border-color:#2563eb;
+  background:#dbeafe;
+}
+
+.answer-btn.correct-answer{
+  border-color:#16a34a;
+  background:#dcfce7;
+}
+
+.answer-btn.wrong-answer{
+  border-color:#dc2626;
+  background:#fee2e2;
+}
+
+.result{
+  text-align:center;
+}
+
+.result-icon{
+  font-size:70px;
+}
+
+.score{
+  font-size:40px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.pass{
+  color:#16a34a;
+}
+
+.fail{
+  color:#dc2626;
+}
+
+.wrong-list{
+  margin-top:25px;
+  text-align:right;
+}
+
+.wrong-item{
+  background:#f8fafc;
+  border-right:5px solid #dc2626;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:12px;
+  line-height:1.9;
+}
+
+.small{
+  color:#64748b;
+  font-size:14px;
+}
+
+@media(max-width:500px){
+  .card{
+    padding:18px;
+  }
+
+  .language-grid{
+    grid-template-columns:1fr;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+  .answer-btn{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LANGUAGE -->
+<section id="languageScreen" class="card">
+  <div class="logo">🚗</div>
+  <h1 id="chooseLanguage">تکایە زمانێک هەڵبژێرە</h1>
+  <p class="subtitle" id="chooseLanguageSub">
+    تکایە زمانی تاقیکردنەوەکە هەڵبژێرە
+  </p>
+
+  <div class="language-grid">
+    <button class="lang-btn" onclick="selectLanguage('ku')">
+      کوردی سۆرانی
+    </button>
+
+    <button class="lang-btn" onclick="selectLanguage('badini')">
+      کوردی بادینی
+    </button>
+
+    <button class="lang-btn" onclick="selectLanguage('ar')">
+      العربية
+    </button>
+
+    <button class="lang-btn" onclick="selectLanguage('en')">
+      English
+    </button>
+  </div>
+</section>
+
+
+<!-- WELCOME -->
+<section id="welcomeScreen" class="card hidden">
+
+  <div class="logo">🚘</div>
+
+  <h1 id="welcomeTitle"></h1>
+
+  <div class="info">
+    <p id="ownerText"></p>
+    <p id="teacherText"></p>
+    <p id="problemText"></p>
+  </div>
+
+  <div class="contact">
+    <a class="whatsapp"
+       href="https://wa.me/9647515176569"
+       target="_blank">
+       🟢 WhatsApp
+    </a>
+
+    <a class="viber"
+       href="viber://chat?number=%2B9647515176569">
+       🟣 Viber
+    </a>
+  </div>
+
+  <button class="primary-btn" onclick="showNameScreen()" id="startBtn">
+    دەست پێکردن
+  </button>
+
+</section>
+
+
+<!-- NAME -->
+<section id="nameScreen" class="card hidden">
+
+  <div class="logo">👤</div>
+
+  <h2 id="nameTitle"></h2>
+
+  <p class="subtitle" id="nameSub"></p>
+
+  <input
+    id="fullName"
+    type="text"
+    autocomplete="name"
+  >
+
+  <button
+    class="primary-btn"
+    onclick="startQuiz()"
+    id="beginQuizBtn">
+  </button>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quizScreen" class="card hidden">
+
+  <div class="topbar">
+    <strong id="questionCounter"></strong>
+    <div class="timer" id="timer">60</div>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="question-numbers" id="questionNumbers"></div>
+
+  <div class="question" id="questionText"></div>
+
+  <div class="answers" id="answers"></div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="resultScreen" class="card hidden">
+
+  <div class="result">
+
+    <div class="result-icon" id="resultIcon"></div>
+
+    <h1 id="resultTitle"></h1>
+
+    <div class="score" id="finalScore"></div>
+
+    <p id="resultDetails"></p>
+
+    <div class="wrong-list" id="wrongList"></div>
+
+    <button
+      class="primary-btn"
+      onclick="newTest()"
+      id="newTestBtn">
+    </button>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+let currentLanguage = "ku";
+
+const translations = {
+
+ku:{
+  dir:"rtl",
+  choose:"تکایە زمانێک هەڵبژێرە",
+  chooseSub:"تکایە زمانی تاقیکردنەوەکە هەڵبژێرە",
+
+  welcome:"بەخێر بێیت بۆ تاقی کردنەوەی تیۆری مۆڵەتی شوفێری",
+  owner:"خاوەنی سایتی تاقی کردنەوە : لاوە سعدللە",
+  teacher:"پرسیارەکان وەرگیراون لە مامۆستا: باوان ئازاد",
+  problem:"هەر کێشەیەک هەبوو لە سایتەکە تکایە ئاگادارمان بکەرەوە (7515176569)",
+  start:"دەست پێکردن",
+
+  nameTitle:"ناوی سیانی بنووسە",
+  nameSub:"تکایە ناوی سیانی خۆت بنووسە بۆ دەستپێکردنی تاقیکردنەوە.",
+  namePlaceholder:"ناوی سیانی",
+  begin:"دەست پێکردنی تاقیکردنەوە",
+
+  question:"پرسیار",
+  of:"لە",
+  time:"کات",
+
+  passed:"پیرۆزە دەرچویت 🎉",
+  failed:"دەرنەچویت ❌",
+
+  correct:"وەڵامی ڕاست",
+  wrong:"وەڵامی هەڵە",
+  timeout:"کات تەواو بوو",
+  yourAnswer:"وەڵامی تۆ",
+  score:"نمرە",
+  correctCount:"وەڵامی ڕاست",
+  wrongCount:"وەڵامی هەڵە",
+
+  newTest:"تاقیکردنەوەی نوێ",
+  noAnswer:"وەڵام نەدراوە"
+},
+
+badini:{
+  dir:"rtl",
+  choose:"Ji kerema xwe zimanekî hilbijêre",
+  chooseSub:"Ji kerema xwe zimanê testê hilbijêre",
+
+  welcome:"Bi xêr hatî bo testa teorî ya destûra ajotinê",
+  owner:"Xwediyê malpera testê: Lawê Sa'dullah",
+  teacher:"Pirs ji mamoste Bawan Azad hatine wergirtin",
+  problem:"Heke di malperê de pirsgirêkek hebe, ji kerema xwe agahdar bikin (7515176569)",
+  start:"Dest pê bike",
+
+  nameTitle:"Navê xwe yê sêparçe binivîse",
+  nameSub:"Ji kerema xwe navê xwe yê temam binivîse da ku test dest pê bike.",
+  namePlaceholder:"Navê temam",
+  begin:"Destpêkirina testê",
+
+  question:"Pirs",
+  of:"ji",
+  time:"Dem",
+
+  passed:"Pîroz be, tu derketî 🎉",
+  failed:"Tu derneketî ❌",
+
+  correct:"Bersiva rast",
+  wrong:"Bersiva şaş",
+  timeout:"Dem qediya",
+  yourAnswer:"Bersiva te",
+  score:"Xal",
+  correctCount:"Bersivên rast",
+  wrongCount:"Bersivên şaş",
+
+  newTest:"Testeke nû",
+  noAnswer:"Bersiv nehatiye dayîn"
+},
+
+ar:{
+  dir:"rtl",
+  choose:"يرجى اختيار اللغة",
+  chooseSub:"يرجى اختيار لغة الاختبار",
+
+  welcome:"مرحباً بك في اختبار النظري لرخصة القيادة",
+  owner:"صاحب موقع الاختبار: لاوە سعدالله",
+  teacher:"الأسئلة مأخوذة من المدرس: باوان آزاد",
+  problem:"إذا واجهتك أي مشكلة في الموقع يرجى إبلاغنا (7515176569)",
+  start:"ابدأ",
+
+  nameTitle:"اكتب اسمك الكامل",
+  nameSub:"يرجى كتابة اسمك الكامل لبدء الاختبار.",
+  namePlaceholder:"الاسم الكامل",
+  begin:"بدء الاختبار",
+
+  question:"السؤال",
+  of:"من",
+  time:"الوقت",
+
+  passed:"مبروك، لقد نجحت 🎉",
+  failed:"لم تنجح ❌",
+
+  correct:"الإجابة الصحيحة",
+  wrong:"الإجابة الخاطئة",
+  timeout:"انتهى الوقت",
+  yourAnswer:"إجابتك",
+  score:"الدرجة",
+  correctCount:"الإجابات الصحيحة",
+  wrongCount:"الإجابات الخاطئة",
+
+  newTest:"اختبار جديد",
+  noAnswer:"لم تتم الإجابة"
+},
+
+en:{
+  dir:"ltr",
+  choose:"Please choose a language",
+  chooseSub:"Please choose the language of the test",
+
+  welcome:"Welcome to the Driving License Theory Test",
+  owner:"Test website owner: Lawa Saadullah",
+  teacher:"Questions taken from teacher: Bawan Azad",
+  problem:"If you have any problem with the website, please contact us (7515176569)",
+  start:"Start",
+
+  nameTitle:"Enter your full name",
+  nameSub:"Please enter your full name to start the test.",
+  namePlaceholder:"Full name",
+  begin:"Start the Test",
+
+  question:"Question",
+  of:"of",
+  time:"Time",
+
+  passed:"Congratulations, you passed 🎉",
+  failed:"You did not pass ❌",
+
+  correct:"Correct answer",
+  wrong:"Wrong answer",
+  timeout:"Time expired",
+  yourAnswer:"Your answer",
+  score:"Score",
+  correctCount:"Correct answers",
+  wrongCount:"Wrong answers",
+
+  newTest:"New Test",
+  noAnswer:"No answer"
+}
+
+};
+
+
+/* =========================================================
+   42 QUESTIONS
+========================================================= */
+
+const questions = [
+
+{
+id:1,
+q:"هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",
+a:[
+"سوارڕۆ",
+"ئۆتۆمبێل",
+"شەمەندەفەر"
+],
+correct:0
+},
+
+{
+id:2,
+q:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
+a:[
+"پاسکیل",
+"ماتۆڕسکیل",
+"سکۆتەر"
+],
+correct:0
+},
+
+{
+id:3,
+q:"چۆن پاسکیل بۆ منداڵەکەت هەڵدەبژێریت؟",
+a:[
+"بەپێی حەزو داواکاری منداڵەکە",
+"بە شێوەیەک بتوانێت بۆ چەند ساڵێک بەکاری بهێنێت",
+"بە پێی قەبارەو چوار چێوەی پاسکیلەکە،لەگەڵ باڵاو توانای منداڵەکە بگونجێت"
+],
+correct:2
+},
+
+{
+id:4,
+q:"ئامێرێکی گواستنەوەیە دوو یان سێ تایەی هەیە بەهێزی میکانیکی پاڵی پێوە دەنرێت",
+a:[
+"پاسکیل",
+"ماتۆڕسکیل",
+"سوارڕۆ"
+],
+correct:1
+},
+
+{
+id:5,
+q:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
+a:[
+"ئۆتۆمبێلی تایبەت",
+"ئۆتۆمبێلی بارهەڵگر",
+"تەکسی"
+],
+correct:2
+},
+
+{
+id:6,
+q:"چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",
+a:[
+"کاتی سەرکەوتن",
+"کاتی دابەزین",
+"کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"
+],
+correct:2
+},
+
+{
+id:7,
+q:"سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",
+a:[
+"مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات",
+"مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە",
+"هەردوو وڵامەکەی سەرەوە ڕاستن"
+],
+correct:0
+},
+
+{
+id:8,
+q:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",
+a:[
+"تەکسی",
+"پاس",
+"بارهڵگر"
+],
+correct:1
+},
+
+{
+id:9,
+q:"لۆری بارهەڵگرێکە تەرخان کراوە بۆ",
+a:[
+"گواستنەوەی کەل و پەل",
+"گواستنەوەی کەرەستەو پێداویستی بیناسازی",
+"گواستنەوەی سوتەمەنی و تۆز و پاودەر"
+],
+correct:0
+},
+
+{
+id:10,
+q:"بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",
+a:[
+"لۆری",
+"گەڵابە",
+"تەنکەر"
+],
+correct:1
+},
+
+{
+id:11,
+q:"پاسی گواستنەوەی گشتی بەکاردێت بۆ",
+a:[
+"گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان",
+"گواستنەوەی منداڵان و قوتابیان",
+"گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"
+],
+correct:2
+},
+
+{
+id:12,
+q:"لە چی بارودۆخێکدا لێخوڕینی ئۆتۆمبێل بە عەرەبانەوە مەترسیدارە؟",
+a:[
+"لەکاتی بونی بەفر و خلیسکی سەر ڕێگا",
+"لەکاتی بونی گەرمای زۆردا",
+"لەکاتی بونی هەورێکی زۆردا"
+],
+correct:0
+},
+
+{
+id:13,
+q:"لەکاتی بەستنی عەرەبانە یان کەرەڤانە بە ئۆتۆمبێلەکەتەوە نابێت",
+a:[
+"بە خێرایی زیاتر لە 30 کم بڕوات",
+"بە خێرایی زیاتر لە 80 کم بڕوات",
+"بە خێرایی کەمتر لە 80 کم بڕوات"
+],
+correct:1
+},
+
+{
+id:14,
+q:"لە کاتی ڕاکێشانی ئۆتۆمبێل",
+a:[
+"نابێت بە خێرایی زیاتر لە 30 کم بڕوات",
+"نابێت بە خێرایی کەمتر لە 30 کم بڕوات",
+"پێویستە بە خێرایی 30 کم بڕوات"
+],
+correct:0
+},
+
+{
+id:15,
+q:"ڕێڕەوی ناوەڕاست بەکاردێت بۆ",
+a:[
+"لێخوڕین بە ئەوپەڕی خێرایی ڕێگە پێدراو",
+"لێخوڕین بە کەمترین خێرایی ڕێگە پێدراو",
+"لێخوڕینی ڕاستەو ڕاست"
+],
+correct:2
+},
+
+{
+id:16,
+q:"شانی ڕێگا چیە؟",
+a:[
+"ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە",
+"بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک",
+"ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"
+],
+correct:0
+},
+
+{
+id:17,
+q:"پاتناییەکە تەنها ڕێگا بە ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک دەدات",
+a:[
+"شانی ڕێگا",
+"ڕێڕەو",
+"ڕێگای فریاکەوتن"
+],
+correct:1
+},
+
+{
+id:18,
+q:"ڕێگای خێرا چییە؟",
+a:[
+"ڕێگایەکی ئامادە کراوە بۆ هۆیەکانی گواستنەوە، بە خێرایی دەتوانن لێیەوە هاتوچۆ بکەن",
+"ئەو ڕێگایانەن کە شارەکان بە یەکتر دەبەستنەوە",
+"لە ڕێگای سەرەکی و لاوەکی پێکهاتوە"
+],
+correct:0
+},
+
+{
+id:19,
+q:"ڕێگای خێرای دابەشکراو چییە؟",
+a:[
+"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبستنەوە",
+"لە ڕێگای سەرەکی و لاوەکی پێکهاتووە",
+"ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆرو خێرایی سوارڕۆکان"
+],
+correct:2
+},
+
+{
+id:20,
+q:"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبەستنەوە",
+a:[
+"ڕێگای خێرا",
+"ڕێگا دەرەکیەکان",
+"ڕێگا خزمەت گوزاریەکان"
+],
+correct:1
+},
+
+{
+id:21,
+q:"ڕێگای ناوخۆیی چییە؟",
+a:[
+"لە ڕێگای سەرەکی و لاوەکی پێک هاتوە",
+"ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبەستنەوە",
+"ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"
+],
+correct:0
+},
+
+{
+id:22,
+q:"منداڵ تا تەمەنی (13) ساڵی پێویستە",
+a:[
+"لە کوشنەکانی پێشەوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت",
+"لە کوشنەکانی دواوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت",
+"لە کوشنەکانی دواوە دابنیشێت و کورسی تایبەت بەکار بهێنێت"
+],
+correct:2
+},
+
+{
+id:23,
+q:"یاسای هاتوچۆ جێبەجێ دەبێت بەسەر",
+a:[
+"تەنها ئۆتۆمبێل و ماتۆڕسکیل",
+"تەنها پاسکیل و پیادەو سەرنشین",
+"تەواوی بەکارهێنەرانی ڕێگا و بەشدار بوانی هاتوچۆ لە شوفێر و سەرنشین و پیادە"
+],
+correct:2
+},
+
+{
+id:24,
+q:"چی کاتێک ڕێگە پێ دراوە سەرنشین بەشێکی لەشی لە ئۆتۆمبێلەکە بباتە دەرەوە؟",
+a:[
+"تەنها لە کاتی ئاهەنگ و دەربڕینی خۆشی و شادی",
+"تەنها لە کاتی دڵ تێکچون",
+"هیچ کاتێک ڕێگە پێدراو نیە"
+],
+correct:2
+},
+
+{
+id:25,
+q:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",
+a:[
+"نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە",
+"بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت",
+"مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"
+],
+correct:1
+},
+
+{
+id:26,
+q:"هەر کەسێک بە کەمتەر خەمی لێ بخوڕێت و ببێتە هۆکاری مردنی کەسێک یان پەککەوتنی زیاتر لە کەسێک یان مردنی زیاتر لە کەسێک سزا دەدرێت بە",
+a:[
+"سزای دارایی",
+"بەندکردن",
+"بەندکردن و سزای دارایی"
+],
+correct:2
+},
+
+{
+id:27,
+q:"کام لەم وڵامانە سەبارەت بە یاسای هاتوچۆ ڕاستن؟",
+a:[
+"دروست بونی ڕوداوی هاتوچۆ لەسەر هێڵی پەڕینەوە یاخود یارمەتی نەدانی کەسی زیان لەکەوتو نەگەیاندنی بۆ نەخۆشخانە یاخود ئاگادار نەکردنەوەی لایەنە پەیوەندیدارەکان بە بارودۆخی توند کردنی سزا دادەنرێن",
+"دروست بونی ڕوداوی هاتوچۆ دور لە هێڵی پەڕینەوە یاخود یارمەتی دانی کەسی زیان لێکەوتو بە گەیاندنی بۆ نەخۆشخانە یاخود ئاگادار کردەوەی لایەنە پەیوەندی دارەکان بە بارودۆخی کەمکردنەوەی سزا دادەنرێن",
+"هەردوو وڵامی سەرەوە ڕاستن"
+],
+correct:2
+},
+
+{
+id:28,
+q:"هەر کەسێک هەڕەشە یان سوکایەتی بکات بە پۆلیسی هاتوچۆ سزا دەدرێت بە",
+a:[
+"بەندکردن",
+"سزای دارایی",
+"بەندکردن و سزای دارایی"
+],
+correct:0
+},
+
+{
+id:29,
+q:"هەرکەسێک هێرش بکاتە سەر پۆلیسی هاتوچۆ",
+a:[
+"سزای دارایی",
+"بەندکردن زیاتر نەبێت لە 3 ساڵ",
+"بەندکردن و سزای دارایی"
+],
+correct:1
+},
+
+{
+id:30,
+q:"هەرکەسێک هێرش بکاتە سەر ئەفسەری هاتوچۆ سزا دەدرێت بە",
+a:[
+"سزای دارایی",
+"بەندکردن زیاتر نەبێت لە 5 ساڵ",
+"بەندکردن و سزای دارایی"
+],
+correct:1
+},
+
+{
+id:31,
+q:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
+a:[
+"گەرمی و ئۆکسجین و ماددە",
+"بەنزین",
+"گاز"
+],
+correct:0
+},
+
+{
+id:32,
+q:"لەکاتی کوژاندنەوەی ئاگر پێویستە بوەستین لە",
+a:[
+"ڕو لەو شوێنەی کە بایەکەی لێوە دێت",
+"شانمان دەکەینە باکە",
+"بە ئاڕاستەی با، واتا پشت لە باوو ڕو لە ئاگرەکە"
+],
+correct:2
+},
+
+{
+id:33,
+q:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری (A) ڕەنگی سەوز ئەمانە لەخۆ دەگرێت",
+a:[
+"کاغەزو تەختەو قوماش",
+"ئامێرە ئەلیکترۆنی و کارەباییەکان",
+"نەوت و گازوایل و بەنزین"
+],
+correct:0
+},
+
+{
+id:34,
+q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری ئاو جیادەکرێتەوە بە ڕەنگی",
+a:[
+"شین",
+"سوور",
+"سەوز"
+],
+correct:1
+},
+
+{
+id:35,
+q:"لە وەرزی گەرمادا شۆفێری تەنکەری غازی شل پێویستە کاری بارکردن و بەتاڵکردنەوە ئەنجەم بدات لە",
+a:[
+"شەو",
+"ڕۆژ",
+"هەر کاتێک بێت گرینگ نیە"
+],
+correct:0
+},
+
+{
+id:36,
+q:"ژمارە تەڵەفونی پۆلیسی فریا کەوتن چەندە؟",
+a:[
+"188",
+"440",
+"104"
+],
+correct:2
+},
+
+{
+id:37,
+q:"ژمارە تەلەفونی بەرگری شارستانی چەندە؟",
+a:[
+"440",
+"115",
+"122"
+],
+correct:1
+},
+
+{
+id:38,
+q:"ژمارە تەلەفونی فریا گوزاری(ئەمبوڵانس) چەندە؟",
+a:[
+"122",
+"104",
+"188"
+],
+correct:0
+},
+
+{
+id:39,
+q:"ژمارە تەلەفونی پۆلیسی هاتوچۆ (مرور) چەندە؟",
+a:[
+"188",
+"440",
+"هەردوو وڵامەکە ڕاستن"
+],
+correct:2
+},
+
+{
+id:40,
+q:"یەکێک لە نیشانەکانی ئەگەری ئاگر کەوتنەوەی ئۆتۆمبێل بریتیە لە",
+a:[
+"بەرزبونەوەی پلەی گەرمی بزوێنەر",
+"لەرزینی سوکان",
+"کەمبونی ئاوی فڵچەکان"
+],
+correct:0
+},
+
+{
+id:41,
+q:"تانکەری گواستنەوەی غازی شل پێویستە پارک بکرێت",
+a:[
+"لەبەر هەتاو",
+"لە گەراجی کراوە کە هەوا گۆڕکێی هەبێت",
+"لە گەراجی داخراودا"
+],
+correct:1
+},
+
+{
+id:42,
+q:"لە کاتی بەتاڵکردنی غازی شل پێویستە دوور بێت لە هەر سەرچاوەیەکی گەرمی بە دوریەک کەمترنەبێت لە",
+a:[
+"2 مەتر",
+"5 مەتر",
+"8 مەتر"
+],
+correct:2
+}
+
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let sessionQuestions=[];
+let currentQuestion=0;
+let scoreCorrect=0;
+let wrongAnswers=[];
+let timerInterval=null;
+let timeLeft=60;
+let userName="";
+
+
+/* =========================================================
+   RANDOM SHUFFLE
+========================================================= */
+
+function shuffle(array){
+  const arr=[...array];
+
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+
+  return arr;
+}
+
+
+/* =========================================================
+   GET 25 QUESTIONS
+========================================================= */
+
+function getSessionQuestions(){
+
+  let remaining=[];
+
+  try{
+    remaining=JSON.parse(
+      localStorage.getItem("remainingQuestions") || "[]"
+    );
+  }catch(e){
+    remaining=[];
+  }
+
+  const allIds=questions.map(q=>q.id);
+
+  if(!Array.isArray(remaining)){
+    remaining=[];
+  }
+
+  remaining=remaining.filter(id=>allIds.includes(id));
+
+  /*
+    If fewer than 25 remain, create a new shuffled pool.
+    This makes consecutive tests different as much as possible.
+  */
+  if(remaining.length<25){
+
+    const lastSession=
+      JSON.parse(
+        localStorage.getItem("lastSession") || "[]"
+      );
+
+    const notLast=shuffle(
+      allIds.filter(id=>!lastSession.includes(id))
+    );
+
+    const inRemaining=remaining.filter(
+      id=>!lastSession.includes(id)
+    );
+
+    const combined=[
+      ...inRemaining,
+      ...notLast.filter(id=>!inRemaining.includes(id))
+    ];
+
+    remaining=shuffle(combined);
+
+    /*
+      If still less than 25, fill from all questions.
+    */
+    if(remaining.length<25){
+      remaining=shuffle(allIds);
+    }
+  }
+
+  const selected=remaining.slice(0,25);
+  const newRemaining=remaining.slice(25);
+
+  localStorage.setItem(
+    "remainingQuestions",
+    JSON.stringify(newRemaining)
+  );
+
+  localStorage.setItem(
+    "lastSession",
+    JSON.stringify(selected)
+  );
+
+  return selected.map(id =>
+    questions.find(q=>q.id===id)
+  );
+}
+
+
+/* =========================================================
+   LANGUAGE SELECT
+========================================================= */
+
+function selectLanguage(lang){
+
+  currentLanguage=lang;
+
+  const t=translations[lang];
+
+  document.documentElement.lang=
+    lang==="ar" ? "ar" :
+    lang==="en" ? "en" : "ku";
+
+  document.documentElement.dir=t.dir;
+
+  document.getElementById("chooseLanguage").textContent=t.choose;
+  document.getElementById("chooseLanguageSub").textContent=t.chooseSub;
+
+  document.getElementById("languageScreen")
+    .classList.add("hidden");
+
+  document.getElementById("welcomeScreen")
+    .classList.remove("hidden");
+
+  document.getElementById("welcomeTitle").textContent=t.welcome;
+  document.getElementById("ownerText").textContent=t.owner;
+  document.getElementById("teacherText").textContent=t.teacher;
+  document.getElementById("problemText").textContent=t.problem;
+  document.getElementById("startBtn").textContent=t.start;
+}
+
+
+/* =========================================================
+   NAME SCREEN
+========================================================= */
+
+function showNameScreen(){
+
+  const t=translations[currentLanguage];
+
+  document.getElementById("welcomeScreen")
+    .classList.add("hidden");
+
+  document.getElementById("nameScreen")
+    .classList.remove("hidden");
+
+  document.getElementById("nameTitle").textContent=t.nameTitle;
+  document.getElementById("nameSub").textContent=t.nameSub;
+  document.getElementById("fullName").placeholder=t.namePlaceholder;
+  document.getElementById("beginQuizBtn").textContent=t.begin;
+
+  setTimeout(()=>{
+    document.getElementById("fullName").focus();
+  },200);
+}
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+function startQuiz(){
+
+  const input=document.getElementById("fullName");
+
+  userName=input.value.trim();
+
+  if(!userName){
+
+    input.focus();
+
+    return;
+  }
+
+  sessionQuestions=getSessionQuestions();
+
+  currentQuestion=0;
+  scoreCorrect=0;
+  wrongAnswers=[];
+
+  document.getElementById("nameScreen")
+    .classList.add("hidden");
+
+  document.getElementById("quizScreen")
+    .classList.remove("hidden");
+
+  createQuestionNumbers();
+
+  showQuestion();
+}
+
+
+/* =========================================================
+   QUESTION NUMBERS
+========================================================= */
+
+function createQuestionNumbers(){
+
+  const box=document.getElementById("questionNumbers");
+
+  box.innerHTML="";
+
+  for(let i=0;i<25;i++){
+
+    const div=document.createElement("div");
+
+    div.className="qnum";
+    div.id="qnum-"+i;
+
+    div.textContent=i+1;
+
+    box.appendChild(div);
+  }
+}
+
+
+/* =========================================================
+   SHOW QUESTION
+========================================================= */
+
+function showQuestion(){
+
+  clearInterval(timerInterval);
+
+  const t=translations[currentLanguage];
+  const q=sessionQuestions[currentQuestion];
+
+  document.querySelectorAll(".qnum")
+    .forEach(x=>x.classList.remove("current"));
+
+  const currentNumber=
+    document.getElementById("qnum-"+currentQuestion);
+
+  if(currentNumber){
+    currentNumber.classList.add("current");
+  }
+
+  document.getElementById("questionCounter").textContent=
+    `${t.question} ${currentQuestion+1} ${t.of} 25`;
+
+  document.getElementById("progressBar").style.width=
+    `${((currentQuestion)/25)*100}%`;
+
+  document.getElementById("questionText").textContent=
+    q.q;
+
+  const answersBox=document.getElementById("answers");
+
+  answersBox.innerHTML="";
+
+  /*
+    Shuffle answer choices while keeping the correct answer.
+  */
+  const choices=q.a.map((text,index)=>({
+    text:text,
+    originalIndex:index
+  }));
+
+  const shuffledChoices=shuffle(choices);
+
+  shuffledChoices.forEach(choice=>{
+
+    const button=document.createElement("button");
+
+    button.className="answer-btn";
+
+    button.textContent=choice.text;
+
+    button.onclick=()=>{
+      answerQuestion(
+        choice.originalIndex,
+        button
+      );
+    };
+
+    answersBox.appendChild(button);
+  });
+
+  startTimer();
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+  timeLeft=60;
+
+  updateTimer();
+
+  timerInterval=setInterval(()=>{
+
+    timeLeft--;
+
+    updateTimer();
+
+    if(timeLeft<=0){
+
+      clearInterval(timerInterval);
+
+      timeExpired();
+    }
+
+  },1000);
+}
+
+
+function updateTimer(){
+
+  document.getElementById("timer")
+    .textContent=timeLeft;
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+function answerQuestion(originalIndex,button){
+
+  clearInterval(timerInterval);
+
+  const q=sessionQuestions[currentQuestion];
+
+  const buttons=
+    document.querySelectorAll(".answer-btn");
+
+  buttons.forEach(b=>{
+    b.disabled=true;
+  });
+
+  if(originalIndex===q.correct){
+
+    scoreCorrect++;
+
+    button.classList.add("correct-answer");
+
+    markQuestion(true);
+
+  }else{
+
+    button.classList.add("wrong-answer");
+
+    buttons.forEach(b=>{
+
+      if(
+        b.textContent===
+        q.a[q.correct]
+      ){
+        b.classList.add("correct-answer");
+      }
+
+    });
+
+    wrongAnswers.push({
+      number:currentQuestion+1,
+      question:q.q,
+      userAnswer:q.a[originalIndex],
+      correctAnswer:q.a[q.correct]
+    });
+
+    markQuestion(false);
+  }
+
+  setTimeout(nextQuestion,700);
+}
+
+
+/* =========================================================
+   TIME EXPIRED
+========================================================= */
+
+function timeExpired(){
+
+  const q=sessionQuestions[currentQuestion];
+
+  const buttons=
+    document.querySelectorAll(".answer-btn");
+
+  buttons.forEach(b=>b.disabled=true);
+
+  buttons.forEach(b=>{
+
+    if(
+      b.textContent===
+      q.a[q.correct]
+    ){
+      b.classList.add("correct-answer");
+    }
+
+  });
+
+  wrongAnswers.push({
+    number:currentQuestion+1,
+    question:q.q,
+    userAnswer:translations[currentLanguage].timeout,
+    correctAnswer:q.a[q.correct]
+  });
+
+  markQuestion(false);
+
+  setTimeout(nextQuestion,700);
+}
+
+
+/* =========================================================
+   MARK QUESTION
+========================================================= */
+
+function markQuestion(isCorrect){
+
+  const el=
+    document.getElementById("qnum-"+currentQuestion);
+
+  if(!el) return;
+
+  el.classList.remove("current");
+
+  if(isCorrect){
+    el.classList.add("correct");
+  }else{
+    el.classList.add("wrong");
+  }
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  if(currentQuestion>=sessionQuestions.length){
+
+    finishQuiz();
+
+  }else{
+
+    showQuestion();
+  }
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finishQuiz(){
+
+  clearInterval(timerInterval);
+
+  document.getElementById("quizScreen")
+    .classList.add("hidden");
+
+  document.getElementById("resultScreen")
+    .classList.remove("hidden");
+
+  const t=translations[currentLanguage];
+
+  /*
+    25 questions.
+    Each question = 4 points.
+    Total = 100.
+  */
+  const finalScore=scoreCorrect*4;
+
+  const passed=scoreCorrect>=20;
+
+  document.getElementById("resultIcon")
+    .textContent=passed ? "🏆" : "❌";
+
+  document.getElementById("resultTitle")
+    .textContent=
+      passed ? t.passed : t.failed;
+
+  document.getElementById("resultTitle")
+    .className=passed ? "pass" : "fail";
+
+  document.getElementById("finalScore")
+    .textContent=
+      `${t.score}: ${finalScore}/100`;
+
+  document.getElementById("resultDetails")
+    .innerHTML=
+      `<strong>${t.correctCount}:</strong> ${scoreCorrect}/25
+       <br>
+       <strong>${t.wrongCount}:</strong> ${wrongAnswers.length}/25`;
+
+  const list=document.getElementById("wrongList");
+
+  list.innerHTML="";
+
+  if(wrongAnswers.length>0){
+
+    const title=document.createElement("h3");
+
+    title.textContent=
+      `${t.wrongCount}: ${wrongAnswers.length}`;
+
+    list.appendChild(title);
+
+    wrongAnswers.forEach(item=>{
+
+      const div=document.createElement("div");
+
+      div.className="wrong-item";
+
+      div.innerHTML=`
+        <strong>${t.question} ${item.number}</strong>
+        <p>${item.question}</p>
+        <p>
+          <strong>${t.yourAnswer}:</strong>
+          ${item.userAnswer}
+        </p>
+        <p>
+          <strong>${t.correct}:</strong>
+          ${item.correctAnswer}
+        </p>
+      `;
+
+      list.appendChild(div);
+    });
+
+  }else{
+
+    const perfect=document.createElement("p");
+
+    perfect.textContent=
+      currentLanguage==="en"
+      ? "Excellent! You answered all questions correctly."
+      : currentLanguage==="ar"
+      ? "ممتاز! أجبت عن جميع الأسئلة بشكل صحيح."
+      : currentLanguage==="badini"
+      ? "Pir baş! Tu hemû pirsên rast bersiv da."
+      : "زۆر باشە! هەموو پرسیارەکانت بە ڕاستی وەڵام دا.";
+
+    list.appendChild(perfect);
+  }
+
+  document.getElementById("newTestBtn")
+    .textContent=t.newTest;
+}
+
+
+/* =========================================================
+   NEW TEST
+========================================================= */
+
+function newTest(){
+
+  document.getElementById("resultScreen")
+    .classList.add("hidden");
+
+  document.getElementById("nameScreen")
+    .classList.remove("hidden");
+
+  const t=translations[currentLanguage];
+
+  document.getElementById("nameTitle").textContent=t.nameTitle;
+  document.getElementById("nameSub").textContent=t.nameSub;
+  document.getElementById("fullName").placeholder=t.namePlaceholder;
+  document.getElementById("beginQuizBtn").textContent=t.begin;
+
+  document.getElementById("fullName").value="";
+}
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document.getElementById("fullName")
+.addEventListener("keydown",function(e){
+
+  if(e.key==="Enter"){
+    startQuiz();
+  }
+
+});
+
+</script>
+
+</body>
+</html>
