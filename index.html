@@ -4,100 +4,79 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Driving Theory Test</title>
+
 <style>
-*{box-sizing:border-box}
 body{
-margin:0;background:#eef1f5;font-family:Arial,sans-serif;color:#222
+    font-family:Arial,sans-serif;
+    background:#f1f3f6;
+    margin:0;
+    padding:20px;
 }
-.container{max-width:700px;margin:auto;padding:15px}
-.card{
-background:white;border-radius:18px;padding:22px;margin-top:20px;
-box-shadow:0 4px 18px #0002
+.box{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 4px 15px #0002;
 }
-h1,h2{text-align:center}
 button{
-width:100%;padding:14px;margin-top:10px;border:0;border-radius:12px;
-background:#1769e0;color:white;font-size:17px
+    width:100%;
+    padding:14px;
+    margin:7px 0;
+    border:0;
+    border-radius:10px;
+    font-size:17px;
+    cursor:pointer;
 }
-.lang{background:white;color:#222;border:2px solid #ddd}
-input{
-width:100%;padding:14px;border:1px solid #bbb;border-radius:10px;
-font-size:18px;margin-top:10px;text-align:center
+.lang{
+    background:white;
+    border:2px solid #ddd;
 }
-.hidden{display:none}
-.option{
-background:#f5f5f5;color:#111;border:2px solid #ddd;
-text-align:right
+.answer{
+    background:#f3f3f3;
+    text-align:right;
 }
-.option.correct{background:#b8f3c2;border-color:#168b2b}
-.option.wrong{background:#222;color:white;border-color:#222}
-#timer{text-align:center;font-size:32px;font-weight:bold;margin:10px}
-#progress{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
-.qnum{
-width:27px;height:27px;border-radius:50%;background:#ddd;
-display:flex;align-items:center;justify-content:center;font-size:12px
-}
-.qnum.correct{background:#16a34a;color:white}
-.qnum.wrong{background:#111;color:white}
-.result{text-align:center;font-size:26px;font-weight:bold}
-.wrongBox{
-background:#f3f3f3;padding:12px;border-radius:10px;margin-top:10px
+#quiz{
+    display:none;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
+
+<div class="box">
 
 <!-- LANGUAGE -->
-<div id="language" class="card">
-<h2>🌍</h2>
-<h2>تکایە زمانێک هەڵبژێرە</h2>
+<div id="languages">
 
-<button class="lang" onclick="chooseLang('ku')">🇹🇯 کوردی سۆرانی</button>
-<button class="lang" onclick="chooseLang('badini')">🇹🇯 کوردی بادینی</button>
-<button class="lang" onclick="chooseLang('ar')">🇮🇶 العربية</button>
-<button class="lang" onclick="chooseLang('en')">🇬🇧 English</button>
-</div>
+<h2 id="chooseLanguage">تکایە زمانێک هەڵبژێرە</h2>
 
-<!-- LOGIN -->
-<div id="login" class="card hidden">
-<h2 id="loginTitle"></h2>
-<input id="code" type="text" inputmode="numeric" maxlength="4"
-placeholder="">
-<button onclick="login()" id="loginBtn"></button>
-<p id="loginMsg" style="text-align:center;color:red"></p>
-</div>
+<button class="lang" onclick="setLanguage('ku')">
+🇹🇯 کوردی سۆرانی
+</button>
 
-<!-- WELCOME -->
-<div id="welcome" class="card hidden">
-<h2 id="welcomeTitle"></h2>
-<p id="welcomeText"></p>
-<button onclick="showName()" id="startBtn"></button>
-</div>
+<button class="lang" onclick="setLanguage('badini')">
+🇹🇯 کوردی بادینی
+</button>
 
-<!-- NAME -->
-<div id="nameBox" class="card hidden">
-<h2 id="nameTitle"></h2>
-<input id="name" type="text">
-<button onclick="startQuiz()" id="beginBtn"></button>
+<button class="lang" onclick="setLanguage('ar')">
+🇮🇶 العربية
+</button>
+
+<button class="lang" onclick="setLanguage('en')">
+🇬🇧 English
+</button>
+
 </div>
 
 <!-- QUIZ -->
-<div id="quiz" class="card hidden">
-<div id="progress"></div>
-<div id="timer">60</div>
-<h2 id="question"></h2>
-<div id="options"></div>
-</div>
+<div id="quiz">
 
-<!-- RESULT -->
-<div id="resultBox" class="card hidden">
-<div id="result" class="result"></div>
-<p id="score" style="text-align:center"></p>
-<p id="wrongCount" style="text-align:center"></p>
-<div id="wrongQuestions"></div>
-<button onclick="location.reload()" id="againBtn"></button>
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
 </div>
 
 </div>
@@ -105,179 +84,210 @@ placeholder="">
 <script>
 
 /* =========================
-   10 ACCESS CODES
+   QUESTIONS - 4 LANGUAGES
 ========================= */
 
-const ACCESS_CODES = [
-"2008",
-"1575",
-"1098",
-"2222",
-"0176",
-"6523",
-"0023",
-"1276",
-"0922",
-"1197"
-];
+const questions = [
 
-/* =========================
-   LANGUAGE
-========================= */
-
-let lang="ku";
-
-const UI={
+{
 ku:{
-login:"کۆدی چوونەژوورەوە بنووسە",
-loginBtn:"چوونەژوورەوە",
-placeholder:"کۆد",
-bad:"کۆدەکە هەڵەیە یان پێشتر بەکارهاتووە",
-welcome:"بەخێر بێیت بۆ تاقی کردنەوەی تیۆری مۆڵەتی شوفێری",
-welcomeText:"خاوەنی سایتی تاقی کردنەوە: لاوە سعدللە",
-start:"دەست پێکردن",
-name:"تکایە ناوی سیانی بنووسە",
-begin:"دەست پێکردنی تاقیکردنەوە",
-again:"دووبارە تاقیکردنەوە",
-pass:"🎉 پیرۆزە دەرچویت",
-fail:"❌ دەرنەچوویت",
-score:"نمرە",
-wrong:"ژمارەی هەڵەکان"
+q:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
+a:["پاسکیل","ماتۆڕسکیل","سکۆتەر"]
 },
 badini:{
-login:"Koda têketinê binivîse",
-loginBtn:"Têketin",
-placeholder:"Kod",
-bad:"Kod şaş e an jixwe hatiye bikaranîn",
-welcome:"Bi xêr hatî bo testa teorî ya lîsansa ajotinê",
-welcomeText:"Xwediyê malperê: Lawê Saedllah",
-start:"Dest pê bike",
-name:"Navê xwe yê sêparî binivîse",
-begin:"Dest bi testê bike",
-again:"Dîsa test bike",
-pass:"🎉 Pîroz be, tu derketî",
-fail:"❌ Tu derneketî",
-score:"Pûan",
-wrong:"Hejmara bersivên şaş"
+q:"Amadeyek çerxdar e ku bi hêza bedenî dimeşe",
+a:["Bisîklet","Motorsîklet","Skuter"]
 },
 ar:{
-login:"أدخل رمز الدخول",
-loginBtn:"دخول",
-placeholder:"الرمز",
-bad:"الرمز خاطئ أو مستخدم مسبقاً",
-welcome:"مرحباً بك في اختبار نظرية رخصة القيادة",
-welcomeText:"صاحب الموقع: لاوة سعدالله",
-start:"ابدأ",
-name:"أدخل اسمك الثلاثي",
-begin:"ابدأ الاختبار",
-again:"إعادة الاختبار",
-pass:"🎉 مبروك، لقد نجحت",
-fail:"❌ لم تنجح",
-score:"النتيجة",
-wrong:"عدد الأخطاء"
+q:"مركبة ذات عجلات تسير بقوة جسمانية",
+a:["دراجة هوائية","دراجة نارية","سكوتر"]
 },
 en:{
-login:"Enter access code",
-loginBtn:"Login",
-placeholder:"Code",
-bad:"Wrong code or this code has already been used",
-welcome:"Welcome to the Driving Licence Theory Test",
-welcomeText:"Site owner: Lawa Saadallah",
-start:"Start",
-name:"Enter your full name",
-begin:"Start Test",
-again:"Try Again",
-pass:"🎉 Congratulations, you passed",
-fail:"❌ You did not pass",
-score:"Score",
-wrong:"Wrong answers"
+q:"A wheeled vehicle that moves by physical power",
+a:["Bicycle","Motorcycle","Scooter"]
+},
+correct:0
+},
+
+{
+ku:{
+q:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
+a:["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"]
+},
+badini:{
+q:"Sewarek ji bo veguhastina kesan li hember kirê hatiye amadekirin",
+a:["Otomobîla taybet","Kamyon","Taksî"]
+},
+ar:{
+q:"مركبة مخصصة لنقل الأشخاص مقابل أجرة",
+a:["سيارة خاصة","شاحنة","تاكسي"]
+},
+en:{
+q:"A vehicle designed to transport people for a fare",
+a:["Private car","Truck","Taxi"]
+},
+correct:2
+},
+
+{
+ku:{
+q:"شانی ڕێگا چیە؟",
+a:[
+"ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە",
+"بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک",
+"ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و چەپی ڕێگاوە"
+]
+},
+badini:{
+q:"Milê rê çi ye?",
+a:[
+"Beşa rê ye ku rasterast li kêleka rê ye",
+"Beşa rê ye ji bo rêçûna yek rêza otomobîlan",
+"Beşa rê ye ku li rast û çepê rê ye"
+]
+},
+ar:{
+q:"ما هو كتف الطريق؟",
+a:[
+"الجزء من الطريق الذي يقع مباشرة بجانب الطريق",
+"جزء من الطريق لسير صف واحد من السيارات",
+"الجزء من الطريق الموجود على يمين ويسار الطريق"
+]
+},
+en:{
+q:"What is the road shoulder?",
+a:[
+"The part of the road directly beside the roadway",
+"A part of the road for one line of vehicles",
+"The part of the road on the right and left sides"
+]
+},
+correct:0
+},
+
+{
+ku:{
+q:"ژمارەی تەلەفۆنی فریا گوزاری (ئەمبوڵانس) چەندە؟",
+a:["122","104","188"]
+},
+badini:{
+q:"Hejmara telefona ambulansê çi ye?",
+a:["122","104","188"]
+},
+ar:{
+q:"ما رقم هاتف الإسعاف؟",
+a:["122","104","188"]
+},
+en:{
+q:"What is the ambulance telephone number?",
+a:["122","104","188"]
+},
+correct:0
+},
+
+{
+ku:{
+q:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",
+a:["گەرمی و ئۆکسجین و ماددە","بەنزین","گاز"]
+},
+badini:{
+q:"Hêmayên bingehîn ên çêbûna agirê çi ne?",
+a:["Germî, oksîjen û madde","Benzîn","Gaz"]
+},
+ar:{
+q:"ما هي العناصر الأساسية لحدوث الحريق؟",
+a:["الحرارة والأكسجين والمادة","البنزين","الغاز"]
+},
+en:{
+q:"What are the main elements necessary for fire?",
+a:["Heat, oxygen and fuel","Petrol","Gas"]
+},
+correct:0
 }
+
+];
+
+
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+
+let currentLanguage="ku";
+
+const languageNames={
+ku:"کوردی سۆرانی",
+badini:"کوردی بادینی",
+ar:"العربية",
+en:"English"
 };
 
-function chooseLang(x){
-lang=x;
+function setLanguage(language){
 
-document.getElementById("language").classList.add("hidden");
-document.getElementById("login").classList.remove("hidden");
+currentLanguage=language;
 
-document.documentElement.lang=x==="ar"?"ar":x==="en"?"en":"ku";
-document.documentElement.dir=x==="ar"||x==="ku"?"rtl":"ltr";
+document.getElementById("languages").style.display="none";
+document.getElementById("quiz").style.display="block";
 
-document.getElementById("loginTitle").textContent=UI[x].login;
-document.getElementById("loginBtn").textContent=UI[x].loginBtn;
-document.getElementById("code").placeholder=UI[x].placeholder;
+if(language==="ar"){
+document.documentElement.dir="rtl";
+document.documentElement.lang="ar";
 }
+else if(language==="ku" || language==="badini"){
+document.documentElement.dir="rtl";
+document.documentElement.lang="ku";
+}
+else{
+document.documentElement.dir="ltr";
+document.documentElement.lang="en";
+}
+
+showQuestion();
+}
+
 
 /* =========================
-   LOGIN
+   SHOW QUESTION
 ========================= */
 
-function login(){
+let currentQuestion=0;
 
-const code=document.getElementById("code").value.trim();
+function showQuestion(){
 
-if(!ACCESS_CODES.includes(code)){
-document.getElementById("loginMsg").textContent=UI[lang].bad;
-return;
+const item=questions[currentQuestion][currentLanguage];
+
+document.getElementById("question").textContent=item.q;
+
+const answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+item.a.forEach((answer,index)=>{
+
+const button=document.createElement("button");
+
+button.className="answer";
+
+button.textContent=answer;
+
+button.onclick=function(){
+
+if(index===questions[currentQuestion].correct){
+button.style.background="#b9f6c3";
+}
+else{
+button.style.background="#222";
+button.style.color="white";
 }
 
-/*
- IMPORTANT:
- This remembers the used code on this browser.
-*/
-let used=JSON.parse(localStorage.getItem("usedCodes")||"[]");
+};
 
-if(used.includes(code)){
-document.getElementById("loginMsg").textContent=UI[lang].bad;
-return;
+answers.appendChild(button);
+
+});
+
 }
 
-used.push(code);
-localStorage.setItem("usedCodes",JSON.stringify(used));
+</script>
 
-document.getElementById("login").classList.add("hidden");
-document.getElementById("welcome").classList.remove("hidden");
-
-document.getElementById("welcomeTitle").textContent=UI[lang].welcome;
-document.getElementById("welcomeText").textContent=UI[lang].welcomeText;
-document.getElementById("startBtn").textContent=UI[lang].start;
-}
-
-/* =========================
-   QUESTIONS
-   42 QUESTIONS
-========================= */
-
-const Q=[
-["هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",
-["سوارڕۆ","ئۆتۆمبێل","شەمەندەفەر"],0],
-["هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",
-["پاسکیل","ماتۆڕسکیل","سکۆتەر"],0],
-["چۆن پاسکیل بۆ منداڵەکەت هەڵدەبژێریت؟",
-["بەپێی حەزو داواکاری منداڵەکە","بە شێوەیەک بتوانێت بۆ چەند ساڵێک بەکاری بهێنێت","بە پێی قەبارەو چوار چێوەی پاسکیلەکە،لەگەڵ باڵاو توانای منداڵەکە بگونجێت"],2],
-["ئامێرێکی گواستنەوەیە دوو یان سێ تایەی هەیە بەهێزی میکانیکی پاڵی پێوە دەنرێت",
-["پاسکیل","ماتۆڕسکیل","سوارڕۆ"],1],
-["سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",
-["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"],2],
-["چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",
-["کاتی سەرکەوتن","کاتی دابەزین","کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"],2],
-["سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",
-["مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات","مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە","هەردوو وڵامەکەی سەرەوە ڕاستن"],0],
-["سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",
-["تەکسی","پاس","بارهڵگر"],1],
-["لۆری بارهەڵگرێکە تەرخان کراوە بۆ",
-["گواستنەوەی کەل و پەل","گواستنەوەی کەرەستەو پێداویستی بیناسازی","گواستنەوەی سوتەمەنی و تۆز و پاودەر"],0],
-["بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",
-["لۆری","گەڵابە","تەنکەر"],1],
-["پاسی گواستنەوەی گشتی بەکاردێت بۆ",
-["گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان","گواستنەوەی منداڵان و قوتابیان","گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"],2],
-["لە چی بارودۆخێکدا لێخوڕینی ئۆتۆمبێل بە عەرەبانەوە مەترسیدارە؟",
-["لەکاتی بونی بەفر و خلیسکی سەر ڕێگا","لەکاتی بونی گەرمای زۆردا","لەکاتی بونی هەورێکی زۆردا"],0],
-["لەکاتی بەستنی عەرەبانە یان کەرەڤانە بە ئۆتۆمبێلەکەتەوە نابێت",
-["بە خێرایی زیاتر لە 30 کم بڕوات","بە خێرایی زیاتر لە 80 کم بڕوات","بە خێرایی کەمتر لە 80 کم بڕوات"],1],
-["لە کاتی ڕاکێشانی ئۆتۆمبێل",
-["نابێت بە خێرایی زیاتر لە 30 کم بڕوات","نابێت بە خێرایی کەمتر لە 30 کم بڕوات","پێویستە بە خێرایی 30 کم بڕوات"],0],
-["ڕێڕەوی ناوەڕاست بەکاردێت بۆ",
-["لێخوڕین بە ئەوپەڕی خێرایی ڕێگە پێدراو","لێخوڕین بە کەمترین خێرایی ڕێگە پێدراو","لێخوڕینی ڕاستەو ڕاست"],2],
-["شانی ڕێگا چیە؟",
-["ئەو بەشەی ڕێگایە کە ڕاستەوخۆ دەکەوێتە تەنیشتی ڕێگاکە","بەشێکی ڕێگایە بۆ ڕۆیشتنی یەک ڕیز ئۆتۆمبێلی یەک لە دوای یەک","ئەو بەشەی ڕێگایە کە دەکەوێتە دەستە ڕاست و
+</body>
+</html>
