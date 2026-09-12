@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XOSHNAW MARKET</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+  background:#f5f6fa;
+  color:#171717;
+}
+
+/* HEADER */
+header{
+  background:#111;
+  color:white;
+  padding:16px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.logo span{
+  color:#00e676;
+}
+
+nav{
+  display:flex;
+  gap:20px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.login{
+  background:#00e676;
+  color:#000;
+  padding:10px 18px;
+  border-radius:25px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#111,#252525);
+  color:white;
+  padding:70px 8%;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.hero h1 span{
+  color:#00e676;
+}
+
+.hero p{
+  color:#ccc;
+  margin-bottom:30px;
+}
+
+.search{
+  max-width:600px;
+  margin:auto;
+  display:flex;
+  background:white;
+  border-radius:40px;
+  padding:6px;
+}
+
+.search input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:15px;
+  font-size:16px;
+  border-radius:40px;
+}
+
+.search button{
+  border:0;
+  background:#00e676;
+  padding:0 25px;
+  border-radius:35px;
+  cursor:pointer;
+}
+
+/* CATEGORIES */
+.categories{
+  display:flex;
+  gap:12px;
+  overflow:auto;
+  padding:25px 6%;
+}
+
+.category{
+  background:white;
+  padding:12px 20px;
+  border-radius:30px;
+  white-space:nowrap;
+  cursor:pointer;
+  box-shadow:0 3px 12px #00000010;
+}
+
+/* TITLE */
+.section{
+  padding:20px 6%;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.section-title h2{
+  font-size:25px;
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:22px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 5px 20px #00000010;
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:17px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.price{
+  font-size:22px;
+  font-weight:bold;
+  color:#111;
+}
+
+.type{
+  display:inline-block;
+  margin:8px 0;
+  padding:6px 10px;
+  border-radius:15px;
+  font-size:11px;
+  background:#eafff2;
+  color:#00a94f;
+}
+
+.btn{
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:12px;
+  background:#111;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn.green{
+  background:#00c853;
+  color:#000;
+}
+
+/* LIVE */
+.live-section{
+  background:#111;
+  color:white;
+  padding:45px 6%;
+  margin-top:30px;
+}
+
+.live-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.live-card{
+  background:#222;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+}
+
+.live-card img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  opacity:.8;
+}
+
+.live-info{
+  padding:15px;
+}
+
+.live-badge{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:#ff1744;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* VERIFICATION */
+.verify{
+  margin:45px 6%;
+  background:white;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 5px 20px #00000010;
+}
+
+.verify h2{
+  margin-bottom:10px;
+}
+
+.verify p{
+  color:#666;
+  line-height:1.8;
+}
+
+.form{
+  margin-top:20px;
+  display:grid;
+  gap:15px;
+}
+
+.form input,.form select{
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  width:100%;
+}
+
+.upload{
+  border:2px dashed #bbb;
+  padding:25px;
+  text-align:center;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  color:#aaa;
+  text-align:center;
+  padding:35px;
+  margin-top:50px;
+}
+
+footer strong{
+  color:#00e676;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+  header{
+    padding:13px 4%;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero{
+    padding:50px 5%;
+  }
+
+  .verify{
+    margin:30px 4%;
+    padding:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">XOSHNAW <span>MARKET</span></div>
+
+  <nav>
+    <a href="#home">سەرەکی</a>
+    <a href="#auction">مەزاد</a>
+    <a href="#shop">فرۆشتن</a>
+    <a href="#live">🔴 Live</a>
+  </nav>
+
+  <a class="login" href="#">چوونەژوورەوە</a>
+</header>
+
+
+<section class="hero" id="home">
+
+  <h1>بازاڕەکەت، <span>بە شێوەی نوێ</span></h1>
+
+  <p>
+    کاڵا بفرۆشە، مەزاد بکە و Live بکەوە
+  </p>
+
+  <div class="search">
+    <input type="text" placeholder="چی دەگەڕێیت؟">
+    <button onclick="searchProduct()">گەڕان</button>
+  </div>
+
+</section>
+
+
+<div class="categories">
+
+  <div class="category">📱 ئەلیکترۆنیات</div>
+  <div class="category">🚗 ئۆتۆمبێل</div>
+  <div class="category">👕 جل و بەرگ</div>
+  <div class="category">💻 کۆمپیوتەر</div>
+  <div class="category">🏠 ماڵ و مۆبڵ</div>
+  <div class="category">🎮 یاری</div>
+
+</div>
+
+
+<section class="section" id="auction">
+
+<div class="section-title">
+  <h2>🔥 مەزادی چالاک</h2>
+  <span>بینینی هەموو</span>
+</div>
+
+<div class="products">
+
+  <div class="card">
+
+    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9">
+
+    <div class="card-body">
+
+      <h3>iPhone 15 Pro Max</h3>
+
+      <span class="type">🔨 مەزاد</span>
+
+      <p>بەرزترین Bid</p>
+
+      <div class="price">$850</div>
+
+      <button class="btn green"
+      onclick="bid('iPhone 15 Pro Max')">
+      🔨 Bid بکە
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
+
+    <div class="card-body">
+
+      <h3>Nike Air Jordan</h3>
+
+      <span class="type">🔨 مەزاد</span>
+
+      <p>بەرزترین Bid</p>
+
+      <div class="price">$220</div>
+
+      <button class="btn green"
+      onclick="bid('Nike Air Jordan')">
+      🔨 Bid بکە
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="shop">
+
+<div class="section-title">
+  <h2>🛒 فرۆشتنی ڕاستەوخۆ</h2>
+</div>
+
+<div class="products">
+
+  <div class="card">
+
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30">
+
+    <div class="card-body">
+
+      <h3>Apple Watch</h3>
+
+      <span class="type">🛒 Buy Now</span>
+
+      <div class="price">$299</div>
+
+      <button class="btn"
+      onclick="buy('Apple Watch')">
+      🛒 کڕینی ئێستا
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e">
+
+    <div class="card-body">
+
+      <h3>Headphones</h3>
+
+      <span class="type">🛒 Buy Now</span>
+
+      <div class="price">$120</div>
+
+      <button class="btn"
+      onclick="buy('Headphones')">
+      🛒 کڕینی ئێستا
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="live-section" id="live">
+
+<h2>🔴 Live ـە چالاکەکان</h2>
+
+<br>
+
+<div class="live-grid">
+
+  <div class="live-card">
+
+    <span class="live-badge">● LIVE</span>
+
+    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d">
+
+    <div class="live-info">
+
+      <h3>بازاڕی ئەلیکترۆنیات</h3>
+
+      <p>👁️ 1,245 بینەر</p>
+
+      <button class="btn green"
+      onclick="joinLive()">
+      🔴 بەشداری Live
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="live-card">
+
+    <span class="live-badge">● LIVE</span>
+
+    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8">
+
+    <div class="live-info">
+
+      <h3>فرۆشتنی جل</h3>
+
+      <p>👁️ 834 بینەر</p>
+
+      <button class="btn green"
+      onclick="joinLive()">
+      🔴 بەشداری Live
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="verify">
+
+<h2>🛡️ پشتڕاستکردنەوەی فرۆشیار</h2>
+
+<p>
+بۆ دانانی کاڵا بۆ مەزاد، پێویستە ناسنامەکەت
+یان پاسپۆرت پشتڕاست بکرێتەوە.
+وێنەکان تەنها بۆ پێداچوونەوەی ئەدمین بەکاردێن.
+</p>
+
+<div class="form">
+
+<select>
+  <option>جۆری بەڵگە هەڵبژێرە</option>
+  <option>کارتی نیشتیمانی</option>
+  <option>پاسپۆرت</option>
+</select>
+
+<input type="text" placeholder="ناوی تەواو">
+
+<label class="upload">
+  📷 وێنەی پێشەوەی بەڵگە
+  <input type="file" accept="image/*" hidden>
+</label>
+
+<label class="upload">
+  📷 وێنەی دواوەی بەڵگە
+  <input type="file" accept="image/*" hidden>
+</label>
+
+<button class="btn green" onclick="verify()">
+  ناردن بۆ پێداچوونەوە
+</button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+<strong>XOSHNAW MARKET</strong>
+</p>
+
+<br>
+
+<p>
+بازاڕێکی نوێ بۆ کڕین، فرۆشتن، مەزاد و Live
+</p>
+
+</footer>
+
+
+<script>
+
+function bid(product){
+
+  let amount = prompt(
+    "نرخی Bid ـەکەت بە دۆلار بنووسە:"
+  );
+
+  if(amount){
+
+    alert(
+      "Bid ـەکەت بۆ " +
+      product +
+      " بە $" +
+      amount +
+      " تۆمار کرا."
+    );
+
+  }
+
+}
+
+
+function buy(product){
+
+  alert(
+    "🛒 کڕینی " +
+    product +
+    " دەست پێدەکات."
+  );
+
+}
+
+
+function joinLive(){
+
+  alert(
+    "🔴 Live ـەکە دەکرێتەوە..."
+  );
+
+}
+
+
+function verify(){
+
+  alert(
+    "✅ داواکارییەکەت نێردرا.\n\n" +
+    "تکایە چاوەڕێ بکە تا ئەدمین " +
+    "زانیارییەکانت پێداچوونەوەی بۆ دەکات."
+  );
+
+}
+
+
+function searchProduct(){
+
+  let value =
+    document.querySelector(".search input").value;
+
+  if(value){
+
+    alert(
+      "گەڕان بۆ: " + value
+    );
+
+  }else{
+
+    alert("تکایە ناوی کاڵا بنووسە.");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
