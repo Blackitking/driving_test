@@ -3,8 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تاقیکردنەوەی تیۆری مۆڵەتی شوفێری</title>
+<title>تاقیکردنەوەی تیۆری</title>
 <style>
+body{font-family:Arial;text-align:center;padding:60px}
+#quiz{display:none}
+button{padding:15px 30px;font-size:20px}
+</style>
+</head>
+<body>
+<div id="start">
+<h1>تاقیکردنەوەی تیۆری</h1>
+<button onclick="startQuiz()">دەست پێ بکە</button>
+</div>
+
+<div id="quiz">
+<h2>پرسیارەکان</h2>
+<p>تاقیکردنەوە دەستی پێکرد.</p>
+</div>
+
+<script>
+function startQuiz(){
+ document.getElementById("start").style.display="none";
+ document.getElementById("quiz").style.display="block";
+}
+</script>
+</body>
+</html>
 *{box-sizing:border-box;font-family:Arial,Tahoma,sans-serif}
 body{margin:0;background:linear-gradient(135deg,#0f172a,#1e3a8a);min-height:100vh;color:#111827}
 .container{width:94%;max-width:700px;margin:20px auto}.card{background:white;border-radius:22px;padding:24px;box-shadow:0 15px 40px rgba(0,0,0,.25)}
