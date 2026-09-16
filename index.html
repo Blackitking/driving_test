@@ -1,106 +1,25 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>تاقیکردنەوەی تیۆری مۆڵەتی شوفێری</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,Tahoma,sans-serif}
-body{margin:0;background:linear-gradient(135deg,#0f172a,#1e3a8a);min-height:100vh;color:#111827}
-.container{width:94%;max-width:700px;margin:20px auto}.card{background:white;border-radius:22px;padding:24px;box-shadow:0 15px 40px rgba(0,0,0,.25)}
-.hidden{display:none!important}h1,h2,h3{text-align:center}.logo{text-align:center;font-size:55px;margin-bottom:10px}.subtitle{text-align:center;color:#64748b;line-height:1.8}
-.primary-btn{width:100%;border:0;padding:16px;border-radius:15px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer;margin-top:15px}.primary-btn:hover{background:#1d4ed8}
-input{width:100%;padding:15px;border:2px solid #cbd5e1;border-radius:14px;font-size:17px;outline:none;margin-top:10px}input:focus{border-color:#2563eb}
-.info{line-height:2;background:#eff6ff;padding:15px;border-radius:15px;margin-top:20px}.contact{text-align:center;margin-top:15px;line-height:2}.contact a{text-decoration:none;font-weight:bold;margin:0 7px}.whatsapp{color:#16a34a}.viber{color:#7c3aed}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.timer{background:#fee2e2;color:#dc2626;padding:10px 15px;border-radius:13px;font-size:20px;font-weight:bold;min-width:80px;text-align:center}
-.progress{height:9px;background:#e5e7eb;border-radius:20px;overflow:hidden;margin-bottom:15px}.progress-bar{height:100%;background:#2563eb;width:0%;transition:.3s}
-.question-numbers{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px;justify-content:center}.qnum{width:27px;height:27px;border-radius:50%;background:#cbd5e1;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}.qnum.current{outline:3px solid #2563eb}.qnum.correct{background:#16a34a;color:white}.qnum.wrong{background:#000;color:white}
-.question{font-size:21px;font-weight:bold;line-height:1.8;margin-bottom:20px}.question-image{text-align:center;margin:10px 0 20px;background:transparent;border:0;padding:0}.question-image svg{width:150px;height:110px;max-width:100%;display:inline-block}
-.answers{display:flex;flex-direction:column;gap:12px}.answer-btn{width:100%;text-align:right;padding:16px;border:2px solid #d1d5db;border-radius:15px;background:#f8fafc;font-size:17px;cursor:pointer;line-height:1.6}.answer-btn:hover{border-color:#2563eb;background:#eff6ff}.answer-btn.selected{border-color:#2563eb;background:#dbeafe}.answer-btn.correct-answer{border-color:#16a34a;background:#dcfce7}.answer-btn.wrong-answer{border-color:#dc2626;background:#fee2e2}
-.result{text-align:center}.result-icon{font-size:70px}.score{font-size:40px;font-weight:bold;margin:15px 0}.pass{color:#16a34a}.fail{color:#dc2626}.wrong-list{margin-top:25px;text-align:right}.wrong-item{background:#f8fafc;border-right:5px solid #dc2626;padding:15px;border-radius:12px;margin-bottom:12px;line-height:1.9}.small{color:#64748b;font-size:14px}.access-error{display:none;color:#dc2626;font-weight:bold;text-align:center;margin-top:10px}
-@media(max-width:500px){.card{padding:18px}.question{font-size:19px}.answer-btn{font-size:16px}}
-
-.question-image img{max-width:100%;width:auto;max-height:260px;border-radius:14px;object-fit:contain;display:inline-block}
-.admin-link{display:block;text-align:center;margin:28px auto 8px;color:#94a3b8;text-decoration:none;font-size:13px;cursor:pointer}
-.admin-panel{margin-top:15px}
-.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.admin-panel textarea{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;resize:vertical;min-height:90px;font-family:Arial,Tahoma,sans-serif}
-.admin-panel select{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;background:white}
-.admin-note{background:#eff6ff;padding:12px;border-radius:12px;line-height:1.8;margin:10px 0}
-.admin-status{margin-top:12px;padding:12px;border-radius:12px;display:none;line-height:1.7}
-.admin-status.ok{display:block;background:#dcfce7;color:#166534}
-.admin-status.err{display:block;background:#fee2e2;color:#991b1b}
-.admin-list{margin-top:20px}
-.admin-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px;margin-bottom:10px}
-.admin-item-title{font-weight:bold;line-height:1.7}
-.admin-actions{display:flex;gap:8px;margin-top:8px}
-.admin-actions button{flex:1;border:0;border-radius:10px;padding:10px;cursor:pointer;font-weight:bold}
-.danger-btn{background:#fee2e2;color:#991b1b}
-.secondary-btn{background:#e2e8f0;color:#334155}
-@media(max-width:500px){.admin-grid{grid-template-columns:1fr}}
+*{box-sizing:border-box;font-family:Arial,Tahoma,sans-serif}body{margin:0;background:linear-gradient(135deg,#0f172a,#1e3a8a);min-height:100vh;color:#111827}.container{width:94%;max-width:700px;margin:20px auto}.card{background:white;border-radius:22px;padding:24px;box-shadow:0 15px 40px rgba(0,0,0,.25)}.hidden{display:none!important}h1,h2,h3{text-align:center}.logo{text-align:center;font-size:55px;margin-bottom:10px}.subtitle{text-align:center;color:#64748b;line-height:1.8}.primary-btn{width:100%;border:0;padding:16px;border-radius:15px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer;margin-top:15px}.primary-btn:hover{background:#1d4ed8}input{width:100%;padding:15px;border:2px solid #cbd5e1;border-radius:14px;font-size:17px;outline:none;margin-top:10px}input:focus{border-color:#2563eb}.info{line-height:2;background:#eff6ff;padding:15px;border-radius:15px;margin-top:20px}.contact{text-align:center;margin-top:15px;line-height:2}.contact a{text-decoration:none;font-weight:bold;margin:0 7px}.whatsapp{color:#16a34a}.viber{color:#7c3aed}.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.timer{background:#fee2e2;color:#dc2626;padding:10px 15px;border-radius:13px;font-size:20px;font-weight:bold;min-width:80px;text-align:center}.progress{height:9px;background:#e5e7eb;border-radius:20px;overflow:hidden;margin-bottom:15px}.progress-bar{height:100%;background:#2563eb;width:0%;transition:.3s}.question-numbers{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px;justify-content:center}.qnum{width:27px;height:27px;border-radius:50%;background:#cbd5e1;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}.qnum.current{outline:3px solid #2563eb}.qnum.correct{background:#16a34a;color:white}.qnum.wrong{background:#000;color:white}.question{font-size:21px;font-weight:bold;line-height:1.8;margin-bottom:20px}.question-image{text-align:center;margin:10px 0 20px}.question-image img{max-width:100%;width:auto;max-height:260px;border-radius:14px;object-fit:contain}.answers{display:flex;flex-direction:column;gap:12px}.answer-btn{width:100%;text-align:right;padding:16px;border:2px solid #d1d5db;border-radius:15px;background:#f8fafc;font-size:17px;cursor:pointer;line-height:1.6}.answer-btn:hover{border-color:#2563eb;background:#eff6ff}.answer-btn.correct-answer{border-color:#16a34a;background:#dcfce7}.answer-btn.wrong-answer{border-color:#dc2626;background:#fee2e2}.result{text-align:center}.result-icon{font-size:70px}.score{font-size:40px;font-weight:bold;margin:15px 0}.pass{color:#16a34a}.fail{color:#dc2626}.wrong-list{margin-top:25px;text-align:right}.wrong-item{background:#f8fafc;border-right:5px solid #dc2626;padding:15px;border-radius:12px;margin-bottom:12px;line-height:1.9}.small{color:#64748b;font-size:14px}.access-error{display:none;color:#dc2626;font-weight:bold;text-align:center;margin-top:10px}.admin-link{display:block;text-align:center;margin:28px auto 8px;color:#94a3b8;text-decoration:none;font-size:13px;cursor:pointer}.admin-panel{margin-top:15px}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.admin-panel textarea{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;resize:vertical;min-height:90px;font-family:Arial,Tahoma,sans-serif}.admin-panel select{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;background:white;margin-top:10px}.admin-note{background:#eff6ff;padding:12px;border-radius:12px;line-height:1.8;margin:10px 0}.admin-status{margin-top:12px;padding:12px;border-radius:12px;display:none;line-height:1.7}.admin-status.ok{display:block;background:#dcfce7;color:#166534}.admin-status.err{display:block;background:#fee2e2;color:#991b1b}.admin-list{margin-top:20px}.admin-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px;margin-bottom:10px}.admin-item-title{font-weight:bold;line-height:1.7}.admin-item img{max-width:140px;max-height:100px;border-radius:10px;margin-top:8px}.admin-actions{display:flex;gap:8px;margin-top:8px}.admin-actions button{flex:1;border:0;border-radius:10px;padding:10px;cursor:pointer;font-weight:bold}.danger-btn{background:#fee2e2;color:#991b1b}.secondary-btn{background:#e2e8f0;color:#334155}.edit-btn{background:#dbeafe;color:#1d4ed8}@media(max-width:500px){.card{padding:18px}.question{font-size:19px}.answer-btn{font-size:16px}.admin-grid{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
+</head><body>
 <div class="container">
-<section id="welcomeScreen" class="card">
-<div class="logo">🚘</div><h1>بەخێر بێیت بۆ تاقی کردنەوەی تیۆری مۆڵەتی شوفێری</h1>
-<p style="text-align:center;font-weight:bold;margin-top:20px;">مافی ئەم بەرهەمە پارێزراوە بۆ نوسینگەی هەرمان لە کۆیە</p>
-<p style="text-align:center;margin-top:8px;color:#64748b;line-height:1.8;">ناونیشان: کۆیە، نزیک فلکەی سەوز، تەنیشت کەبابخانەی ڕانیە 2</p>
-<div class="info"><p><strong>خاوەنی سایتی تاقی کردنەوە:</strong> لاوە سعدللە</p><p><strong>پرسیارەکان وەرگیراون لە مامۆستا:</strong> باوان ئازاد</p><p><strong>کێشەیەکت هەبوو لە سایتەکە:</strong> تکایە ئاگادارمان بکەرەوە (7515176569)</p></div>
-<div class="contact"><a class="whatsapp" href="https://wa.me/9647515176569" target="_blank">🟢 WhatsApp</a><a class="viber" href="viber://chat?number=%2B9647515176569">🟣 Viber</a></div>
-<button class="primary-btn" onclick="showAccessScreen()">دەست پێکردن</button>
-</section>
-<section id="accessScreen" class="card hidden"><div class="logo">🔐</div><h2>کۆدی چونە ژوورەوە</h2><p class="subtitle">فێرخوازی بەڕێز تکایە کۆدی چونە ژوورەوە داخڵ بکە</p><input id="accessCode" type="password" inputmode="numeric" autocomplete="off" placeholder="کۆدی چونە ژوورەوە"><div id="accessError" class="access-error">کۆدەکە هەڵەیە، تکایە دووبارە هەوڵ بدەوە.</div><button class="primary-btn" onclick="checkAccessCode()">چوونە ژوورەوە</button></section>
-<section id="nameScreen" class="card hidden"><div class="logo">👤</div><h2>ناوی سیانی بنووسە</h2><p class="subtitle">تکایە ناوی سیانی خۆت بنووسە بۆ دەستپێکردنی تاقیکردنەوە.</p><input id="fullName" type="text" autocomplete="name" placeholder="ناوی سیانی"><button class="primary-btn" onclick="startQuiz()">دەست پێکردنی تاقیکردنەوە</button></section>
+<section id="welcomeScreen" class="card"><div class="logo">🚘</div><h1>بەخێر بێیت بۆ تاقی کردنەوەی تیۆری مۆڵەتی شوفێری</h1><p style="text-align:center;font-weight:bold;margin-top:20px;">مافی ئەم بەرهەمە پارێزراوە بۆ نوسینگەی هەرمان لە کۆیە</p><p style="text-align:center;margin-top:8px;color:#64748b;line-height:1.8;">ناونیشان: کۆیە، نزیک فلکەی سەوز، تەنیشت کەبابخانەی ڕانیە 2</p><div class="info"><p><strong>خاوەنی سایتی تاقی کردنەوە:</strong> لاوە سعدللە</p><p><strong>پرسیارەکان وەرگیراون لە مامۆستا:</strong> باوان ئازاد</p><p><strong>کێشەیەکت هەبوو لە سایتەکە:</strong> تکایە ئاگادارمان بکەرەوە (7515176569)</p></div><div class="contact"><a class="whatsapp" href="https://wa.me/9647515176569" target="_blank">🟢 WhatsApp</a><a class="viber" href="viber://chat?number=%2B9647515176569">🟣 Viber</a></div><button class="primary-btn" onclick="showAccessScreen()">دەست پێکردن</button></section>
+<section id="accessScreen" class="card hidden"><div class="logo">🔐</div><h2>کۆدی چونە ژوورەوە</h2><p class="subtitle">فێرخوازی بەڕێز تکایە کۆدی چونە ژوورەوە داخڵ بکە</p><input id="accessCode" type="password" inputmode="numeric" placeholder="کۆدی چونە ژوورەوە"><div id="accessError" class="access-error">کۆدەکە هەڵەیە، تکایە دووبارە هەوڵ بدەوە.</div><button class="primary-btn" onclick="checkAccessCode()">چوونە ژوورەوە</button></section>
+<section id="nameScreen" class="card hidden"><div class="logo">👤</div><h2>ناوی سیانی بنووسە</h2><p class="subtitle">تکایە ناوی سیانی خۆت بنووسە بۆ دەستپێکردنی تاقیکردنەوە.</p><input id="fullName" type="text" placeholder="ناوی سیانی"><button class="primary-btn" onclick="startQuiz()">دەست پێکردنی تاقیکردنەوە</button></section>
 <section id="quizScreen" class="card hidden"><div class="topbar"><strong id="questionCounter"></strong><div class="timer" id="timer">60</div></div><div class="progress"><div class="progress-bar" id="progressBar"></div></div><div class="question-numbers" id="questionNumbers"></div><div class="question" id="questionText"></div><div class="question-image hidden" id="questionImage"></div><div class="answers" id="answers"></div></section>
-<section id="resultScreen" class="card hidden"><div class="result"><div class="result-icon" id="resultIcon"></div><h1 id="resultTitle"></h1><div class="score" id="finalScore"></div><p id="resultDetails"></p><div class="wrong-list" id="wrongList"></div><button class="primary-btn" onclick="newTest()" id="newTestBtn">تاقیکردنەوەی نوێ</button></div></section>
+<section id="resultScreen" class="card hidden"><div class="result"><div class="result-icon" id="resultIcon"></div><h1 id="resultTitle"></h1><div class="score" id="finalScore"></div><p id="resultDetails"></p><div class="wrong-list" id="wrongList"></div><button class="primary-btn" onclick="newTest()">تاقیکردنەوەی نوێ</button></div></section>
 </div>
-
 <a id="adminEntry" class="admin-link" href="javascript:void(0)">Admin</a>
-
-<section id="adminLoginScreen" class="card hidden">
-  <div class="logo">🛠️</div>
-  <h2>بەشی ئەدمین</h2>
-  <p class="subtitle">تکایە کۆدی پشتڕاستکردنەوەی ئەدمینی داخڵ بکە</p>
-  <input id="adminCode" type="password" inputmode="numeric" autocomplete="off" placeholder="کۆدی ئەدمین">
-  <div id="adminLoginError" class="access-error">کۆدی ئەدمین هەڵەیە.</div>
-  <button id="adminLoginBtn" class="primary-btn" type="button">چوونە ژوورەوەی ئەدمین</button>
-  <button id="adminBackBtn" class="primary-btn secondary-btn" type="button">گەڕانەوە</button>
-</section>
-
-<section id="adminPanel" class="card hidden admin-panel">
-  <div class="logo">👨‍💻</div>
-  <h2>بەڕێوەبردنی پرسیارەکان</h2>
-  <div class="admin-note">
-    پرسیاری نوێ لێرە زیاد بکە. کاتێک خەزن دەکرێت، دەچێتە کۆمەڵەی پرسیارەکان و
-    فێرخواز لە تاقیکردنەوەی داهاتوودا بە هەڕەمەکی دەیبینێت.
-  </div>
-
-  <textarea id="adminQuestion" placeholder="دەقی پرسیار"></textarea>
-  <div class="admin-grid">
-    <input id="adminA" type="text" placeholder="هەڵبژاردەی 1">
-    <input id="adminB" type="text" placeholder="هەڵبژاردەی 2">
-    <input id="adminC" type="text" placeholder="هەڵبژاردەی 3">
-    <input id="adminD" type="text" placeholder="هەڵبژاردەی 4">
-  </div>
-
-  <select id="adminCorrect">
-    <option value="0">وەڵامی ڕاست: هەڵبژاردەی 1</option>
-    <option value="1">وەڵامی ڕاست: هەڵبژاردەی 2</option>
-    <option value="2">وەڵامی ڕاست: هەڵبژاردەی 3</option>
-    <option value="3">وەڵامی ڕاست: هەڵبژاردەی 4</option>
-  </select>
-
-  <input id="adminImage" type="file" accept="image/*">
-  <button id="adminAddBtn" class="primary-btn" type="button">➕ زیادکردنی پرسیار</button>
-  <div id="adminStatus" class="admin-status"></div>
-
-  <div id="adminList" class="admin-list"></div>
-  <button id="adminLogoutBtn" class="primary-btn secondary-btn" type="button">دەرچوون لە ئەدمین</button>
-</section>
-
+<section id="adminLoginScreen" class="card hidden"><div class="logo">🛠️</div><h2>بەشی ئەدمین</h2><p class="subtitle">تکایە کۆدی پشتڕاستکردنەوەی ئەدمینی داخڵ بکە</p><input id="adminCode" type="password" inputmode="numeric" placeholder="کۆدی ئەدمین"><div id="adminLoginError" class="access-error">کۆدی ئەدمین هەڵەیە.</div><button id="adminLoginBtn" class="primary-btn">چوونە ژوورەوەی ئەدمین</button><button id="adminBackBtn" class="primary-btn secondary-btn">گەڕانەوە</button></section>
+<section id="adminPanel" class="card hidden admin-panel"><div class="logo">👨‍💻</div><h2>بەڕێوەبردنی پرسیارەکان</h2><div class="admin-note">لێرە پرسیار زیاد بکە بە <strong>٣ هەڵبژاردە</strong> و وێنە. دەتوانیت هەر پرسیارێکی زیادکراو دەستکاری یان بسڕیتەوە.</div><textarea id="adminQuestion" placeholder="دەقی پرسیار"></textarea><div class="admin-grid"><input id="adminA" placeholder="هەڵبژاردەی 1"><input id="adminB" placeholder="هەڵبژاردەی 2"><input id="adminC" placeholder="هەڵبژاردەی 3"></div><select id="adminCorrect"><option value="0">وەڵامی ڕاست: هەڵبژاردەی 1</option><option value="1">وەڵامی ڕاست: هەڵبژاردەی 2</option><option value="2">وەڵامی ڕاست: هەڵبژاردەی 3</option></select><input id="adminImage" type="file" accept="image/*"><div id="adminImagePreview" style="display:none;text-align:center;margin-top:12px"><img id="adminPreviewImg" style="max-width:100%;max-height:220px;border-radius:14px;object-fit:contain"></div><button id="adminAddBtn" class="primary-btn">➕ زیادکردنی پرسیار</button><button id="adminCancelEditBtn" class="primary-btn secondary-btn" style="display:none">❌ هەڵوەشاندنەوەی دەستکاری</button><div id="adminStatus" class="admin-status"></div><div id="adminList" class="admin-list"></div><button id="adminLogoutBtn" class="primary-btn secondary-btn">دەرچوون لە ئەدمین</button></section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const t={question:"پرسیار",of:"لە",passed:"پیرۆزە دەرچویت 🎉",failed:"دەرنەچویت ❌",correct:"وەڵامی ڕاست",wrong:"وەڵامی هەڵە",timeout:"کات تەواو بوو",yourAnswer:"وەڵامی تۆ",score:"نمرە",correctCount:"وەڵامی ڕاست",wrongCount:"وەڵامی هەڵە",newTest:"تاقیکردنەوەی نوێ",noAnswer:"وەڵام نەدراوە"};
+const SUPABASE_URL="YOUR_SUPABASE_URL";const SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY";const ADMIN_CODE="2035";
 const questions=[
 {id:1,q:"هۆیەکی چەرخدارە بەهێزی جەستەیی یان میکانیکی دەڕوات یان ڕادەکێشرێت",a:["سوارڕۆ","ئۆتۆمبێل","شەمەندەفەر"],correct:0},
 {id:2,q:"هۆیەکی چەرخدارە بە هێزی جەستەیی دەڕوات",a:["پاسکیل","ماتۆڕسکیل","سکۆتەر"],correct:0},
@@ -109,7 +28,7 @@ const questions=[
 {id:5,q:"سوارڕۆیەکە ئامادە کراوە بۆ گواستنەوەی کەسی بەرامبەر بە کرێ",a:["ئۆتۆمبێلی تایبەت","ئۆتۆمبێلی بارهەڵگر","تەکسی"],correct:2},
 {id:6,q:"چی کاتێک شۆفێری تەکسی پێویستە یارمەتی سەرنشین بدات؟",a:["کاتی سەرکەوتن","کاتی دابەزین","کاتێک سەرنشین بەساڵاچوو،یان نەخۆش یان خاوەن پێداویستی تایبەت بوو"],correct:2},
 {id:7,q:"سەبارەت بە سەرنشینی تەکسی کام لەمانە ڕاستن",a:["مافی خۆیەتی بە ئۆتۆمبێلێکی سەلامەت گەشت بکات","مافی خۆیەتی ئاژەڵەکەی لەگەڵ خۆی بباتە ناو تەکسیەوە","هەردوو وڵامەکەی سەرەوە ڕاستن"],correct:0},
-{id:8,q:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",a:["تەکسی","پاس","بارهڵگر"],correct:1},
+{id:8,q:"سوارڕۆیەکی قەبارە گەورەیە بۆ گواستنەوەی ژمارەیەکی دیاریکراو سەرنشین",a:["تەکسی","پاس","بارهەڵگر"],correct:1},
 {id:9,q:"لۆری بارهەڵگرێکە تەرخان کراوە بۆ",a:["گواستنەوەی کەل و پەل","گواستنەوەی کەرەستەو پێداویستی بیناسازی","گواستنەوەی سوتەمەنی و تۆز و پاودەر"],correct:0},
 {id:10,q:"بارهەڵگرێکە تەرخان کراوە بۆ گواستنەوەی کەرەستەو پێداویستی بیناسازی",a:["لۆری","گەڵابە","تەنکەر"],correct:1},
 {id:11,q:"پاسی گواستنەوەی گشتی بەکاردێت بۆ",a:["گواستنەوەی گەشتیاران بۆ شوێنە گەشتیاریەکان","گواستنەوەی منداڵان و قوتابیان","گواستنەوەی سەرنشین لە ناوەو دەرەوەی شارەکان"],correct:2},
@@ -122,363 +41,41 @@ const questions=[
 {id:18,q:"ڕێگای خێرا چییە؟",a:["ڕێگایەکی ئامادە کراوە بۆ هۆیەکانی گواستنەوە، بە خێرایی دەتوانن لێیەوە هاتوچۆ بکەن","ئەو ڕێگایانەن کە شارەکان بە یەکتر دەبەستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتوە"],correct:0},
 {id:19,q:"ڕێگای خێرای دابەشکراو چییە؟",a:["ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبستنەوە","لە ڕێگای سەرەکی و لاوەکی پێکهاتووە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆرو خێرایی سوارڕۆکان"],correct:2},
 {id:20,q:"ئەو ڕێگایانەن کە شارەکان بە یەکتری دەبەستنەوە",a:["ڕێگای خێرا","ڕێگا دەرەکیەکان","ڕێگا خزمەت گوزاریەکان"],correct:1},
-{id:21,q:"ڕێگای ناوخۆیی چییە؟",a:["لە ڕێگای سەرەکی و لاوەکی پێک هاتوە","ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبەستنەوە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"],correct:0},
+{id:21,q:"ڕێگای ناوخۆیی چییە؟",a:["لە ڕێگای سەرەکی و لاوەکی پێک هاتوە","ئەو ڕێگایانەن کە شارەکان بە یەکەوە دەبستنەوە","ڕێگایەکە کە ڕێڕەوەکانی دابەشکراون بە پێی جۆر و خێرایی سوارڕۆکان"],correct:0},
 {id:22,q:"منداڵ تا تەمەنی (13) ساڵی پێویستە",a:["لە کوشنەکانی پێشەوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و پشتێنی سەلامەتی بەکار بهێنێت","لە کوشنەکانی دواوە دابنیشێت و کورسی تایبەت بەکار بهێنێت"],correct:2},
 {id:23,q:"یاسای هاتوچۆ جێبەجێ دەبێت بەسەر",a:["تەنها ئۆتۆمبێل و ماتۆڕسکیل","تەنها پاسکیل و پیادەو سەرنشین","تەواوی بەکارهێنەرانی ڕێگا و بەشدار بوانی هاتوچۆ لە شوفێر و سەرنشین و پیادە"],correct:2},
 {id:24,q:"چی کاتێک ڕێگە پێ دراوە سەرنشین بەشێکی لەشی لە ئۆتۆمبێلەکە بباتە دەرەوە؟",a:["تەنها لە کاتی ئاهەنگ و دەربڕینی خۆشی و شادی","تەنها لە کاتی دڵ تێکچون","هیچ کاتێک ڕێگە پێدراو نیە"],correct:2},
-{id:25,q:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",a:["نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە","بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت","مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"],correct:1},
-{id:26,q:"هەر کەسێک بە کەمتەر خەمی لێ بخوڕێت و ببێتە هۆکاری مردنی کەسێک یان پەککەوتنی زیاتر لە کەسێک یان مردنی زیاتر لە کەسێک سزا دەدرێت بە",a:["سزای دارایی","بەندکردن","بەندکردن و سزای دارایی"],correct:2},
-{id:27,q:"کام لەمانە سەبارەت بە یاسای هاتوچۆ ڕاستن؟",a:["دروست بونی ڕوداوی هاتوچۆ لەسەر هێڵی پەڕینەوە یاخود یارمەتی نەدانی کەسی زیان لەکەوتو نەگەیاندنی بۆ نەخۆشخانە یاخود ئاگادار نەکردنەوەی لایەنە پەیوەندیدارەکان بە بارودۆخی توند کردنی سزا دادەنرێن","دروست بونی ڕوداوی هاتوچۆ دور لە هێڵی پەڕینەوە یاخود یارمەتی دانی کەسی زیان لێکەوتو بە گەیاندنی بۆ نەخۆشخانە یاخود ئاگادار کردەوەی لایەنە پەیوەندی دارەکان بە بارودۆخی کەمکردنەوەی سزا دادەنرێن","هەردوو وڵامی سەرەوە ڕاستن"],correct:2},
-{id:28,q:"هەر کەسێک هەڕەشە یان سوکایەتی بکات بە پۆلیسی هاتوچۆ سزا دەدرێت بە",a:["بەندکردن","سزای دارایی","بەندکردن و سزای دارایی"],correct:0},
-{id:29,q:"هەرکەسێک هێرش بکاتە سەر پۆلیسی هاتوچۆ",a:["سزای دارایی","بەندکردن زیاتر نەبێت لە 3 ساڵ","بەندکردن و سزای دارایی"],correct:1},
-{id:30,q:"هەرکەسێک هێرش بکاتە سەر ئەفسەری هاتوچۆ سزا دەدرێت بە",a:["سزای دارایی","بەندکردن زیاتر نەبێت لە 5 ساڵ","بەندکردن و سزای دارایی"],correct:1},
-{id:31,q:"ڕەگەزە سەرەکیەکانی دروستبونی ئاگر بریتین لە",a:["گەرمی و ئۆکسجین و ماددە","بەنزین","گاز"],correct:0},
-{id:32,q:"لەکاتی کوژاندنەوەی ئاگر پێویستە بوەستین لە",a:["ڕو لەو شوێنەی کە بایەکەی لێوە دێت","شانمان دەکەینە باکە","بە ئاڕاستەی با، واتا پشت لە باوو ڕو لە ئاگرەکە"],correct:2},
-{id:33,q:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری (A) ڕەنگی سەوز ئەمانە لەخۆ دەگرێت",a:["کاغەزو تەختەو قوماش","ئامێرە ئەلیکترۆنی و کارەباییەکان","نەوت و گازوایل و بەنزین"],correct:0},
-{id:34,q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری ئاو جیادەکرێتەوە بە ڕەنگی",a:["شین","سوور","سەوز"],correct:1},
-{id:35,q:"لە وەرزی گەرمادا شۆفێری تەنکەری غازی شل پێویستە کاری بارکردن و بەتاڵکردنەوە ئەنجەم بدات لە",a:["شەو","ڕۆژ","هەر کاتێک بێت گرینگ نیە"],correct:0},
-{id:36,q:"ژمارە تەڵەفونی پۆلیسی فریا کەوتن چەندە؟",a:["188","440","104"],correct:2},
-{id:37,q:"ژمارە تەلەفونی بەرگری شارستانی چەندە؟",a:["440","115","122"],correct:1},
-{id:38,q:"ژمارە تەلەفونی فریا گوزاری(ئەمبوڵانس) چەندە؟",a:["122","104","188"],correct:0},
-{id:39,q:"ژمارە تەلەفونی پۆلیسی هاتوچۆ (مرور) چەندە؟",a:["188","440","هەردوو وڵامەکە ڕاستن"],correct:2},
-{id:40,q:"یەکێک لە نیشانەکانی ئەگەری ئاگر کەوتنەوەی ئۆتۆمبێل بریتیە لە",a:["بەرزبونەوەی پلەی گەرمی بزوێنەر","لەرزینی سوکان","کەمبونی ئاوی فڵچەکان"],correct:0},
-{id:41,q:"تانکەری گواستنەوەی غازی شل پێویستە پارک بکرێت",a:["لەبەر هەتاو","لە گەراجی کراوە کە هەوا گۆڕکێی هەبێت","لە گەراجی داخراودا"],correct:1},
-{id:42,q:"لە کاتی بەتاڵکردنی غازی شل پێویستە دوور بێت لە هەر سەرچاوەیەکی گەرمی بە دوریەک کەمترنەبێت لە",a:["2 مەتر","5 مەتر","8 مەتر"],correct:2},
-{id:43,q:"ئەم هێمایەی ناو داشبۆڕد واتای چیە؟",a:["بەنزینت کەمە","بزوێنەر یان سیستەمی سوتەمەنی بپشکنە","ڕۆنی ئۆتۆمبێلەکەت بگۆڕە"],correct:1,image:"engine"},
-{id:44,q:"گڵۆپی سوری ڕۆنی بزوێنەر لەناو داشبۆڕد هەڵ بوە بە مانای چی دێت؟",a:["ئاساییە","وریاکردنەوەیە","مەترسیدارە"],correct:2,image:"oil"},
-{id:45,q:"کام لەمانە ئەرکی بریتییە لە بەرز کردنەوەی تەزوی پاتری؟",a:["دیلکۆ","دینەمۆ","کۆیل"],correct:1},
-{id:46,q:"کام لەم شێوازانە باشترینە بۆ گرتنی سوکانی ئۆتۆمبێلە نوێیەکان؟",a:["3:9","2:10","4:8"],correct:0},
-{id:47,q:"ئەم نیشانەیە بەدوای سوارڕۆکانەوە مانای چیە؟",a:["سوارڕۆیەکی لەسەر خۆیە خێرایی لە 80 کم کەم ترە","سوارڕۆیەکی لەسەر خۆیە خێرایی لە 30 کم کەم ترە","سوارڕۆیەکی لەسەر خۆیە خێرایی لە 80 کم زیاترە"],correct:1,image:"triangle"},
-{id:48,q:"یەکێک لە مەترسیە گەورەکانی ئاگر کەوتنەوە لەسەر ئۆتۆمبێل بریتییە لە؟",a:["پاتری","تایەکان","سیستەمی غازی شل"],correct:2},
-{id:49,q:"مەبەست لە هەڵواسینی هێمای(UN Number) لە تانکەری گواستنەوەی سوتەمەنی:",a:["بۆ دیاری کردنی خێراییە","بۆ جوانیە","بۆ ناسینەوەی ماددەی ناو تەنکەر و مەترسیەکانی"],correct:2},
-{id:50,q:"ئەگەرر ژنێکی دو گیان توشی ڕوداوێکی ئۆتۆمبێل بوبێت، باشترین یارمەتی چیە؟",a:["هەوڵی ڕزگار کردنی منداڵەکەی ناو سکی دەدەم","هەوڵ دەدەم بە خێرایی بیگەیەنمە نەخۆشخانە","دڵنیایی دەدەم لەوەی کە ئاسودە بێت و پەیوەندی بە تیمی فریا گوزاری دەکەم"],correct:2},
-{id:51,q:"یەکەم شت کە پێویستە بیکەیت ئەگەر هەستت بە ئاگر کەوتنەوە کرد لەکاتی لێ خوڕین ئەوەیە:",a:["لە کەناری ڕێگاکە بوەستیت و بزوێنەرەکە بکوژێنیتەوە","یەکسەر ئیستۆپ بگرەو ئۆتۆمبێلەکەت ڕابگرە","بەردەوام بە لە لێخوڕین تا دەگەیتە نزیکترین فرتەر"],correct:0},
-{id:52,q:"لەکاتی لافاو لەناوچەی نوقوم بوو بە ئاو:",a:["نابێت لێ بخوڕیت","زوو بپەڕیتەوە","شۆفێرەکە دابەزێت بۆ قیاس کردنی قوڵی ئاوەکە"],correct:0},
-{id:53,q:"لەکاتی بونی لێچونی سوتەمەنی یان تێکچونی وایەرەکان پێویستە کاری چاک کردنەوە ئەنجام بدرێت لە؟",a:["شوفێرەکە","کەسی شارەزا","یەکێک لە سەر نشینەکان"],correct:1},
-{id:54,q:"ئامێری ئاگر کوژێنەوە بە جۆری(CO2)گونجاوە بۆ کوژاندنەوەی ئاگری؟",a:["نەوت و گازوایل و بەنزین","ئامێر ئەلیکترۆنی و کارەباییەکان","کەلوپەلی چێشت خانەو خواردن دروست کردن"],correct:1},
-{id:55,q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری(پاودەر)گونجاوە بۆ کوژاندنەوەی ئاگری؟",a:["نەوت و گازوایل و بەنزین","کەلوپەلی چێشتخانەو خواردن دروست کردن","هەردوکیان"],correct:2},
-{id:56,q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری(ئاو)گونجاوە بۆ کوژاندنەوەی ئاگری؟",a:["نەوت و گازوایل و بەنزین","کەلوپەلی چێشت خانەو خواردن دروست کردن","هیچ کامیان"],correct:2},
-{id:57,q:"باشترین ڕێگا بۆ کوژاندنەوەی ئاگری ڕۆن مەنجەڵی چێشت لێنان بریتییە لە؟",a:["ئاگر کوژێنەوەی جۆری A","بەتانی ئاگر کوژێنەوە","ئاو"],correct:1},
-{id:58,q:"ئامێری ئاگر کوژێنەوەی دەستی لە جۆری (ئاو)جیا دەکرێتەوە بە ڕەنگی؟",a:["شین","سور","سەوز"],correct:1},
-{id:59,q:"لەکاتی کوژاندنەوەی ئاگر پێویستە پرژاندنی ئامێری ئاگر کوژێنەوەی دەستی بەرەو:",a:["سەرەوەی ئاگر","تەنیشتی ئاگر","بنکەی ئاگر"],correct:2},
-{id:60,q:"کەی پێویستە کەسێکی بریندار لە شوێنی ڕوداوەکە بگوزرێتەوە؟",a:["ئەگەر نەخۆشەکە داوای گواستنەوەیکرد","ئەگەر هاتوو شوێنی ڕوداوەکە دور بو لە ڕێگای سەرەکیەوە","ئەگەر مەترسیەکی ڕاستەوخۆ هەبوو وەک ئاگر"],correct:2},
-{id:61,q:"پۆلێنی ماددەکانی ئاگر کوژێنەوە لە جۆری(A)ڕەنگی سەوز ئەمانە لەخۆ دەگرێت:",a:["کاغەز و تەختەو قوماش","ئامێرە ئەلیکترۆنی و کارەباییەکان","نەوت و گازوایل و بەنزین"],correct:0},
-{id:62,q:"ئامێری ئاگر کوژێنەوەی دەستی جۆری(فوم)گونجاوە بۆ کوژاندنەوەی ئاگری؟",a:["نەوت و گازوایل و بەنزین","ئامێرە ئەلیکترۆنی و کارەباییەکان","کەلوپەلی چێشت خانەو خواردن دروست کردن"],correct:0},
-{id:63,q:"ئەگەر کەسێک توشی سوتانێکی زۆر هات لە جەستەدا چی دەکەیت؟",a:["بڵقی سوتاویەکە دەتەقێنم و پێستەکەی لادەبەم","شوێنی سوتاویەکە پاک دەکەمەوە بە ئاوی پاک","هیچ یەکێک لەم وڵامانە ڕاست نین"],correct:1},
-{id:64,q:"بۆ دڵنیا بون لە کەسێکس لە هۆش چو لێدانی دڵی هەیە باشترین شوێن بریتیە لە کام لەمانە؟",a:["خوێنهێنەری کارۆنید لە ملدا","خوێن هێنەری مەچەک","خوێن هێنەری پەنجە گەورەی دەست"],correct:0,note:"فێر خوازی بەڕێز کارۆنید خوێن هێنەرێکە دەکەوێتە ناوەڕاستی مل"},
-{id:65,q:"لەکاتی نەبونی هەناسەو لێدانی دڵ لە کەسێکی لەهۆشچو پێویستە سەرەتا چی بکەیت؟",a:["دەیگوازمەوە بۆ نەخۆشخانە","هەناسە دانی دەست کرد (CPR)ئەنجام دەدەم","هیچ کارێکی بۆ ئەنجام نادەم"],correct:1},
-{id:66,q:"ئەگەر قوربانیەکە خوێن بەربونێکی زۆری هەبێت چی دەکەیت",a:["هەوڵ دەدەم بە هێمنی بمێنمەوەو داوای یارمەتی پزیشکی دەکەم","پێویستە ئاوێکی زۆری پێ بدەم تا شوێنی خوێنە ونبوەکە بگرێتەوە","پەستان دەخەمە سەر شوێنی برینەکە بە باندیج یان پارچە قوماشێک"],correct:2},
-{id:67,q:"بۆچی ئەو خوێنەی لە قوربانیەکە دەڕوات سورێکی گەش بێت مەترسیدارەو دەبێت دەست بەجێ هەوڵی وەستانی بدرێت؟",a:["چونکە لە دڵەوە دێت و فیچقە دەکات،جگە لەوەش ئۆکسجینێکی زۆری هەڵگرتوە","چونکە قوربانیەکە زیاتر دەترسێت","چونکە خوێنی سوری گەش ناوەستێتەوە"],correct:0},
-{id:68,q:"قوربانی ڕوداوەکە بێ هۆشە بەڵام هەناسە دانی ئاساییە باشترین شێواز چیە بۆ مانەوەی؟",a:["لەسەر شێوەی دانیشتن","ڕاکشان لەسەر پشت","ڕاکشان لەسەر دەم"],correct:1},
-{id:69,q:"دوای ڕوداوی ئۆتۆمبێل شوفێرەکە یارمەتی ڕەت دەکاتەوە پێداگری لەسەر ئەوە دەکات کە باشە سەرەڕای ئەوەی شوێنی برینی پێوە دیارە،پێویستە چی بکەیت؟",a:["ڕێز لە بڕیارەکەی دەگرم بەڵام پێشنیار دەکەم بە زوترین کات پزیشک ببینێت","لەبەر ئەوەی شوفێرەکە یارمەتەی ڕەت دەکاتەوە کەواتە پێویستی بە من نیە","لەو کاتەدا هیچ کارێک نیە من ئەنجامی نادەم"],correct:0},
-{id:70,q:"کام لەمانە نیشانەی بەرکەوتنی زەبر نیە بە مێشک دوای ڕوداوێکی هاتوچۆ؟",a:["بێ هۆش بون","ئاوسانی سەر","زیاد بونی وزە"],correct:2},
-{id:71,q:"چۆن یارمەتی قوربانیەک دەدەیت کە ناتوانێت بەباشی هەناسە بدات لە دوای ڕوداوێک؟",a:["یارمەتی دەدەم بە شێوەیەکی ڕێک دابنیشێت و سەری بەرەو خوارەوە لار بکاتەوە","یارمەتی دەدەم لەسەر دەم ڕا بکشێت","یارمەتی دەدەم لەسەر پشت ڕا بکشێت"],correct:0},
-{id:72,q:"چۆن یارمەتی قوربانیەک دەدەیت بە هۆی ڕوداوێکەوە شتێک کەوتۆتە ناو چاویەوە؟",a:["یارمەتی دەدەم چاوی ببەستم","هەوڵدەدەم شتەکە دەربهێنم","بە وریایی بە ئاوی پاک چاوی دەشۆم"],correct:2},
-{id:73,q:"چی دەکەیتئەگەر قوربانیەک هەست بە ئازارێکی توند لەناو سکی بکات دوای ڕوداوێک؟",a:["هەوڵ دەدەم بە هێمنی بمێنێتەوەو داوای یارمەتی پزیشکی دەکەم","هەوڵ دەدەم ئازار شکێنی پێ بدەم","لێی دەگەڕێم تا بۆخۆی چاک ببێت"],correct:0},
-{id:74,q:"چی دەکەین ئەگەر قوربانیەک نەتوانێ قسە بکات یان بە ئاسانی لێت تێنەگات",a:["وازی لێ دەهێنم","هەوڵ دەدەم بە قسەی بهێنم","بەهێواشی و بە ڕونی قسەی لەگەڵ دەکەم و دڵنیایی پێ دەدەم کە یارمەتی لەڕێگایە"],correct:2},
-{id:75,q:"چی دەکەیت ئەگەر توشی خوێنبەربونی لوت بویت لە کاتی لێخوڕینی ئۆتۆمبێل؟",a:["دەست بە نێو چەوانمەوە دەگرم و سەرم دەخەم بەپشت دا","لێدەگەڕێم تابۆخۆی خوێنەکە دەوەستێتەوە","هەوڵ دەدەم ئۆتۆمبێلەکە لە شوێنێکی سەلامەت بوەستێنم و پەیوەندی بە تیمی فریا گوزاریەوە دەکەم"],correct:2},
-{id:76,q:"چۆن مامەڵە لەگەڵ قورانیەک دەکەیت کە توشی حەپەسان یان شۆک بون بووە؟",a:["بانگی دەکەم تا بەهۆش خۆی بێتەوە","چاوەڕێ دەکەم تا بەهۆش خۆی بێتەوە","قاچەکانی بەرز دەکەمەوەو دایدەپۆشم"],correct:2},
-{id:77,q:"چۆن مامەڵە لەگەڵ قوربانیەک دەکەیت کە نیشانەی شکانی ئێسک لەسەر جەستەی دیار بێت؟",a:["هەوڵدەدەم ئێسکەکە بخەمەوە شوێنی خۆی","خێرا پاو دەدەم بە قوربانیەکە","هەوڵ دەدەم کەسەکە جوڵە نەکات و پەیوەندی بە تیمی فریا گوزاریەوە دەکەم"],correct:2},
-{id:78,q:"چی دەکەیت ئەگەر قوربانیەک بریندار بون هەبێت لە سەری دا و بێهۆش بێت؟",a:["هەوڵ دەدەم بەڕێکی بمێنێتەوەو چاودێری هەناسە دانی دەکەم","هەوڵ دەدەم بەهۆش خۆی بێنمەوە","لێدەگەڕێم تا بەهۆش خۆی دێتەوە"],correct:0},
-{id:79,q:"چی دەکەین ئەگەر قوربانیەک لەناو ئۆتۆمبێلەکەیدا گیری خواردبێت لە دوای ڕوداو؟",a:["هەوڵدەدەم خێرا بیهێنمە دەرەوە","هەوڵ دەدەم بە هێمنی بیهێڵمەوەو چاوەڕێی تیمی فریا گوزاری دەکەم","هیچ یەکێک لەم وڵامانە ڕاست نین"],correct:1},
-{id:80,q:"ئەم هێمایەی ناو داشبۆڕد واتای چییە؟",a:["کێشە لە پاتری ئۆتۆمبێلەکەیە","کێشە لە سیستەمی گەرمی بزوێنەرە","کێشە لە ڕۆنی بزوێنەرە"],correct:0,image:"battery"},
-{id:81,q:"ئەم هێمایەی ناو داشبۆڕد واتای چییە؟",a:["پلەی گەرمی بزوێنەر بەرز بووەتەوە","بەنزین کەمە","تایەکە پنچرە"],correct:0,image:"temperature"},
-{id:82,q:"ئەم هێمایەی ناو داشبۆڕد واتای چییە؟",a:["هۆشداری سیستەمی فڕێنەکەیە","هۆشداری بەنزینە","هۆشداری ڕۆنی بزوێنەرە"],correct:0,image:"brake"},
-{id:83,q:"ئەم هێمایە واتای چیە؟",a:["وریای منداڵ بە لە پێشەوە","وریای خاوەن پێداویستی تایبەت بە لە پێشەوە","هیچ کام لەمانەی وتراوە ڕاست نین"],correct:0,image:"sign83"},
-{id:84,q:"ئەم هێمایە مانای چیە؟",a:["ئاگاداری ئاژەڵی کێوی بە لە پێشەوە","ئاگاداری ئەسپ سوار بە لە پێشەوە","ئاگاداری ئاژەڵی ماڵی بە لە پێشەوە"],correct:1,image:"sign84"},
-{id:85,q:"ئەم هێمایە واتای چیە؟",a:["وریای هەرەسی بەرد بە لە پێشەوە","وریای ڕێگەی تەماوی بە لە پێشەوە","وریابە ڕێگەی خلیسک لە پێشەوەیە"],correct:2,image:"sign85"}
+{id:25,q:"ئایا مۆڵەتی شوفێری پوچەڵ دەبێتەوە؟",a:["نەخێر، مۆڵەتی شوفێری پوچەڵ نابێتەوە","بەڵێ ئەگەر شوفێر یەکێک لە مەرجەکانی بەدەست هێنانی مۆڵەتی لەدەست دابێت","مۆڵەتی شوفێری دوای 5 ساڵ پوچەڵ دەبێتەوە"],correct:1}
 ];
 let sessionQuestions=[],currentQuestion=0,scoreCorrect=0,wrongAnswers=[],timerInterval=null,timeLeft=60,userName="";
-function shuffle(array){const arr=[...array];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-function getSessionQuestions(){let remaining=[];try{remaining=JSON.parse(localStorage.getItem("remainingQuestions")||"[]")}catch(e){remaining=[]}const allIds=questions.map(q=>q.id);if(!Array.isArray(remaining))remaining=[];remaining=remaining.filter(id=>allIds.includes(id));if(remaining.length<25){let lastSession=[];try{lastSession=JSON.parse(localStorage.getItem("lastSession")||"[]")}catch(e){lastSession=[]}const notLast=shuffle(allIds.filter(id=>!lastSession.includes(id)));const inRemaining=remaining.filter(id=>!lastSession.includes(id));const combined=[...inRemaining,...notLast.filter(id=>!inRemaining.includes(id))];remaining=shuffle(combined);if(remaining.length<25)remaining=shuffle(allIds)}const selected=remaining.slice(0,25);localStorage.setItem("remainingQuestions",JSON.stringify(remaining.slice(25)));localStorage.setItem("lastSession",JSON.stringify(selected));return selected.map(id=>questions.find(q=>q.id===id))}
-function showAccessScreen(){document.getElementById("welcomeScreen").classList.add("hidden");document.getElementById("accessScreen").classList.remove("hidden");document.getElementById("accessCode").value="";document.getElementById("accessError").style.display="none";setTimeout(()=>document.getElementById("accessCode").focus(),200)}
-function checkAccessCode(){const input=document.getElementById("accessCode"),error=document.getElementById("accessError");if(input.value==="2035"){error.style.display="none";document.getElementById("accessScreen").classList.add("hidden");showNameScreen()}else{error.style.display="block";input.focus();input.select()}}
-function showNameScreen(){document.getElementById("welcomeScreen").classList.add("hidden");document.getElementById("nameScreen").classList.remove("hidden");setTimeout(()=>document.getElementById("fullName").focus(),200)}
-function startQuiz(){const input=document.getElementById("fullName");userName=input.value.trim();if(!userName){input.focus();return}sessionQuestions=getSessionQuestions();currentQuestion=0;scoreCorrect=0;wrongAnswers=[];document.getElementById("nameScreen").classList.add("hidden");document.getElementById("quizScreen").classList.remove("hidden");createQuestionNumbers();showQuestion()}
-function createQuestionNumbers(){const box=document.getElementById("questionNumbers");box.innerHTML="";for(let i=0;i<25;i++){const div=document.createElement("div");div.className="qnum";div.id="qnum-"+i;div.textContent=i+1;box.appendChild(div)}}
-function showQuestion(){clearInterval(timerInterval);const q=sessionQuestions[currentQuestion];document.querySelectorAll(".qnum").forEach(x=>x.classList.remove("current"));const currentNumber=document.getElementById("qnum-"+currentQuestion);if(currentNumber)currentNumber.classList.add("current");document.getElementById("questionCounter").textContent=`${t.question} ${currentQuestion+1} ${t.of} 25`;document.getElementById("progressBar").style.width=`${(currentQuestion/25)*100}%`;document.getElementById("questionText").textContent=q.q;const imageBox=document.getElementById("questionImage");imageBox.innerHTML="";if(q.imageUrl){const img=document.createElement("img");img.src=q.imageUrl;img.alt="وێنەی پرسیار";img.loading="lazy";imageBox.appendChild(img);imageBox.classList.remove("hidden")}else{imageBox.classList.add("hidden")}const answersBox=document.getElementById("answers");answersBox.innerHTML="";shuffle(q.a.map((text,index)=>({text,originalIndex:index}))).forEach(choice=>{const button=document.createElement("button");button.className="answer-btn";button.textContent=choice.text;button.onclick=()=>answerQuestion(choice.originalIndex,button);answersBox.appendChild(button)});startTimer()}
-function startTimer(){timeLeft=60;updateTimer();timerInterval=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(timerInterval);timeExpired()}},1000)}
-function updateTimer(){document.getElementById("timer").textContent=timeLeft}
-function answerQuestion(originalIndex,button){clearInterval(timerInterval);const q=sessionQuestions[currentQuestion],buttons=document.querySelectorAll(".answer-btn");buttons.forEach(b=>b.disabled=true);if(originalIndex===q.correct){scoreCorrect++;button.classList.add("correct-answer");markQuestion(true)}else{button.classList.add("wrong-answer");buttons.forEach(b=>{if(b.textContent===q.a[q.correct])b.classList.add("correct-answer")});wrongAnswers.push({number:currentQuestion+1,question:q.q,userAnswer:q.a[originalIndex],correctAnswer:q.a[q.correct],note:q.note||""});markQuestion(false)}setTimeout(nextQuestion,700)}
-function timeExpired(){const q=sessionQuestions[currentQuestion],buttons=document.querySelectorAll(".answer-btn");buttons.forEach(b=>b.disabled=true);buttons.forEach(b=>{if(b.textContent===q.a[q.correct])b.classList.add("correct-answer")});wrongAnswers.push({number:currentQuestion+1,question:q.q,userAnswer:t.timeout,correctAnswer:q.a[q.correct],note:q.note||""});markQuestion(false);setTimeout(nextQuestion,700)}
-function markQuestion(isCorrect){const el=document.getElementById("qnum-"+currentQuestion);if(!el)return;el.classList.remove("current");el.classList.add(isCorrect?"correct":"wrong")}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function getSessionQuestions(){return shuffle(questions).slice(0,Math.min(25,questions.length))}
+function showAccessScreen(){welcomeScreen.classList.add('hidden');accessScreen.classList.remove('hidden');accessCode.value='';accessError.style.display='none';setTimeout(()=>accessCode.focus(),100)}
+function checkAccessCode(){if(accessCode.value==='2035'){accessScreen.classList.add('hidden');nameScreen.classList.remove('hidden')}else accessError.style.display='block'}
+function startQuiz(){userName=fullName.value.trim();if(!userName)return;sessionQuestions=getSessionQuestions();currentQuestion=0;scoreCorrect=0;wrongAnswers=[];nameScreen.classList.add('hidden');quizScreen.classList.remove('hidden');createQuestionNumbers();showQuestion()}
+function createQuestionNumbers(){questionNumbers.innerHTML='';sessionQuestions.forEach((_,i)=>{let d=document.createElement('div');d.className='qnum';d.id='qnum-'+i;d.textContent=i+1;questionNumbers.appendChild(d)})}
+function showQuestion(){clearInterval(timerInterval);let q=sessionQuestions[currentQuestion];document.querySelectorAll('.qnum').forEach(x=>x.classList.remove('current'));document.getElementById('qnum-'+currentQuestion).classList.add('current');questionCounter.textContent=`پرسیار ${currentQuestion+1} لە ${sessionQuestions.length}`;progressBar.style.width=`${currentQuestion/sessionQuestions.length*100}%`;questionText.textContent=q.q;questionImage.innerHTML='';if(q.imageUrl){let im=document.createElement('img');im.src=q.imageUrl;questionImage.appendChild(im);questionImage.classList.remove('hidden')}else questionImage.classList.add('hidden');answers.innerHTML='';shuffle(q.a.map((text,index)=>({text,index}))).forEach(c=>{let b=document.createElement('button');b.className='answer-btn';b.textContent=c.text;b.onclick=()=>answerQuestion(c.index,b);answers.appendChild(b)});startTimer()}
+function startTimer(){timeLeft=60;timer.textContent=timeLeft;timerInterval=setInterval(()=>{timeLeft--;timer.textContent=timeLeft;if(timeLeft<=0){clearInterval(timerInterval);timeExpired()}},1000)}
+function answerQuestion(i,b){clearInterval(timerInterval);let q=sessionQuestions[currentQuestion],bs=document.querySelectorAll('.answer-btn');bs.forEach(x=>x.disabled=true);if(i===q.correct){scoreCorrect++;b.classList.add('correct-answer');markQuestion(true)}else{b.classList.add('wrong-answer');bs.forEach(x=>{if(x.textContent===q.a[q.correct])x.classList.add('correct-answer')});wrongAnswers.push({number:currentQuestion+1,question:q.q,userAnswer:q.a[i],correctAnswer:q.a[q.correct]});markQuestion(false)}setTimeout(nextQuestion,700)}
+function timeExpired(){let q=sessionQuestions[currentQuestion],bs=document.querySelectorAll('.answer-btn');bs.forEach(x=>x.disabled=true);bs.forEach(x=>{if(x.textContent===q.a[q.correct])x.classList.add('correct-answer')});wrongAnswers.push({number:currentQuestion+1,question:q.q,userAnswer:'کات تەواو بوو',correctAnswer:q.a[q.correct]});markQuestion(false);setTimeout(nextQuestion,700)}
+function markQuestion(ok){let e=document.getElementById('qnum-'+currentQuestion);e.classList.remove('current');e.classList.add(ok?'correct':'wrong')}
 function nextQuestion(){currentQuestion++;if(currentQuestion>=sessionQuestions.length)finishQuiz();else showQuestion()}
-function finishQuiz(){clearInterval(timerInterval);document.getElementById("quizScreen").classList.add("hidden");document.getElementById("resultScreen").classList.remove("hidden");const finalScore=scoreCorrect*4,passed=scoreCorrect>=20;document.getElementById("resultIcon").textContent=passed?"🏆":"❌";const resultTitle=document.getElementById("resultTitle");resultTitle.textContent=passed?t.passed:t.failed;resultTitle.className=passed?"pass":"fail";document.getElementById("finalScore").textContent=`${t.score}: ${finalScore}/100`;document.getElementById("resultDetails").innerHTML=`<strong>${t.correctCount}:</strong> ${scoreCorrect}/25 <br><strong>${t.wrongCount}:</strong> ${wrongAnswers.length}/25`;const list=document.getElementById("wrongList");list.innerHTML="";if(wrongAnswers.length>0){const title=document.createElement("h3");title.textContent=`${t.wrongCount}: ${wrongAnswers.length}`;list.appendChild(title);wrongAnswers.forEach(item=>{const div=document.createElement("div");div.className="wrong-item";div.innerHTML=`<strong>${t.question} ${item.number}</strong><p>${item.question}</p><p><strong>${t.yourAnswer}:</strong> ${item.userAnswer}</p><p><strong>${t.correct}:</strong> ${item.correctAnswer}</p>${item.note?`<p><strong>${item.note}</strong></p>`:""}`;list.appendChild(div)})}else{const perfect=document.createElement("p");perfect.textContent="زۆر باشە! هەموو پرسیارەکانت بە ڕاستی وەڵام دا. 🎉";list.appendChild(perfect)}document.getElementById("newTestBtn").textContent=t.newTest}
-function newTest(){document.getElementById("resultScreen").classList.add("hidden");document.getElementById("nameScreen").classList.remove("hidden");document.getElementById("fullName").value="";setTimeout(()=>document.getElementById("fullName").focus(),200)}
-document.getElementById("fullName").addEventListener("keydown",e=>{if(e.key==="Enter")startQuiz()});document.getElementById("accessCode").addEventListener("keydown",e=>{if(e.key==="Enter")checkAccessCode()});
-</script>
+function finishQuiz(){quizScreen.classList.add('hidden');resultScreen.classList.remove('hidden');let passed=scoreCorrect>=20;resultIcon.textContent=passed?'🏆':'❌';resultTitle.textContent=passed?'پیرۆزە دەرچویت 🎉':'دەرنەچویت ❌';resultTitle.className=passed?'pass':'fail';finalScore.textContent=`نمرە: ${scoreCorrect*4}/100`;resultDetails.innerHTML=`<strong>وەڵامی ڕاست:</strong> ${scoreCorrect}/${sessionQuestions.length}<br><strong>وەڵامی هەڵە:</strong> ${wrongAnswers.length}/${sessionQuestions.length}`;wrongList.innerHTML='';wrongAnswers.forEach(x=>{let d=document.createElement('div');d.className='wrong-item';d.innerHTML=`<strong>پرسیار ${x.number}</strong><p>${x.question}</p><p><strong>وەڵامی تۆ:</strong> ${x.userAnswer}</p><p><strong>وەڵامی ڕاست:</strong> ${x.correctAnswer}</p>`;wrongList.appendChild(d)})}
+function newTest(){resultScreen.classList.add('hidden');nameScreen.classList.remove('hidden');fullName.value=''}
 
-<script>
-(function(){
-  function openAccess(e){
-    if(e) e.preventDefault();
-    var welcome=document.getElementById('welcomeScreen');
-    var access=document.getElementById('accessScreen');
-    if(welcome) welcome.classList.add('hidden');
-    if(access) access.classList.remove('hidden');
-    var code=document.getElementById('accessCode');
-    var err=document.getElementById('accessError');
-    if(code) code.value='';
-    if(err) err.style.display='none';
-    if(code) setTimeout(function(){code.focus();},100);
-  }
-  window.showAccessScreen=openAccess;
-  function bind(){
-    var btn=document.querySelector('#welcomeScreen button.primary-btn');
-    if(btn){ btn.onclick=openAccess; }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
-})();
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/*
-  ============================================================
-  XOSHNAW DRIVING TEST - ADMIN / SUPABASE
-  ------------------------------------------------------------
-  1) SUPABASE_URL و SUPABASE_ANON_KEY ـەکانت لە خوارەوە دابنێ.
-  2) لە Supabase جدولێک بە ناوی questions دروست بکە:
-       id          bigint/text primary key
-       question   text
-       answer_a   text
-       answer_b   text
-       answer_c   text
-       answer_d   text
-       correct    integer
-       image_url  text
-       created_at timestamptz default now()
-  3) Storage bucket ـێک بە ناوی question-images دروست بکە و public بکە.
-  4) SQL ـی policy ـەکان لە کۆتایی وەڵامی من هەیە.
-*/
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
-
-/* ئەم کۆدە تەنها قفڵی ڕووکاری ئەدمینە؛ بۆ پاراستنی ڕاستەقینە
-   پێویستە Supabase Auth بەکاربهێنرێت. */
-const ADMIN_CODE = "2035";
-
-let sb = null;
-let adminLoggedIn = false;
-let remoteQuestionsLoaded = false;
-
-function adminConfigured(){
-  return SUPABASE_URL.startsWith("https://") &&
-         !SUPABASE_URL.includes("YOUR_SUPABASE") &&
-         SUPABASE_ANON_KEY &&
-         !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
-}
-
-function setAdminStatus(message, ok){
-  const el=document.getElementById("adminStatus");
-  if(!el)return;
-  el.textContent=message;
-  el.className="admin-status "+(ok?"ok":"err");
-}
-
-function openAdminLogin(){
-  document.getElementById("welcomeScreen").classList.add("hidden");
-  document.getElementById("accessScreen").classList.add("hidden");
-  document.getElementById("nameScreen").classList.add("hidden");
-  document.getElementById("quizScreen").classList.add("hidden");
-  document.getElementById("resultScreen").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-  document.getElementById("adminLoginScreen").classList.remove("hidden");
-  document.getElementById("adminCode").value="";
-  document.getElementById("adminLoginError").style.display="none";
-  setTimeout(()=>document.getElementById("adminCode").focus(),100);
-}
-
-function closeAdminToWelcome(){
-  document.getElementById("adminLoginScreen").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-  document.getElementById("welcomeScreen").classList.remove("hidden");
-}
-
-async function loginAdmin(){
-  const code=document.getElementById("adminCode").value.trim();
-  const err=document.getElementById("adminLoginError");
-  if(code!==ADMIN_CODE){
-    err.style.display="block";
-    return;
-  }
-  err.style.display="none";
-  adminLoggedIn=true;
-  document.getElementById("adminLoginScreen").classList.add("hidden");
-  document.getElementById("adminPanel").classList.remove("hidden");
-  await loadRemoteQuestions();
-  renderAdminList();
-}
-
-async function initSupabase(){
-  if(!adminConfigured()) return false;
-  if(!sb) sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  return true;
-}
-
-async function loadRemoteQuestions(){
-  if(remoteQuestionsLoaded) return;
-  if(!await initSupabase()){
-    setAdminStatus("Supabase هێشتا ڕێک نەخراوە. SUPABASE_URL و SUPABASE_ANON_KEY لە کۆدەکە دابنێ.",false);
-    return;
-  }
-  const {data,error}=await sb.from("questions").select("*").order("created_at",{ascending:true});
-  if(error){
-    setAdminStatus("هەڵە لە وەرگرتنی پرسیارەکان: "+error.message,false);
-    return;
-  }
-  (data||[]).forEach(r=>{
-    const id = r.id;
-    if(!questions.some(q=>String(q.id)===String(id))){
-      questions.push({
-        id:id,
-        q:r.question,
-        a:[r.answer_a,r.answer_b,r.answer_c,r.answer_d],
-        correct:Number(r.correct),
-        imageUrl:r.image_url||""
-      });
-    }
-  });
-  remoteQuestionsLoaded=true;
-  setAdminStatus("پرسیارەکان نوێکرانەوە و ئامادەن.",true);
-}
-
-async function addAdminQuestion(){
-  if(!adminLoggedIn)return;
-
-  const q=document.getElementById("adminQuestion").value.trim();
-  const answers=[
-    document.getElementById("adminA").value.trim(),
-    document.getElementById("adminB").value.trim(),
-    document.getElementById("adminC").value.trim(),
-    document.getElementById("adminD").value.trim()
-  ];
-  const correct=Number(document.getElementById("adminCorrect").value);
-  const file=document.getElementById("adminImage").files[0];
-
-  if(!q || answers.some(x=>!x)){
-    setAdminStatus("تکایە پرسیار و هەموو ٤ هەڵبژاردە پڕ بکە.",false);
-    return;
-  }
-  if(!await initSupabase()){
-    setAdminStatus("سەرەتا Supabase URL و Anon Key دابنێ.",false);
-    return;
-  }
-
-  const btn=document.getElementById("adminAddBtn");
-  btn.disabled=true;
-  btn.textContent="خەریکی خەزنکردنە...";
-
-  try{
-    let imageUrl="";
-    if(file){
-      const ext=(file.name.split(".").pop()||"jpg").toLowerCase();
-      const safeExt=ext.replace(/[^a-z0-9]/g,"")||"jpg";
-      const path=Date.now()+"-"+Math.random().toString(36).slice(2)+"."+safeExt;
-
-      const upload=await sb.storage.from("question-images").upload(path,file,{upsert:false});
-      if(upload.error) throw upload.error;
-
-      const pub=sb.storage.from("question-images").getPublicUrl(path);
-      imageUrl=pub.data.publicUrl;
-    }
-
-    const newId=Date.now();
-    const row={
-      id:newId,
-      question:q,
-      answer_a:answers[0],
-      answer_b:answers[1],
-      answer_c:answers[2],
-      answer_d:answers[3],
-      correct:correct,
-      image_url:imageUrl
-    };
-
-    const {data,error}=await sb.from("questions").insert(row).select().single();
-    if(error) throw error;
-
-    questions.push({
-      id:data.id,
-      q:data.question,
-      a:[data.answer_a,data.answer_b,data.answer_c,data.answer_d],
-      correct:Number(data.correct),
-      imageUrl:data.image_url||""
-    });
-
-    document.getElementById("adminQuestion").value="";
-    ["adminA","adminB","adminC","adminD"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("adminImage").value="";
-    document.getElementById("adminCorrect").value="0";
-
-    setAdminStatus("✅ پرسیارەکە خەزن کرا. لە تاقیکردنەوەی داهاتوودا بە هەڕەمەکی دێتە ڕیزەکەوە.",true);
-    renderAdminList();
-  }catch(e){
-    setAdminStatus("❌ خەزنکردن سەرکەوتوو نەبوو: "+(e.message||e),false);
-  }finally{
-    btn.disabled=false;
-    btn.textContent="➕ زیادکردنی پرسیار";
-  }
-}
-
-async function deleteAdminQuestion(id){
-  if(!adminLoggedIn || !await initSupabase()) return;
-  if(!confirm("دڵنیایت لە سڕینەوەی ئەم پرسیارە؟")) return;
-
-  const {error}=await sb.from("questions").delete().eq("id",id);
-  if(error){
-    setAdminStatus("سڕینەوە سەرکەوتوو نەبوو: "+error.message,false);
-    return;
-  }
-  const idx=questions.findIndex(q=>String(q.id)===String(id));
-  if(idx>=0)questions.splice(idx,1);
-  renderAdminList();
-  setAdminStatus("پرسیارەکە سڕایەوە.",true);
-}
-
-function renderAdminList(){
-  const box=document.getElementById("adminList");
-  if(!box)return;
-  const remote=questions.filter(q=>typeof q.id!=="number" || q.id>100000000000);
-  if(!remote.length){
-    box.innerHTML="<p class='small'>هێشتا پرسیاری نوێ زیاد نەکراوە.</p>";
-    return;
-  }
-  box.innerHTML="<h3>پرسیارە زیادکراوەکان</h3>";
-  remote.slice().reverse().forEach(q=>{
-    const item=document.createElement("div");
-    item.className="admin-item";
-    const title=document.createElement("div");
-    title.className="admin-item-title";
-    title.textContent=q.q;
-    const actions=document.createElement("div");
-    actions.className="admin-actions";
-    const del=document.createElement("button");
-    del.className="danger-btn";
-    del.textContent="🗑️ سڕینەوە";
-    del.onclick=()=>deleteAdminQuestion(q.id);
-    actions.appendChild(del);
-    item.appendChild(title);
-    item.appendChild(actions);
-    box.appendChild(item);
-  });
-}
-
-function adminLogout(){
-  adminLoggedIn=false;
-  document.getElementById("adminPanel").classList.add("hidden");
-  document.getElementById("welcomeScreen").classList.remove("hidden");
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
-  document.getElementById("adminEntry").addEventListener("click",openAdminLogin);
-  document.getElementById("adminLoginBtn").addEventListener("click",loginAdmin);
-  document.getElementById("adminBackBtn").addEventListener("click",closeAdminToWelcome);
-  document.getElementById("adminAddBtn").addEventListener("click",addAdminQuestion);
-  document.getElementById("adminLogoutBtn").addEventListener("click",adminLogout);
-  document.getElementById("adminCode").addEventListener("keydown",e=>{if(e.key==="Enter")loginAdmin()});
-});
-</script>
-
-</body>
-</html>
+let sb=null,adminLoggedIn=false,remoteQuestionsLoaded=false,editingQuestionId=null;
+function configured(){return SUPABASE_URL.startsWith('https://')&&!SUPABASE_URL.includes('YOUR_SUPABASE')&&SUPABASE_ANON_KEY&&!SUPABASE_ANON_KEY.includes('YOUR_SUPABASE')}
+async function initSB(){if(!configured())return false;if(!sb)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true}
+function status(m,ok){adminStatus.textContent=m;adminStatus.className='admin-status '+(ok?'ok':'err')}
+function openAdmin(){['welcomeScreen','accessScreen','nameScreen','quizScreen','resultScreen','adminPanel'].forEach(id=>document.getElementById(id).classList.add('hidden'));adminLoginScreen.classList.remove('hidden');adminCode.value='';adminLoginError.style.display='none'}
+async function loginAdmin(){if(adminCode.value.trim()!==ADMIN_CODE){adminLoginError.style.display='block';return}adminLoggedIn=true;adminLoginScreen.classList.add('hidden');adminPanel.classList.remove('hidden');await loadRemote();renderAdmin()}
+async function loadRemote(){if(remoteQuestionsLoaded)return;if(!await initSB()){status('Supabase ڕێک نەخراوە؛ URL و Anon Key ـەکەت دابنێ.',false);return}let r=await sb.from('questions').select('*').order('created_at',{ascending:true});if(r.error){status('هەڵە: '+r.error.message,false);return}(r.data||[]).forEach(x=>{if(!questions.some(q=>String(q.id)===String(x.id)))questions.push({id:x.id,q:x.question,a:[x.answer_a,x.answer_b,x.answer_c].filter(Boolean),correct:Number(x.correct),imageUrl:x.image_url||''})});remoteQuestionsLoaded=true;status('پرسیارەکان نوێکرانەوە.',true)}
+async function saveQuestion(){if(!adminLoggedIn)return;let q=adminQuestion.value.trim(),a=[adminA.value.trim(),adminB.value.trim(),adminC.value.trim()],correct=Number(adminCorrect.value),file=adminImage.files[0];if(!q||a.some(x=>!x)){status('تکایە پرسیار و ٣ هەڵبژاردە پڕ بکە.',false);return}if(!await initSB()){status('سەرەتا Supabase URL و Anon Key دابنێ.',false);return}adminAddBtn.disabled=true;try{let imageUrl=editingQuestionId?((questions.find(x=>String(x.id)===String(editingQuestionId))||{}).imageUrl||''):'';if(file){let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';let path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;let up=await sb.storage.from('question-images').upload(path,file,{upsert:false});if(up.error)throw up.error;imageUrl=sb.storage.from('question-images').getPublicUrl(path).data.publicUrl}let row={question:q,answer_a:a[0],answer_b:a[1],answer_c:a[2],answer_d:'',correct,image_url:imageUrl};let res;if(editingQuestionId)res=await sb.from('questions').update(row).eq('id',editingQuestionId).select().single();else row.id=Date.now(),res=await sb.from('questions').insert(row).select().single();if(res.error)throw res.error;let d=res.data,idx=questions.findIndex(x=>String(x.id)===String(d.id)),obj={id:d.id,q:d.question,a:[d.answer_a,d.answer_b,d.answer_c],correct:Number(d.correct),imageUrl:d.image_url||''};if(idx>=0)questions[idx]=obj;else questions.push(obj);resetForm();renderAdmin();status(editingQuestionId?'پرسیارەکە نوێکرایەوە.':'پرسیارەکە زیاد کرا.',true);editingQuestionId=null}catch(e){status('هەڵە: '+(e.message||e),false)}finally{adminAddBtn.disabled=false}}
+function editQuestion(id){let q=questions.find(x=>String(x.id)===String(id));if(!q)return;editingQuestionId=id;adminQuestion.value=q.q;adminA.value=q.a[0]||'';adminB.value=q.a[1]||'';adminC.value=q.a[2]||'';adminCorrect.value=String(q.correct);adminImage.value='';adminAddBtn.textContent='💾 خەزنکردنی دەستکاری';adminCancelEditBtn.style.display='block';if(q.imageUrl){adminPreviewImg.src=q.imageUrl;adminImagePreview.style.display='block'}window.scrollTo({top:document.getElementById('adminPanel').offsetTop,behavior:'smooth'})}
+async function deleteQuestion(id){if(!adminLoggedIn||!await initSB())return;if(!confirm('دڵنیایت لە سڕینەوەی ئەم پرسیارە؟'))return;let r=await sb.from('questions').delete().eq('id',id);if(r.error){status('سڕینەوە سەرکەوتوو نەبوو: '+r.error.message,false);return}let i=questions.findIndex(q=>String(q.id)===String(id));if(i>=0)questions.splice(i,1);renderAdmin();status('پرسیارەکە سڕایەوە.',true)}
+function renderAdmin(){let box=adminList;let remote=questions.filter(q=>String(q.id).length>8||typeof q.id!=='number');if(!remote.length){box.innerHTML='<p class="small">هێشتا پرسیاری زیادکراو نییە.</p>';return}box.innerHTML='<h3>پرسیارە زیادکراوەکان</h3>';remote.slice().reverse().forEach(q=>{let item=document.createElement('div');item.className='admin-item';let title=document.createElement('div');title.className='admin-item-title';title.textContent=q.q;item.appendChild(title);if(q.imageUrl){let im=document.createElement('img');im.src=q.imageUrl;item.appendChild(im)}let p=document.createElement('div');p.className='small';p.textContent='٣ هەڵبژاردە • وەڵامی ڕاست: '+(q.correct+1);item.appendChild(p);let act=document.createElement('div');act.className='admin-actions';let ed=document.createElement('button');ed.className='edit-btn';ed.textContent='✏️ دەستکاری';ed.onclick=()=>editQuestion(q.id);let del=document.createElement('button');del.className='danger-btn';del.textContent='🗑️ سڕینەوە';del.onclick=()=>deleteQuestion(q.id);act.append(ed,del);item.appendChild(act);box.appendChild(item)})}
+function resetForm(){adminQuestion.value='';adminA.value='';adminB.value='';adminC.value='';adminCorrect.value='0';adminImage.value='';adminImagePreview.style.display='none';adminPreviewImg.removeAttribute('src');adminAddBtn.textContent='➕ زیادکردنی پرسیار';adminCancelEditBtn.style.display='none';editingQuestionId=null}
+function logoutAdmin(){adminLoggedIn=false;adminPanel.classList.add('hidden');welcomeScreen.classList.remove('hidden');resetForm()}
+adminImage.addEventListener('change',()=>{let f=adminImage.files[0];if(!f){adminImagePreview.style.display='none';return}let r=new FileReader();r.onload=e=>{adminPreviewImg.src=e.target.result;adminImagePreview.style.display='block'};r.readAsDataURL(f)});
+adminEntry.onclick=openAdmin;adminLoginBtn.onclick=loginAdmin;adminBackBtn.onclick=()=>{adminLoginScreen.classList.add('hidden');welcomeScreen.classList.remove('hidden')};adminAddBtn.onclick=saveQuestion;adminCancelEditBtn.onclick=resetForm;adminLogoutBtn.onclick=logoutAdmin;adminCode.onkeydown=e=>{if(e.key==='Enter')loginAdmin()};fullName.onkeydown=e=>{if(e.key==='Enter')startQuiz()};accessCode.onkeydown=e=>{if(e.key==='Enter')checkAccessCode()};
+</script></body></html>
