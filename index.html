@@ -238,6 +238,23 @@ async function deleteQuestion(id){
   status('پرسیارەکە بە سەرکەوتوویی سڕایەوە. لە Refresh ـیشدا ناگەڕێتەوە.',true);
 }
 
+function renderAdmin(){
+  let box=adminList;
+  let list=questions.filter(q=>q && Number(q.id)>0);
+  if(!list.length){box.innerHTML='<p class="small">هیچ پرسیارێک نییە.</p>';return}
+  box.innerHTML='<h3>هەموو پرسیارەکان ('+list.length+')</h3>';
+  list.slice().sort((a,b)=>Number(a.id)-Number(b.id)).forEach(q=>{
+    let item=document.createElement('div');item.className='admin-item';
+    let title=document.createElement('div');title.className='admin-item-title';title.textContent=q.id+'. '+q.q;item.appendChild(title);
+    if(q.imageUrl){let im=document.createElement('img');im.src=q.imageUrl;im.alt='';item.appendChild(im)}
+    let p=document.createElement('div');p.className='small';p.textContent=q.a.length+' هەڵبژاردە • وەڵامی ڕاست: '+(Number(q.correct)+1);item.appendChild(p);
+    let act=document.createElement('div');act.className='admin-actions';
+    let ed=document.createElement('button');ed.className='edit-btn';ed.textContent='✏️ دەستکاری';ed.onclick=()=>editQuestion(q.id);
+    let del=document.createElement('button');del.className='danger-btn';del.textContent='🗑️ سڕینەوە';del.onclick=()=>deleteQuestion(q.id);
+    act.append(ed,del);item.appendChild(act);box.appendChild(item);
+  });
+}
+
 function resetForm(){adminQuestion.value='';adminA.value='';adminB.value='';adminC.value='';adminCorrect.value='0';adminImage.value='';adminImagePreview.style.display='none';adminPreviewImg.removeAttribute('src');adminAddBtn.textContent='➕ زیادکردنی پرسیار';adminCancelEditBtn.style.display='none';editingQuestionId=null}
 function logoutAdmin(){adminLoggedIn=false;adminPanel.classList.add('hidden');welcomeScreen.classList.remove('hidden');resetForm()}
 adminImage.addEventListener('change',()=>{let f=adminImage.files[0];if(!f){adminImagePreview.style.display='none';return}let r=new FileReader();r.onload=e=>{adminPreviewImg.src=e.target.result;adminImagePreview.style.display='block'};r.readAsDataURL(f)});
