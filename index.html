@@ -112,7 +112,18 @@ function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math
 function getSessionQuestions(){return shuffle(questions).slice(0,Math.min(25,questions.length))}
 function showAccessScreen(){welcomeScreen.classList.add('hidden');accessScreen.classList.remove('hidden');accessCode.value='';accessError.style.display='none';setTimeout(()=>accessCode.focus(),100)}
 function checkAccessCode(){if(accessCode.value==='2035'){accessScreen.classList.add('hidden');nameScreen.classList.remove('hidden')}else accessError.style.display='block'}
-async function startQuiz(){await loadRemote();userName=fullName.value.trim();if(!userName)return;sessionQuestions=getSessionQuestions();currentQuestion=0;scoreCorrect=0;wrongAnswers=[];nameScreen.classList.add('hidden');quizScreen.classList.remove('hidden');createQuestionNumbers();showQuestion()}
+async function startQuiz(){
+userName=fullName.value.trim();
+if(!userName){fullName.focus();return;}
+try{await loadRemote();}catch(e){console.log("Supabase load skipped:",e);}
+sessionQuestions=getSessionQuestions();
+if(!sessionQuestions.length){alert("هیچ پرسیارێک بەردەست نییە.");return;}
+currentQuestion=0;scoreCorrect=0;wrongAnswers=[];
+nameScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+createQuestionNumbers();
+showQuestion();
+}
 function createQuestionNumbers(){questionNumbers.innerHTML='';sessionQuestions.forEach((_,i)=>{let d=document.createElement('div');d.className='qnum';d.id='qnum-'+i;d.textContent=i+1;questionNumbers.appendChild(d)})}
 function showQuestion(){clearInterval(timerInterval);let q=sessionQuestions[currentQuestion];document.querySelectorAll('.qnum').forEach(x=>x.classList.remove('current'));document.getElementById('qnum-'+currentQuestion).classList.add('current');questionCounter.textContent=`پرسیار ${currentQuestion+1} لە ${sessionQuestions.length}`;progressBar.style.width=`${currentQuestion/sessionQuestions.length*100}%`;questionText.textContent=q.q;questionImage.innerHTML='';if(q.imageUrl){let im=document.createElement('img');im.src=q.imageUrl;questionImage.appendChild(im);questionImage.classList.remove('hidden')}else questionImage.classList.add('hidden');answers.innerHTML='';shuffle(q.a.map((text,index)=>({text,index}))).forEach(c=>{let b=document.createElement('button');b.className='answer-btn';b.textContent=c.text;b.onclick=()=>answerQuestion(c.index,b);answers.appendChild(b)});startTimer()}
 function startTimer(){timeLeft=60;timer.textContent=timeLeft;timerInterval=setInterval(()=>{timeLeft--;timer.textContent=timeLeft;if(timeLeft<=0){clearInterval(timerInterval);timeExpired()}},1000)}
@@ -124,9 +135,6 @@ function finishQuiz(){quizScreen.classList.add('hidden');resultScreen.classList.
 function newTest(){resultScreen.classList.add('hidden');nameScreen.classList.remove('hidden');fullName.value=''}
 
 let sb=null,adminLoggedIn=false,remoteQuestionsLoaded=false,editingQuestionId=null;
-const SUPABASE_URL="https://zjlweylwvemfrslhotnv.supabase.co";
-const SUPABASE_ANON_KEY="sb_publishable_EBcY6W4C473hG_xgpOq_-A_XC3RXO8N";
-const ADMIN_CODE="5624";
 function configured(){return SUPABASE_URL.startsWith("https://")&&SUPABASE_ANON_KEY&&!SUPABASE_ANON_KEY.includes("YOUR_SUPABASE")}
 async function initSB(){if(!configured())return false;if(!sb)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true}
 function status(m,ok){adminStatus.textContent=m;adminStatus.className='admin-status '+(ok?'ok':'err')}
