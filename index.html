@@ -139,13 +139,105 @@ function configured(){return SUPABASE_URL.startsWith("https://")&&SUPABASE_ANON_
 async function initSB(){if(!configured())return false;if(!sb)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true}
 function status(m,ok){adminStatus.textContent=m;adminStatus.className='admin-status '+(ok?'ok':'err')}
 function openAdmin(){['welcomeScreen','accessScreen','nameScreen','quizScreen','resultScreen','adminPanel'].forEach(id=>document.getElementById(id).classList.add('hidden'));adminLoginScreen.classList.remove('hidden');adminCode.value='';adminLoginError.style.display='none'}
-async function loginAdmin(){if(adminCode.value.trim()!==ADMIN_CODE){adminLoginError.style.display='block';return}adminLoggedIn=true;adminLoginScreen.classList.add('hidden');adminPanel.classList.remove('hidden');await seedOldQuestions();remoteQuestionsLoaded=false;await loadRemote();renderAdmin()}
-async function loadRemote(){if(remoteQuestionsLoaded)return true;if(!await initSB())return false;let r=await sb.from('questions').select('*').order('created_at',{ascending:true});if(r.error){status('هەڵە لە Supabase: '+r.error.message,false);return false}let remote=(r.data||[]).map(x=>({id:x.id,q:x.question,a:[x.answer_a,x.answer_b,x.answer_c,x.answer_d].filter(Boolean),correct:Number(x.correct),imageUrl:x.image_url||''}));if(remote.length){questions=remote}remoteQuestionsLoaded=true;return true}
-async function seedOldQuestions(){if(!await initSB())return false;let oldQuestions=questions.filter(q=>Number(q.id)>=1&&Number(q.id)<=85);let ids=oldQuestions.map(q=>q.id);if(!ids.length)return true;let r=await sb.from('questions').select('id').in('id',ids);if(r.error){status('پرسیارە کۆنەکان نەخراونەتە Supabase: '+r.error.message,false);return false}let existing=new Set((r.data||[]).map(x=>String(x.id)));let old=oldQuestions.filter(q=>!existing.has(String(q.id))).map(q=>({id:q.id,question:q.q,answer_a:q.a[0]||'',answer_b:q.a[1]||'',answer_c:q.a[2]||'',answer_d:q.a[3]||'',correct:Number(q.correct),image_url:q.imageUrl&&/^https?:/.test(q.imageUrl)?q.imageUrl:''}));if(!old.length)return true;let ins=await sb.from('questions').insert(old);if(ins.error){status('سینککردنی پرسیارە کۆنەکان سەرکەوتوو نەبوو: '+ins.error.message,false);return false}status('پرسیارە کۆنەکان خرانە ناو Supabase و لە Admin دەردەکەون.',true);return true}
-async function saveQuestion(){if(!adminLoggedIn)return;let q=adminQuestion.value.trim(),a=[adminA.value.trim(),adminB.value.trim(),adminC.value.trim()],correct=Number(adminCorrect.value),file=adminImage.files[0];if(!q||a.some(x=>!x)){status('تکایە پرسیار و ٣ هەڵبژاردە پڕ بکە.',false);return}if(!await initSB()){status('Supabase ڕێک نەخراوە.',false);return}adminAddBtn.disabled=true;try{let old=questions.find(x=>String(x.id)===String(editingQuestionId)),imageUrl=old?.imageUrl||'';if(file){let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg',path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext,up=await sb.storage.from('question-images').upload(path,file,{upsert:false});if(up.error)throw up.error;imageUrl=sb.storage.from('question-images').getPublicUrl(path).data.publicUrl}let row={question:q,answer_a:a[0],answer_b:a[1],answer_c:a[2],answer_d:'',correct,image_url:imageUrl},res;if(editingQuestionId)res=await sb.from('questions').update(row).eq('id',editingQuestionId);else row.id=Date.now(),res=await sb.from('questions').insert(row);if(res.error)throw res.error;let id=editingQuestionId||row.id,obj={id,q,a,correct,imageUrl},idx=questions.findIndex(x=>String(x.id)===String(id));if(idx>=0)questions[idx]=obj;else questions.push(obj);resetForm();renderAdmin();status(editingQuestionId?'پرسیارەکە نوێکرایەوە.':'پرسیارەکە زیاد کرا.',true)}catch(e){status('هەڵە: '+(e.message||e),false)}finally{adminAddBtn.disabled=false}}
+async function loginAdmin(){
+if(adminCode.value.trim()!==ADMIN_CODE){adminLoginError.style.display='block';return}
+adminLoggedIn=true;adminLoginScreen.classList.add('hidden');adminPanel.classList.remove('hidden');
+await seedOldQuestions();
+remoteQuestionsLoaded=false;
+await loadRemote();
+renderAdmin();
+}
+
+function normalizeOptions(x){
+  let opts=x.options;
+  if(typeof opts==='string'){try{opts=JSON.parse(opts)}catch(e){opts=null}}
+  if(!Array.isArray(opts)) opts=[x.answer_a,x.answer_b,x.answer_c,x.answer_d].filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='');
+  return opts;
+}
+
+async function loadRemote(){
+  if(remoteQuestionsLoaded)return true;
+  if(!await initSB())return false;
+  let r=await sb.from('questions').select('*').order('created_at',{ascending:true});
+  if(r.error){status('هەڵە لە Supabase: '+r.error.message,false);return false}
+  let remote=(r.data||[]).map(x=>({
+    id:x.id,
+    q:x.question||'',
+    a:normalizeOptions(x),
+    correct:Number(x.correct_answer ?? x.correct ?? 0),
+    imageUrl:x.image_url||''
+  }));
+  if(remote.length) questions=remote;
+  remoteQuestionsLoaded=true;
+  return true;
+}
+
+async function seedOldQuestions(){
+  if(!await initSB())return false;
+  let countRes=await sb.from('questions').select('id',{count:'exact',head:true});
+  if(countRes.error){status('نەتوانرا دۆخی Questions بخوێندرێتەوە: '+countRes.error.message,false);return false}
+  // تەنها کاتێک seed بکە کە table بە تەواوی بەتاڵە؛ بەمەش پرسیاری سڕاوە دووبارە ناگەڕێتەوە.
+  if((countRes.count||0)>0)return true;
+
+  let oldQuestions=questions.filter(q=>Number(q.id)>=1&&Number(q.id)<=85);
+  let old=oldQuestions.map(q=>({
+    id:Number(q.id),
+    question:q.q,
+    options:q.a,
+    answer_a:q.a[0]||'',
+    answer_b:q.a[1]||'',
+    answer_c:q.a[2]||'',
+    answer_d:q.a[3]||'',
+    correct_answer:Number(q.correct),
+    correct:Number(q.correct),
+    image_url:q.imageUrl&&/^https?:/.test(q.imageUrl)?q.imageUrl:null
+  }));
+  if(!old.length)return true;
+  let ins=await sb.from('questions').insert(old);
+  if(ins.error){status('سینککردنی پرسیارە کۆنەکان سەرکەوتوو نەبوو: '+ins.error.message,false);return false}
+  status('٨٥ پرسیارە کۆنەکان بە سەرکەوتوویی خرانە Supabase.',true);
+  return true;
+}
+
+async function saveQuestion(){
+  if(!adminLoggedIn)return;
+  let q=adminQuestion.value.trim(),a=[adminA.value.trim(),adminB.value.trim(),adminC.value.trim()],correct=Number(adminCorrect.value),file=adminImage.files[0];
+  if(!q||a.some(x=>!x)){status('تکایە پرسیار و ٣ هەڵبژاردە پڕ بکە.',false);return}
+  if(!await initSB()){status('Supabase ڕێک نەخراوە.',false);return}
+  adminAddBtn.disabled=true;
+  try{
+    let old=questions.find(x=>String(x.id)===String(editingQuestionId)),imageUrl=old?.imageUrl||'';
+    if(file){
+      let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg',path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;
+      let up=await sb.storage.from('question-images').upload(path,file,{upsert:false});
+      if(up.error)throw up.error;
+      imageUrl=sb.storage.from('question-images').getPublicUrl(path).data.publicUrl;
+    }
+    let row={question:q,options:a,answer_a:a[0],answer_b:a[1],answer_c:a[2],answer_d:'',correct_answer:correct,correct:correct,image_url:imageUrl||null};
+    let res;
+    if(editingQuestionId) res=await sb.from('questions').update(row).eq('id',editingQuestionId);
+    else {row.id=Date.now();res=await sb.from('questions').insert(row)}
+    if(res.error)throw res.error;
+    let id=editingQuestionId||row.id,obj={id,q,a,correct,imageUrl},idx=questions.findIndex(x=>String(x.id)===String(id));
+    if(idx>=0)questions[idx]=obj;else questions.push(obj);
+    resetForm();renderAdmin();status(editingQuestionId?'پرسیارەکە نوێکرایەوە.':'پرسیارەکە زیاد کرا.',true);
+  }catch(e){status('هەڵە: '+(e.message||e),false)}finally{adminAddBtn.disabled=false}
+}
+
 function editQuestion(id){let q=questions.find(x=>String(x.id)===String(id));if(!q)return;editingQuestionId=id;adminQuestion.value=q.q;adminA.value=q.a[0]||'';adminB.value=q.a[1]||'';adminC.value=q.a[2]||'';adminCorrect.value=String(q.correct);adminImage.value='';adminAddBtn.textContent='💾 خەزنکردنی گۆڕانکاری';adminCancelEditBtn.style.display='block';if(q.imageUrl){adminPreviewImg.src=q.imageUrl;adminImagePreview.style.display='block'}window.scrollTo({top:document.getElementById('adminPanel').offsetTop,behavior:'smooth'})}
-async function deleteQuestion(id){if(!adminLoggedIn||!await initSB())return;if(!confirm('دڵنیایت لە سڕینەوەی ئەم پرسیارە؟'))return;let r=await sb.from('questions').delete().eq('id',id);if(r.error){status('سڕینەوە سەرکەوتوو نەبوو: '+r.error.message,false);return}let i=questions.findIndex(q=>String(q.id)===String(id));if(i>=0)questions.splice(i,1);renderAdmin();status('پرسیارەکە سڕایەوە.',true)}
-function renderAdmin(){let box=adminList,remote=questions.filter(q=>Number(q.id)>0&&Number(q.id)<=85||String(q.id).length>8);if(!remote.length){box.innerHTML='<p class="small">هیچ پرسیارێک نییە.</p>';return}box.innerHTML='<h3>هەموو پرسیارەکان</h3>';remote.slice().sort((a,b)=>Number(a.id)-Number(b.id)).forEach(q=>{let item=document.createElement('div');item.className='admin-item';let title=document.createElement('div');title.className='admin-item-title';title.textContent=q.id+'. '+q.q;item.appendChild(title);if(q.imageUrl){let im=document.createElement('img');im.src=q.imageUrl;item.appendChild(im)}let p=document.createElement('div');p.className='small';p.textContent=q.a.length+' هەڵبژاردە • وەڵامی ڕاست: '+(q.correct+1);item.appendChild(p);let act=document.createElement('div');act.className='admin-actions';let ed=document.createElement('button');ed.className='edit-btn';ed.textContent='✏️ دەستکاری';ed.onclick=()=>editQuestion(q.id);let del=document.createElement('button');del.className='danger-btn';del.textContent='🗑️ سڕینەوە';del.onclick=()=>deleteQuestion(q.id);act.append(ed,del);item.appendChild(act);box.appendChild(item)})}
+
+async function deleteQuestion(id){
+  if(!adminLoggedIn)return;
+  if(!await initSB())return;
+  if(!confirm('دڵنیایت لە سڕینەوەی ئەم پرسیارە؟'))return;
+  let r=await sb.from('questions').delete().eq('id',id);
+  if(r.error){status('سڕینەوە سەرکەوتوو نەبوو: '+r.error.message,false);return}
+  questions=questions.filter(q=>String(q.id)!==String(id));
+  remoteQuestionsLoaded=true;
+  renderAdmin();
+  status('پرسیارەکە بە سەرکەوتوویی سڕایەوە. لە Refresh ـیشدا ناگەڕێتەوە.',true);
+}
+
 function resetForm(){adminQuestion.value='';adminA.value='';adminB.value='';adminC.value='';adminCorrect.value='0';adminImage.value='';adminImagePreview.style.display='none';adminPreviewImg.removeAttribute('src');adminAddBtn.textContent='➕ زیادکردنی پرسیار';adminCancelEditBtn.style.display='none';editingQuestionId=null}
 function logoutAdmin(){adminLoggedIn=false;adminPanel.classList.add('hidden');welcomeScreen.classList.remove('hidden');resetForm()}
 adminImage.addEventListener('change',()=>{let f=adminImage.files[0];if(!f){adminImagePreview.style.display='none';return}let r=new FileReader();r.onload=e=>{adminPreviewImg.src=e.target.result;adminImagePreview.style.display='block'};r.readAsDataURL(f)});
