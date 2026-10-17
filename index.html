@@ -258,13 +258,28 @@ function getSessionQuestions(){
  const seenText=new Set(),unique=valid.filter(q=>{const fp=questionFingerprint(q);if(!fp||seenText.has(fp))return false;seenText.add(fp);return true});
  const count=Math.min(25,unique.length);
  let recent=[];try{recent=JSON.parse(localStorage.getItem("drivingQuizRecentQuestionFingerprints")||"[]");if(!Array.isArray(recent))recent=[]}catch(e){recent=[]}
- const fresh=unique.filter(q=>!recent.includes(questionFingerprint(q)));
- // Prefer questions not shown in recent tests; fall back only when the unseen pool is too small.
- const chosen=shuffle(fresh).slice(0,count);
- if(chosen.length<count){const chosenFp=new Set(chosen.map(questionFingerprint));chosen.push(...shuffle(unique.filter(q=>!chosenFp.has(questionFingerprint(q)))).slice(0,count-chosen.length))}
- const newHistory=[...recent,...chosen.map(questionFingerprint)].slice(-50);
+ const isSymbolQuestion=q=>!!(q.image||q.imageUrl||q.image_url);
+ const symbols=unique.filter(isSymbolQuestion),regular=unique.filter(q=>!isSymbolQuestion(q));
+ const freshFirst=list=>{
+  const fresh=list.filter(q=>!recent.includes(questionFingerprint(q)));
+  const older=list.filter(q=>recent.includes(questionFingerprint(q)));
+  return [...shuffle(fresh),...shuffle(older)];
+ };
+ // Reserve eight dashboard/sign questions in every test whenever at least eight exist.
+ const symbolCount=Math.min(8,symbols.length,count);
+ const selectedSymbols=freshFirst(symbols).slice(0,symbolCount);
+ const selectedFp=new Set(selectedSymbols.map(questionFingerprint));
+ const regularCount=Math.min(count-selectedSymbols.length,regular.length);
+ const selectedRegular=freshFirst(regular.filter(q=>!selectedFp.has(questionFingerprint(q)))).slice(0,regularCount);
+ const allSelected=[...selectedSymbols,...selectedRegular];
+ // If there are too few regular questions, fill the remaining slots from any unused questions.
+ if(allSelected.length<count){
+  const used=new Set(allSelected.map(questionFingerprint));
+  allSelected.push(...freshFirst(unique.filter(q=>!used.has(questionFingerprint(q)))).slice(0,count-allSelected.length));
+ }
+ const newHistory=[...recent,...allSelected.map(questionFingerprint)].slice(-50);
  try{localStorage.setItem("drivingQuizRecentQuestionFingerprints",JSON.stringify(newHistory))}catch(e){}
- return shuffle(chosen)
+ return shuffle(allSelected)
 }
 function builtInQuestionImage(key){
  const svgs={
